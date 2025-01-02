@@ -412,6 +412,7 @@ export default function PostLoad() {
             <div className="space-y-6">
               <h2>Review Bulk Cargo Load</h2>
               <div className="border p-4 rounded-lg">
+                <h3>BL Number: {blData.blNumber}</h3>
                 <h3>Bulk Cargo Weight: {blData.bulkCargoWeight} kg</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -457,6 +458,9 @@ export default function PostLoad() {
         return (
           <div className="space-y-6">
             <h2>Review Your Loads</h2>
+            <div className="mb-4">
+              <h3>BL Number: {blData.blNumber}</h3>
+            </div>
             {selectedContainers.map(container => (
               <div key={container.id} className="border p-4 rounded-lg">
                 <h3>Container: {container.containerNumber}</h3>
