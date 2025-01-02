@@ -65,6 +65,11 @@ export function getMenuList(pathname: string): Group[] {
               label: "My Loadboard",
               active: pathname.includes(BASE_PATH + "/loadboard/my-loadboard"),
             },
+            {
+              href: BASE_PATH + "/loadboard/post-load",
+              label: "Post Load",
+              active: pathname.includes(BASE_PATH + "/loadboard/post-load"),
+            },
           ],
         },
         {
