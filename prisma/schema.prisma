@@ -81,3 +81,31 @@ model TwoFactorConfirmation {
 
   @@unique([userId])
 }
+
+model BillOfLading {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  blNumber String @unique
+  containers Container[]
+  bulkCargoWeight Float?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Container {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  containerNumber String @unique
+  billOfLading BillOfLading @relation(fields: [blId], references: [id])
+  blId String @db.ObjectId
+  isPosted Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Rate {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  origin String
+  destination String
+  rate Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
