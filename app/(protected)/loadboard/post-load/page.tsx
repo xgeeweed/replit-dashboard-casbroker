@@ -345,6 +345,7 @@ export default function PostLoad() {
                           pickupLocation: value
                         })
                       }
+                      required
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select pickup location" />
@@ -365,6 +366,7 @@ export default function PostLoad() {
                           deliveryLocation: value
                         })
                       }
+                      required
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select delivery location" />
@@ -386,6 +388,7 @@ export default function PostLoad() {
                           pickupDate: e.target.value
                         })
                       }
+                      required
                     />
                   </div>
 
