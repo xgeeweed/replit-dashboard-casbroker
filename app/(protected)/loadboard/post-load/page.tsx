@@ -3,6 +3,9 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { PlusCircle, X } from "lucide-react";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
@@ -41,6 +44,7 @@ export default function PostLoad() {
   const [selectedContainers, setSelectedContainers] = useState<Container[]>([]);
   const [loadDetails, setLoadDetails] = useState<{ [key: string]: LoadDetails }>({});
   const [isBulkCargo, setIsBulkCargo] = useState(false);
+  const [newEquipment, setNewEquipment] = useState<EquipmentCount>({ equipmentType: '', loadType: '', count: 0 });
   
   const fetchBLData = async (blNumber: string) => {
     // TODO: Replace with actual API call
@@ -193,46 +197,97 @@ export default function PostLoad() {
                   </div>
                   
                   <div className="col-span-2">
-                    <label className="text-sm mb-2 block">Equipment Selection</label>
-                    <div className="space-y-4">
-                      {['flatbed', 'tanker'].map((equipType) => (
-                        ['palletized', 'bulk'].map((loadType) => (
-                          <div key={`${equipType}-${loadType}`} className="flex items-center gap-4 p-2 border rounded">
-                            <div className="flex-1">
-                              <p className="font-medium">{equipType.charAt(0).toUpperCase() + equipType.slice(1)}</p>
-                              <p className="text-sm text-gray-500">{loadType.charAt(0).toUpperCase() + loadType.slice(1)}</p>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="text-sm">Equipment Selection</label>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button variant="outline" size="sm">
+                            <PlusCircle className="h-4 w-4 mr-2" />
+                            Add Equipment
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Add Equipment</DialogTitle>
+                          </DialogHeader>
+                          <div className="grid gap-4 py-4">
+                            <div className="grid gap-2">
+                              <Label>Equipment Type</Label>
+                              <Select onValueChange={(value) => {
+                                setNewEquipment(prev => ({...prev, equipmentType: value}))
+                              }}>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select equipment type" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="flatbed">Flatbed</SelectItem>
+                                  <SelectItem value="tanker">Tanker</SelectItem>
+                                </SelectContent>
+                              </Select>
                             </div>
-                            <Input
-                              type="number"
-                              min="0"
-                              className="w-24"
-                              placeholder="Count"
-                              onChange={(e) => {
-                                const count = parseInt(e.target.value) || 0;
+                            <div className="grid gap-2">
+                              <Label>Load Type</Label>
+                              <Select onValueChange={(value) => {
+                                setNewEquipment(prev => ({...prev, loadType: value}))
+                              }}>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select load type" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="palletized">Palletized</SelectItem>
+                                  <SelectItem value="bulk">Bulk</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div className="grid gap-2">
+                              <Label>Count</Label>
+                              <Input 
+                                type="number" 
+                                min="1"
+                                onChange={(e) => {
+                                  setNewEquipment(prev => ({...prev, count: parseInt(e.target.value) || 0}))
+                                }}
+                              />
+                            </div>
+                          </div>
+                          <DialogFooter>
+                            <Button onClick={() => {
+                              if (newEquipment.equipmentType && newEquipment.loadType && newEquipment.count > 0) {
                                 const currentEquipment = loadDetails.bulk?.equipmentCount || [];
-                                const existingIndex = currentEquipment.findIndex(
-                                  eq => eq.equipmentType === equipType && eq.loadType === loadType
-                                );
-                                
-                                let newEquipment = [...currentEquipment];
-                                if (existingIndex >= 0) {
-                                  if (count === 0) {
-                                    newEquipment.splice(existingIndex, 1);
-                                  } else {
-                                    newEquipment[existingIndex].count = count;
-                                  }
-                                } else if (count > 0) {
-                                  newEquipment.push({ equipmentType: equipType, loadType, count });
-                                }
-                                
+                                handleLoadDetails({
+                                  ...loadDetails.bulk,
+                                  equipmentCount: [...currentEquipment, newEquipment]
+                                });
+                              }
+                            }}>Add</Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                    <div className="space-y-2">
+                      {loadDetails.bulk?.equipmentCount?.map((equip, index) => (
+                        <div key={index} className="flex items-center justify-between p-2 border rounded">
+                          <div>
+                            <p className="font-medium">{equip.equipmentType.charAt(0).toUpperCase() + equip.equipmentType.slice(1)}</p>
+                            <p className="text-sm text-gray-500">{equip.loadType.charAt(0).toUpperCase() + equip.loadType.slice(1)}</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm">Count: {equip.count}</p>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => {
+                                const newEquipment = loadDetails.bulk?.equipmentCount?.filter((_, i) => i !== index) || [];
                                 handleLoadDetails({
                                   ...loadDetails.bulk,
                                   equipmentCount: newEquipment
                                 });
                               }}
-                            />
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
                           </div>
-                        ))
+                        </div>
                       ))}
                     </div>
                   </div>
