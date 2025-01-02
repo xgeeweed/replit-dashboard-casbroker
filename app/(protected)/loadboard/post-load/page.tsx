@@ -166,6 +166,7 @@ export default function PostLoad() {
                           pickupLocation: value
                         })
                       }
+                      required
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select pickup location" />
@@ -186,6 +187,7 @@ export default function PostLoad() {
                           deliveryLocation: value
                         })
                       }
+                      required
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select delivery location" />
@@ -297,6 +299,7 @@ export default function PostLoad() {
                     <label className="text-sm">Pickup Date</label>
                     <Input
                       type="date"
+                      required
                       onChange={(e) =>
                         handleLoadDetails({
                           ...loadDetails.bulk,
