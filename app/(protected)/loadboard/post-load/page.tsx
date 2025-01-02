@@ -422,13 +422,19 @@ export default function PostLoad() {
                     <label className="font-bold">Delivery Location:</label>
                     <p>{loadDetails.bulk?.deliveryLocation}</p>
                   </div>
-                  <div>
-                    <label className="font-bold">Equipment Type:</label>
-                    <p>{loadDetails.bulk?.equipmentType}</p>
-                  </div>
-                  <div>
-                    <label className="font-bold">Load Type:</label>
-                    <p>{loadDetails.bulk?.loadType}</p>
+                  <div className="col-span-2">
+                    <label className="font-bold">Equipment Details:</label>
+                    <div className="space-y-2 mt-2">
+                      {loadDetails.bulk?.equipmentCount?.map((equip, index) => (
+                        <div key={index} className="flex items-center justify-between p-2 border rounded">
+                          <div>
+                            <p className="font-medium">{equip.equipmentType.charAt(0).toUpperCase() + equip.equipmentType.slice(1)}</p>
+                            <p className="text-sm text-gray-500">{equip.loadType.charAt(0).toUpperCase() + equip.loadType.slice(1)}</p>
+                          </div>
+                          <p className="text-sm">Count: {equip.count}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                   <div>
                     <label className="font-bold">Pickup Date:</label>
