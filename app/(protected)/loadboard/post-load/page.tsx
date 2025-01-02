@@ -21,12 +21,17 @@ type BLData = {
   bulkCargoWeight?: number;
 };
 
+type EquipmentCount = {
+  equipmentType: string;
+  loadType: string;
+  count: number;
+};
+
 type LoadDetails = {
   pickupLocation: string;
   deliveryLocation: string;
   pickupDate: string;
-  equipmentType?: string;
-  loadType?: string;
+  equipmentCount?: EquipmentCount[];
   comments: string;
 };
 
@@ -187,44 +192,49 @@ export default function PostLoad() {
                     </Select>
                   </div>
                   
-                  <div>
-                    <label className="text-sm">Equipment Type</label>
-                    <Select
-                      onValueChange={(value) =>
-                        handleLoadDetails({
-                          ...loadDetails.bulk,
-                          equipmentType: value
-                        })
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select equipment type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="flatbed">Flatbed</SelectItem>
-                        <SelectItem value="tanker">Tanker</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm">Load Type</label>
-                    <Select
-                      onValueChange={(value) =>
-                        handleLoadDetails({
-                          ...loadDetails.bulk,
-                          loadType: value
-                        })
-                      }
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select load type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="palletized">Palletized</SelectItem>
-                        <SelectItem value="bulk">Bulk</SelectItem>
-                      </SelectContent>
-                    </Select>
+                  <div className="col-span-2">
+                    <label className="text-sm mb-2 block">Equipment Selection</label>
+                    <div className="space-y-4">
+                      {['flatbed', 'tanker'].map((equipType) => (
+                        ['palletized', 'bulk'].map((loadType) => (
+                          <div key={`${equipType}-${loadType}`} className="flex items-center gap-4 p-2 border rounded">
+                            <div className="flex-1">
+                              <p className="font-medium">{equipType.charAt(0).toUpperCase() + equipType.slice(1)}</p>
+                              <p className="text-sm text-gray-500">{loadType.charAt(0).toUpperCase() + loadType.slice(1)}</p>
+                            </div>
+                            <Input
+                              type="number"
+                              min="0"
+                              className="w-24"
+                              placeholder="Count"
+                              onChange={(e) => {
+                                const count = parseInt(e.target.value) || 0;
+                                const currentEquipment = loadDetails.bulk?.equipmentCount || [];
+                                const existingIndex = currentEquipment.findIndex(
+                                  eq => eq.equipmentType === equipType && eq.loadType === loadType
+                                );
+                                
+                                let newEquipment = [...currentEquipment];
+                                if (existingIndex >= 0) {
+                                  if (count === 0) {
+                                    newEquipment.splice(existingIndex, 1);
+                                  } else {
+                                    newEquipment[existingIndex].count = count;
+                                  }
+                                } else if (count > 0) {
+                                  newEquipment.push({ equipmentType: equipType, loadType, count });
+                                }
+                                
+                                handleLoadDetails({
+                                  ...loadDetails.bulk,
+                                  equipmentCount: newEquipment
+                                });
+                              }}
+                            />
+                          </div>
+                        ))
+                      ))}
+                    </div>
                   </div>
 
                   <div>
