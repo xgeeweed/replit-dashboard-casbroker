@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -426,7 +425,25 @@ export default function PostLoad() {
             ))}
             <div className="space-x-2">
               <Button onClick={() => setStep(2)}>Back</Button>
-              <Button onClick={() => setStep(4)}>Review</Button>
+              <Button onClick={() => {
+                  if (isBulkCargo) {
+                    if (!loadDetails.bulk?.pickupLocation || !loadDetails.bulk?.deliveryLocation || !loadDetails.bulk?.pickupDate) {
+                      toast.error("Please fill in all mandatory fields (Pickup Location, Delivery Location, Pickup Date)");
+                      return;
+                    }
+                  } else {
+                    const hasInvalidContainer = selectedContainers.some(container => {
+                      const details = loadDetails[container.id];
+                      return !details?.pickupLocation || !details?.deliveryLocation || !details?.pickupDate;
+                    });
+                    
+                    if (hasInvalidContainer) {
+                      toast.error("Please fill in all mandatory fields for each container (Pickup Location, Delivery Location, Pickup Date)");
+                      return;
+                    }
+                  }
+                  setStep(4);
+                }}>Review</Button>
             </div>
           </div>
         );
