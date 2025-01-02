@@ -25,8 +25,8 @@ type LoadDetails = {
   pickupLocation: string;
   deliveryLocation: string;
   pickupDate: string;
-  equipmentType: string;
-  loadType: string;
+  equipmentType?: string;
+  loadType?: string;
   comments: string;
 };
 
@@ -35,17 +35,20 @@ export default function PostLoad() {
   const [blData, setBlData] = useState<BLData>({ blNumber: "" });
   const [selectedContainers, setSelectedContainers] = useState<Container[]>([]);
   const [loadDetails, setLoadDetails] = useState<{ [key: string]: LoadDetails }>({});
+  const [isBulkCargo, setIsBulkCargo] = useState(false);
   
   const fetchBLData = async (blNumber: string) => {
     // TODO: Replace with actual API call
     const mockData = {
       blNumber,
-      containers: [
-        { id: "1", containerNumber: "CONT123" },
-        { id: "2", containerNumber: "CONT456" }
-      ]
+      bulkCargoWeight: 5000, // Example bulk cargo weight
+      // containers: [
+      //   { id: "1", containerNumber: "CONT123" },
+      //   { id: "2", containerNumber: "CONT456" }
+      // ]
     };
     setBlData(mockData);
+    setIsBulkCargo(!!mockData.bulkCargoWeight);
   };
 
   const handleBLSubmit = async (e: React.FormEvent) => {
@@ -63,6 +66,10 @@ export default function PostLoad() {
     }
   };
 
+  const handleLoadDetails = (details: LoadDetails) => {
+    setLoadDetails({ bulk: details });
+  };
+
   const handleContainerDetails = (containerId: string, details: LoadDetails) => {
     setLoadDetails(prev => ({
       ...prev,
@@ -71,12 +78,12 @@ export default function PostLoad() {
   };
 
   const handleSubmit = async () => {
-    // TODO: Replace with actual API call
     toast.success("Load posted successfully! It is now under review.");
     setStep(1);
     setBlData({ blNumber: "" });
     setSelectedContainers([]);
     setLoadDetails({});
+    setIsBulkCargo(false);
   };
 
   const renderStep = () => {
@@ -98,6 +105,18 @@ export default function PostLoad() {
         );
 
       case 2:
+        if (isBulkCargo) {
+          return (
+            <div className="space-y-4">
+              <h2>Bulk Cargo Details</h2>
+              <p>Weight: {blData.bulkCargoWeight} kg</p>
+              <div className="space-x-2">
+                <Button onClick={() => setStep(1)}>Back</Button>
+                <Button onClick={() => setStep(3)}>Next</Button>
+              </div>
+            </div>
+          );
+        }
         return (
           <div className="space-y-4">
             <h2>Select Containers</h2>
@@ -122,6 +141,126 @@ export default function PostLoad() {
         );
 
       case 3:
+        if (isBulkCargo) {
+          return (
+            <div className="space-y-6">
+              <div className="border p-4 rounded-lg space-y-4">
+                <h3>Bulk Cargo Details</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm">Pickup Location</label>
+                    <Select
+                      onValueChange={(value) => 
+                        handleLoadDetails({
+                          ...loadDetails.bulk,
+                          pickupLocation: value
+                        })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select pickup location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="location1">Location 1</SelectItem>
+                        <SelectItem value="location2">Location 2</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
+                    <label className="text-sm">Delivery Location</label>
+                    <Select
+                      onValueChange={(value) =>
+                        handleLoadDetails({
+                          ...loadDetails.bulk,
+                          deliveryLocation: value
+                        })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select delivery location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="location1">Location 1</SelectItem>
+                        <SelectItem value="location2">Location 2</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
+                    <label className="text-sm">Equipment Type</label>
+                    <Select
+                      onValueChange={(value) =>
+                        handleLoadDetails({
+                          ...loadDetails.bulk,
+                          equipmentType: value
+                        })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select equipment type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="flatbed">Flatbed</SelectItem>
+                        <SelectItem value="tanker">Tanker</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm">Load Type</label>
+                    <Select
+                      onValueChange={(value) =>
+                        handleLoadDetails({
+                          ...loadDetails.bulk,
+                          loadType: value
+                        })
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select load type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="palletized">Palletized</SelectItem>
+                        <SelectItem value="bulk">Bulk</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <label className="text-sm">Pickup Date</label>
+                    <Input
+                      type="date"
+                      onChange={(e) =>
+                        handleLoadDetails({
+                          ...loadDetails.bulk,
+                          pickupDate: e.target.value
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm">Comments</label>
+                    <Textarea
+                      onChange={(e) =>
+                        handleLoadDetails({
+                          ...loadDetails.bulk,
+                          comments: e.target.value
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="space-x-2">
+                <Button onClick={() => setStep(2)}>Back</Button>
+                <Button onClick={() => setStep(4)}>Review</Button>
+              </div>
+            </div>
+          );
+        }
+
         return (
           <div className="space-y-6">
             {selectedContainers.map(container => (
@@ -203,6 +342,47 @@ export default function PostLoad() {
         );
 
       case 4:
+        if (isBulkCargo) {
+          return (
+            <div className="space-y-6">
+              <h2>Review Bulk Cargo Load</h2>
+              <div className="border p-4 rounded-lg">
+                <h3>Bulk Cargo Weight: {blData.bulkCargoWeight} kg</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="font-bold">Pickup Location:</label>
+                    <p>{loadDetails.bulk?.pickupLocation}</p>
+                  </div>
+                  <div>
+                    <label className="font-bold">Delivery Location:</label>
+                    <p>{loadDetails.bulk?.deliveryLocation}</p>
+                  </div>
+                  <div>
+                    <label className="font-bold">Equipment Type:</label>
+                    <p>{loadDetails.bulk?.equipmentType}</p>
+                  </div>
+                  <div>
+                    <label className="font-bold">Load Type:</label>
+                    <p>{loadDetails.bulk?.loadType}</p>
+                  </div>
+                  <div>
+                    <label className="font-bold">Pickup Date:</label>
+                    <p>{loadDetails.bulk?.pickupDate}</p>
+                  </div>
+                  <div>
+                    <label className="font-bold">Comments:</label>
+                    <p>{loadDetails.bulk?.comments}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-x-2">
+                <Button onClick={() => setStep(3)}>Back</Button>
+                <Button onClick={handleSubmit}>Confirm</Button>
+              </div>
+            </div>
+          );
+        }
+
         return (
           <div className="space-y-6">
             <h2>Review Your Loads</h2>
