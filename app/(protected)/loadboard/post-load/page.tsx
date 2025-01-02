@@ -50,11 +50,12 @@ export default function PostLoad() {
     // TODO: Replace with actual API call
     const mockData = {
       blNumber,
-      bulkCargoWeight: 5000, // Example bulk cargo weight
-      // containers: [
-      //   { id: "1", containerNumber: "CONT123" },
-      //   { id: "2", containerNumber: "CONT456" }
-      // ]
+      containers: blNumber === "BL5678" ? [
+        { id: "1", containerNumber: "CONT123" },
+        { id: "2", containerNumber: "CONT456" },
+        { id: "3", containerNumber: "CONT789" }
+      ] : undefined,
+      bulkCargoWeight: blNumber === "BL1234" ? 5000 : undefined
     };
     setBlData(mockData);
     setIsBulkCargo(!!mockData.bulkCargoWeight);
