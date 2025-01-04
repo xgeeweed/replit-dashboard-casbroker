@@ -62,6 +62,12 @@ export default function LoadDetails() {
   const { id } = useParams();
   const [load, setLoad] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showCompleteDialog, setShowCompleteDialog] = useState(false);
+  
+  const handleDeliveryCompleted = () => {
+    setLoad(prev => ({...prev, status: "Completed"}));
+    setShowCompleteDialog(false);
+  };
 
   useEffect(() => {
     const findLoadById = () => {
@@ -152,7 +158,10 @@ export default function LoadDetails() {
       {/* Action Buttons */}
       {load.status === "In Progress" && (
         <div className="mt-auto p-4 bg-white flex flex-col gap-2">
-          <Button className="w-full bg-black text-white py-3 rounded-md">
+          <Button 
+            className="w-full bg-black text-white py-3 rounded-md"
+            onClick={() => setShowCompleteDialog(true)}
+          >
             Complete Delivery
           </Button>
           <Button 
@@ -161,6 +170,12 @@ export default function LoadDetails() {
           >
             Cancel Load
           </Button>
+          <CompleteDeliveryDialog
+            isOpen={showCompleteDialog}
+            onClose={() => setShowCompleteDialog(false)}
+            onComplete={handleDeliveryCompleted}
+            loadId={load.rowId}
+          />
         </div>
       )}
     </div>
