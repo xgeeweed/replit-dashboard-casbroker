@@ -164,11 +164,7 @@ export function DataTable<TData extends WithId, TValue>({
 
   return (
     <div className="space-y-4">
-      {Custom?.DataTableToolbar ? (
-        <Custom.DataTableToolbar table={table} meta={meta} />
-      ) : (
         <DataTableToolbar table={table} meta={meta} />
-      )}
       <div className="rounded-md border max-h-[70vh] w-full">
         <Table>
           <TableHeader>
