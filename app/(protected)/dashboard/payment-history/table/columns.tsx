@@ -1,4 +1,3 @@
-
 "use client";
 
 import { ColumnDef, Table } from "@tanstack/react-table";
@@ -24,14 +23,14 @@ export const columns: ColumnDef<any>[] = [
       />
     ),
     cell: ({ row }) => {
-      const table = row.table as Table<any> & { options: { meta?: TableMeta } };
       return (
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => {
             row.toggleSelected(!!value);
-            if (table.options.meta?.handleSelectionChange) {
-              table.options.meta.handleSelectionChange(row.original.id);
+            const handleSelectionChange = row.table.options?.meta?.handleSelectionChange;
+            if (handleSelectionChange) {
+              handleSelectionChange(row.original.id);
             }
           }}
           aria-label="Select row"
