@@ -5,7 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header";
 
-interface TableMeta {
+export interface TableMeta {
+  name: string;
+  plural?: string;
   handleSelectionChange?: (id: string) => void;
 }
 
@@ -22,15 +24,15 @@ export const columns: ColumnDef<any>[] = [
         aria-label="Select all"
       />
     ),
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       return (
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => {
             row.toggleSelected(!!value);
-            const meta = row.table.options?.meta;
-            if (meta?.handleSelectionChange) {
-              meta.handleSelectionChange(row.original.id);
+            const handleSelectionChange = table.options.meta?.handleSelectionChange;
+            if (handleSelectionChange) {
+              handleSelectionChange(row.original.id);
             }
           }}
           aria-label="Select row"
