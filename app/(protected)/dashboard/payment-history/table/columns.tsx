@@ -1,10 +1,14 @@
 
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Table } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header";
+
+interface TableMeta {
+  handleSelectionChange?: (id: string) => void;
+}
 
 export const columns: ColumnDef<any>[] = [
   {
@@ -19,19 +23,22 @@ export const columns: ColumnDef<any>[] = [
         aria-label="Select all"
       />
     ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => {
-          row.toggleSelected(!!value);
-          const meta = row.table.options.meta as { handleSelectionChange?: (id: string) => void } | undefined;
-          if (meta?.handleSelectionChange) {
-            meta.handleSelectionChange(row.original.id);
-          }
-        }}
-        aria-label="Select row"
-        disabled={row.original.status !== "Pending"}
-      />
+    cell: ({ row }) => {
+      const table = row.table as Table<any> & { options: { meta?: TableMeta } };
+      return (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => {
+            row.toggleSelected(!!value);
+            if (table.options.meta?.handleSelectionChange) {
+              table.options.meta.handleSelectionChange(row.original.id);
+            }
+          }}
+          aria-label="Select row"
+          disabled={row.original.status !== "Pending"}
+        />
+      );
+    }
     ),
     enableSorting: false,
     enableHiding: false,
