@@ -33,12 +33,33 @@ const mockPayments = [
 
 export default function PaymentHistory() {
   const [payments] = useState(mockPayments);
+  const [showPaymentWizard, setShowPaymentWizard] = useState(false);
   
   const pendingPayments = payments.filter(p => p.status === "Pending");
   const completedPayments = payments.filter(p => p.status === "Completed");
 
+  const totalPendingAmount = pendingPayments.reduce((sum, payment) => sum + payment.amount, 0);
+
   return (
     <div className="space-y-4 p-4">
+      {pendingPayments.length > 0 && (
+        <div className="flex justify-between items-center bg-muted p-4 rounded-lg">
+          <div>
+            <p className="text-sm">Total Pending Amount</p>
+            <p className="text-2xl font-bold">GHS {totalPendingAmount}</p>
+          </div>
+          <Button onClick={() => setShowPaymentWizard(true)}>
+            Make Payment
+          </Button>
+        </div>
+      )}
+
+      <PaymentWizard
+        open={showPaymentWizard}
+        onClose={() => setShowPaymentWizard(false)}
+        totalAmount={totalPendingAmount}
+        referenceNumber={pendingPayments[0]?.referenceNumber}
+      />
       <Tabs defaultValue="pending">
         <TabsList>
           <TabsTrigger value="pending">Pending Payments</TabsTrigger>
