@@ -150,14 +150,19 @@ export default function LoadDetails() {
       </DetailCard>
 
       {/* Action Buttons */}
-      <div className="mt-auto p-4 bg-white flex flex-col gap-2">
-        <Button className="w-full bg-black text-white py-3 rounded-md">
-          Complete Delivery
-        </Button>
-        <Button variant="outline" className="w-full py-3 rounded-md border-gray-200">
-          Cancel Delivery
-        </Button>
-      </div>
+      {load.status === "In Progress" && (
+        <div className="mt-auto p-4 bg-white flex flex-col gap-2">
+          <Button className="w-full bg-black text-white py-3 rounded-md">
+            Complete Delivery
+          </Button>
+          <Button 
+            variant="outline" 
+            className="w-full py-3 rounded-md border-gray-200 text-red-600 hover:text-red-700"
+          >
+            Cancel Load
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

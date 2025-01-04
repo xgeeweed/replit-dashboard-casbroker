@@ -39,15 +39,19 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
             View
           </DropdownMenuItem>
         </Link>
-        <DropdownMenuItem className="cursor-pointer" onClick={handleCompleteDelivery}>
-          <Check className="mr-2 h-4 w-4" />
-          Complete Delivery
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="cursor-pointer">
-          <Trash2 className="mr-2 h-4 w-4" />
-          Delete
-        </DropdownMenuItem>
+        {rowData.status === "In Progress" && (
+          <>
+            <DropdownMenuItem className="cursor-pointer" onClick={handleCompleteDelivery}>
+              <Check className="mr-2 h-4 w-4" />
+              Complete Delivery
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="cursor-pointer text-red-600">
+              <Trash2 className="mr-2 h-4 w-4" />
+              Cancel Load
+            </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
