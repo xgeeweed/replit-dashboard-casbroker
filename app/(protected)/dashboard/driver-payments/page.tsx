@@ -1,6 +1,9 @@
 
 "use client";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
 import { DataTable } from "@/components/datatable/data-table";
 import { columns } from "./table/columns";
 import { Spinner } from "@/components/ui/spinner";
@@ -45,6 +48,14 @@ export default function DriverPayments() {
 
   return (
     <div className="p-4">
+      <div className="flex items-center mb-4">
+        <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-primary mr-4">
+          <Button variant="ghost" size="sm">
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Back to Dashboard
+          </Button>
+        </Link>
+      </div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold">Payment History</h1>
         <p className="text-gray-600">View all your completed delivery payments</p>
