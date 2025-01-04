@@ -22,7 +22,7 @@ const mockPayments = [
   },
   {
     id: "2",
-    referenceNumber: "PAY-2024-002", 
+    referenceNumber: "PAY-2024-002",
     blNumber: "BL5678",
     amount: 2500,
     status: "Completed",
@@ -30,28 +30,71 @@ const mockPayments = [
     createdAt: "2024-01-20",
     paymentMethod: "Mobile Money",
     description: "Container transport payment"
+  },
+  {
+    id: "3",
+    referenceNumber: "PAY-2024-003",
+    blNumber: "BL9012",
+    amount: 4500,
+    status: "Pending",
+    dueDate: "2024-02-20",
+    createdAt: "2024-01-28",
+    paymentMethod: "Pending",
+    description: "Container delivery payment"
+  },
+  {
+    id: "4",
+    referenceNumber: "PAY-2024-004",
+    blNumber: "BL3456",
+    amount: 1800,
+    status: "Pending",
+    dueDate: "2024-02-18",
+    createdAt: "2024-01-26",
+    paymentMethod: "Pending",
+    description: "Bulk cargo handling"
   }
 ];
 
 export default function PaymentHistory() {
   const [payments] = useState(mockPayments);
   const [showPaymentWizard, setShowPaymentWizard] = useState(false);
+  const [selectedPayments, setSelectedPayments] = useState<string[]>([]);
+  const [selectedReference, setSelectedReference] = useState<string>("");
   
   const pendingPayments = payments.filter(p => p.status === "Pending");
   const completedPayments = payments.filter(p => p.status === "Completed");
 
-  const totalPendingAmount = pendingPayments.reduce((sum, payment) => sum + payment.amount, 0);
+  const totalSelectedAmount = pendingPayments
+    .filter(p => selectedPayments.includes(p.id))
+    .reduce((sum, payment) => sum + payment.amount, 0);
+
+  const handlePayment = (paymentId: string) => {
+    const payment = payments.find(p => p.id === paymentId);
+    if (payment) {
+      setSelectedReference(payment.referenceNumber);
+      setShowPaymentWizard(true);
+    }
+  };
+
+  const handleSelectionChange = (id: string) => {
+    setSelectedPayments(prev => 
+      prev.includes(id) ? prev.filter(p => p !== id) : [...prev, id]
+    );
+  };
 
   return (
     <div className="space-y-4 p-4">
       {pendingPayments.length > 0 && (
         <div className="flex justify-between items-center bg-muted p-4 rounded-lg">
           <div>
-            <p className="text-sm">Total Pending Amount</p>
-            <p className="text-2xl font-bold">GHS {totalPendingAmount}</p>
+            <p className="text-sm">Selected Amount</p>
+            <p className="text-2xl font-bold">GHS {totalSelectedAmount}</p>
           </div>
-          <Button onClick={() => setShowPaymentWizard(true)}>
-            Make Payment
+          <Button 
+            onClick={() => setShowPaymentWizard(true)}
+            disabled={selectedPayments.length === 0}
+          >
+            Pay Selected ({selectedPayments.length})
           </Button>
         </div>
       )}
