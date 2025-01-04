@@ -4,6 +4,7 @@
 import { Spinner } from "@/components/ui/spinner";
 import { basicErrorToast } from "@/components/toast";
 import { useEffect, useState } from "react";
+import { CompleteDeliveryDialog } from "@/components/loadboard/complete-delivery-dialog";
 import { useParams } from "next/navigation";
 import {
   ChevronLeft,
