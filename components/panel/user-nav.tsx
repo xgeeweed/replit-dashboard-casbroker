@@ -46,10 +46,12 @@ export function UserNav() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:cursor-pointer">
-          <BadgeCent className="w-4 h-4 mr-3 text-muted-foreground" />
-          Payments
-        </DropdownMenuItem>
+        <Link href="/dashboard/payment-history">
+          <DropdownMenuItem className="hover:cursor-pointer">
+            <BadgeCent className="w-4 h-4 mr-3 text-muted-foreground" />
+            Payments
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="hover:cursor-pointer">
           <MessageCircleQuestion className="w-4 h-4 mr-3 text-muted-foreground" />
