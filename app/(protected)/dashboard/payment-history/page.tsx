@@ -124,7 +124,11 @@ export default function PaymentHistory() {
         onClose={() => setShowPaymentWizard(false)}
         totalAmount={totalSelectedAmount}
         referenceNumber={
-          selectedReference || pendingPayments[0]?.referenceNumber || ""
+          selectedPayments.length === 1
+            ? payments.find(p => p.id === selectedPayments[0])?.referenceNumber || ""
+            : selectedPayments.length > 1
+              ? `BULK-${new Date().getTime()}`
+              : ""
         }
       />
 
