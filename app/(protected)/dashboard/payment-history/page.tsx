@@ -63,11 +63,9 @@ export default function PaymentHistory() {
   const pendingPayments = payments.filter(p => p.status === "Pending");
   const completedPayments = payments.filter(p => p.status === "Completed");
 
-  const totalSelectedAmount = selectedPayments.length > 0 
-    ? payments
-        .filter(p => selectedPayments.includes(p.id))
-        .reduce((sum, payment) => sum + payment.amount, 0)
-    : 0;
+  const totalSelectedAmount = payments
+    .filter(p => selectedPayments.includes(p.id))
+    .reduce((sum, payment) => sum + payment.amount, 0);
 
   const handlePayment = (paymentId: string) => {
     const payment = payments.find(p => p.id === paymentId);
