@@ -35,10 +35,11 @@ interface WithId {
 interface DataTableProps<TData extends WithId, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  meta: TableMetaData;
-  Custom?: {
-    DataTableToolbar?: React.ComponentType<{ table: TanstackTable<TData>; meta: TableMetaData }>;
+  meta?: {
+    name: string;
+    plural: string;
   };
+  updateLoadStatus?: (loadId: string, status: string) => void;
   editable?: {
     cell?: boolean;
     footer?: boolean;
@@ -49,7 +50,7 @@ export function DataTable<TData extends WithId, TValue>({
   columns,
   data: defaultData,
   meta,
-  Custom,
+  updateLoadStatus,
   editable,
 }: DataTableProps<TData, TValue>) {
   const defaultDataWithId = React.useMemo(() => defaultData.map((row, index) => ({ ...row, rowId: index.toString() })), [defaultData]);

@@ -1,10 +1,11 @@
+
 "use client";
 import { Spinner } from "@/components/ui/spinner";
 import { basicErrorToast } from "@/components/toast";
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/datatable/data-table";
 import { columns } from "./table/columns";
-import data from "./data";
+import initialData from "./data";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -18,8 +19,15 @@ import {
 } from "@/components/ui/select";
 
 export default function Loadboard() {
-  // Sample data with Ghanaian locations and details
-  const loadboardData = data;
+  const [loadboardData, setLoadboardData] = useState(initialData);
+
+  const updateLoadStatus = (loadId: string, newStatus: string) => {
+    setLoadboardData(prev => 
+      prev.map(load => 
+        load.rowId === loadId ? { ...load, status: newStatus } : load
+      )
+    );
+  };
 
   const meta = {
     name: "Load",
@@ -117,13 +125,28 @@ export default function Loadboard() {
         </div>
 
         <TabsContent value="in-progress">
-          <DataTable columns={columns} data={loadboardData.filter(item => item.status === "In Progress")} meta={meta} />
+          <DataTable 
+            columns={columns} 
+            data={loadboardData.filter(item => item.status === "In Progress")} 
+            meta={meta}
+            updateLoadStatus={updateLoadStatus} 
+          />
         </TabsContent>
         <TabsContent value="completed">
-          <DataTable columns={columns} data={loadboardData.filter(item => item.status === "Completed")} meta={meta} />
+          <DataTable 
+            columns={columns} 
+            data={loadboardData.filter(item => item.status === "Completed")} 
+            meta={meta}
+            updateLoadStatus={updateLoadStatus}
+          />
         </TabsContent>
         <TabsContent value="saved">
-          <DataTable columns={columns} data={loadboardData.filter(item => item.status === "Saved")} meta={meta} />
+          <DataTable 
+            columns={columns} 
+            data={loadboardData.filter(item => item.status === "Saved")} 
+            meta={meta}
+            updateLoadStatus={updateLoadStatus}
+          />
         </TabsContent>
       </Tabs>
     </div>
