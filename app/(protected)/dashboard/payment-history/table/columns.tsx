@@ -38,8 +38,7 @@ export const columns: ColumnDef<any>[] = [
           disabled={row.original.status !== "Pending"}
         />
       );
-    }
-    ),
+    },
     enableSorting: false,
     enableHiding: false,
   },
