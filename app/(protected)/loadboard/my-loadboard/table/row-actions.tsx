@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Check, Eye, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { CompleteDeliveryDialog } from "@/components/loadboard/complete-delivery-dialog";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -19,9 +21,15 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
   const rowData = row.original as any;
 
+  const [showCompleteDialog, setShowCompleteDialog] = useState(false);
+
   const handleCompleteDelivery = () => {
-    // Here you would typically make an API call to update the delivery status
-    console.log("Completing delivery for:", rowData.rowId);
+    setShowCompleteDialog(true);
+  };
+
+  const handleDeliveryCompleted = () => {
+    // Here you would make an API call to update the status
+    console.log("Delivery completed for:", rowData.rowId);
   };
 
   return (
@@ -54,5 +62,11 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         )}
       </DropdownMenuContent>
     </DropdownMenu>
+    <CompleteDeliveryDialog 
+      isOpen={showCompleteDialog}
+      onClose={() => setShowCompleteDialog(false)}
+      onComplete={handleDeliveryCompleted}
+      loadId={rowData.rowId}
+    />
   );
 }
