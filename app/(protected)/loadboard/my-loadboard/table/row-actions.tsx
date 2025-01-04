@@ -30,8 +30,8 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
   const handleDeliveryCompleted = () => {
     // Here you would make an API call to update the status
     console.log("Delivery completed for:", rowData.rowId);
-    const updateLoadStatus = row.table.options.meta?.updateLoadStatus;
-    if (updateLoadStatus) {
+    const updateLoadStatus = row.table?.options?.meta?.updateLoadStatus;
+    if (typeof updateLoadStatus === 'function') {
       updateLoadStatus(rowData.rowId, "Completed");
     }
   };

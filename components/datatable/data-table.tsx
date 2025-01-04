@@ -94,7 +94,12 @@ export function DataTable<TData extends WithId, TValue>({
     data: defaultData,
     columns,
     meta: {
-      updateLoadStatus: updateLoadStatus
+      updateLoadStatus: (id: string, status: string) => {
+        console.log("Updating load status for:", id, "to:", status);
+        if (updateLoadStatus) {
+          updateLoadStatus(id, status);
+        }
+      }
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
