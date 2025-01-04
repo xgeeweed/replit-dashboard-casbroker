@@ -102,8 +102,8 @@ export default function PaymentHistory() {
       <PaymentWizard
         open={showPaymentWizard}
         onClose={() => setShowPaymentWizard(false)}
-        totalAmount={totalPendingAmount}
-        referenceNumber={pendingPayments[0]?.referenceNumber}
+        totalAmount={totalSelectedAmount}
+        referenceNumber={selectedReference || pendingPayments[0]?.referenceNumber}
       />
       <Tabs defaultValue="pending">
         <TabsList>
