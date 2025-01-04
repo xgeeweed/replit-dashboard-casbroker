@@ -3,8 +3,8 @@ import { Spinner } from "@/components/ui/spinner";
 import { basicErrorToast } from "@/components/toast";
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/datatable/data-table";
-import { columns } from "../view-loadboard/table/columns";
-import loadboardData from "../view-loadboard/data";
+import { columns } from "./table/columns";
+import data from "./data";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,7 @@ import {
 
 export default function Loadboard() {
   // Sample data with Ghanaian locations and details
-  const data = loadboardData.slice(0, 5);
+  const loadboardData = data;
 
   const meta = {
     name: "Load",
@@ -117,13 +117,13 @@ export default function Loadboard() {
         </div>
 
         <TabsContent value="in-progress">
-          <DataTable columns={columns} data={data.slice(0, 2)} meta={meta} />
+          <DataTable columns={columns} data={loadboardData.filter(item => item.status === "In Progress")} meta={meta} />
         </TabsContent>
         <TabsContent value="completed">
-          <DataTable columns={columns} data={data.slice(2, 4)} meta={meta} />
+          <DataTable columns={columns} data={loadboardData.filter(item => item.status === "Completed")} meta={meta} />
         </TabsContent>
         <TabsContent value="saved">
-          <DataTable columns={columns} data={data.slice(4, 6)} meta={meta} />
+          <DataTable columns={columns} data={loadboardData.filter(item => item.status === "Saved")} meta={meta} />
         </TabsContent>
       </Tabs>
     </div>
