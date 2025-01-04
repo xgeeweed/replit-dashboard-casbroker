@@ -22,7 +22,11 @@ export const columns: ColumnDef<any>[] = [
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        onCheckedChange={(value) => {
+          row.toggleSelected(!!value);
+          const meta = row.table.options.meta as { handleSelectionChange?: (id: string) => void };
+          meta?.handleSelectionChange?.(row.original.id);
+        }}
         aria-label="Select row"
         disabled={row.original.status !== "Pending"}
       />

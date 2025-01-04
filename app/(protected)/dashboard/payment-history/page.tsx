@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -114,14 +113,22 @@ export default function PaymentHistory() {
           <DataTable 
             columns={columns} 
             data={pendingPayments} 
-            meta={{ name: "Payment", plural: "Payments" }} 
+            meta={{ 
+              name: "Payment", 
+              plural: "Payments",
+              handleSelectionChange: handleSelectionChange
+            }} 
           />
         </TabsContent>
         <TabsContent value="completed">
           <DataTable 
             columns={columns} 
             data={completedPayments} 
-            meta={{ name: "Payment", plural: "Payments" }} 
+            meta={{ 
+              name: "Payment", 
+              plural: "Payments",
+              handleSelectionChange: handleSelectionChange
+            }} 
           />
         </TabsContent>
       </Tabs>
