@@ -22,14 +22,15 @@ export const columns: ColumnDef<any>[] = [
         aria-label="Select all"
       />
     ),
-    cell: ({ row, table }) => {
+    cell: ({ row }) => {
       return (
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => {
             row.toggleSelected(!!value);
-            if (table.options.meta?.handleSelectionChange) {
-              table.options.meta.handleSelectionChange(row.original.id);
+            const meta = row.table.options?.meta;
+            if (meta?.handleSelectionChange) {
+              meta.handleSelectionChange(row.original.id);
             }
           }}
           aria-label="Select row"
