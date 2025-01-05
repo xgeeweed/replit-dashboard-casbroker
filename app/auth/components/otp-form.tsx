@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as z from "zod";
@@ -9,38 +10,29 @@ import { LoginOTPSchema } from "@/app/auth/schemas";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import CardWrapper from "@/app/auth/components/card-wrapper";
 import { FormError } from "@/app/auth/components/form-error";
 import { FormSucess } from "@/app/auth/components/form-sucesss";
 import { PhoneInput } from "@/components/ui/phone-input";
 
-// Simulated sendOTP function
-const sendOTP = (phoneNumber: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (Math.random() < 1) {
-        console.log(`OTP sent to ${phoneNumber}`);
-        resolve();
-      } else {
-        reject(new Error("Failed to send OTP"));
-      }
-    }, 1000);
-  });
+// Dummy data for testing
+const VALID_USERS = {
+  agent: {
+    phone: "+233200000000",
+    otp: "123456"
+  },
+  owner: {
+    phone: "+233300000000",
+    otp: "654321"
+  }
 };
 
-// Simulated verifyOTP function
-const verifyOTP = (phoneNumber: string, code: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (Math.random() < 1) {
-        console.log(`OTP verified for ${phoneNumber}`);
-        resolve();
-      } else {
-        reject(new Error("Invalid OTP"));
-      }
-    }, 1000);
-  });
-};
+const LoginOTPSchema = z.object({
+  userType: z.string().min(1, "User type is required"),
+  phoneNumber: z.string().min(1, "Phone number is required"),
+  code: z.string().optional()
+});
 
 const OTPForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -48,57 +40,78 @@ const OTPForm = () => {
   const [isPending, startTransition] = useTransition();
   const [isOTPSent, setIsOTPSent] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
-  const urlError =
-    searchParams.get("error") === "OAuthAccountNotLinked" ? "Email already in use with different Provider!" : "";
 
   const form = useForm<z.infer<typeof LoginOTPSchema>>({
     resolver: zodResolver(LoginOTPSchema),
     defaultValues: {
+      userType: "",
       phoneNumber: "",
       code: "",
     },
   });
 
   const onSendOTP = () => {
+    const { userType, phoneNumber } = form.getValues();
+    const validUser = VALID_USERS[userType as keyof typeof VALID_USERS];
+
+    if (!validUser) {
+      setError("Invalid user type selected");
+      return;
+    }
+
     setIsOTPSent(true);
     setError("");
-    setSuccess("");
-    const phoneNumber = form.getValues("phoneNumber");
-    
-    startTransition(() => {
-      sendOTP(phoneNumber)
-        .then(() => {
-          setSuccess("OTP sent successfully!");
-        })
-        .catch((error) => setError(error.message || "Failed to send OTP. Please try again."));
-    });
+    setSuccess("OTP sent successfully!");
   };
 
   const onVerifyOTP = (values: z.infer<typeof LoginOTPSchema>) => {
     setError("");
     setSuccess("");
     
-    startTransition(() => {
-      verifyOTP(values.phoneNumber, values.code)
-        .then(() => {
-          router.push("/dashboard");
-        })
-        .catch((error) => setError(error.message || "Invalid OTP. Please try again."));
-    });
+    const validUser = VALID_USERS[values.userType as keyof typeof VALID_USERS];
+    
+    if (validUser && values.phoneNumber === validUser.phone && values.code === validUser.otp) {
+      router.push(values.userType === "agent" ? "/dashboard/agent-dashboard" : "/dashboard/driver-dashboard");
+    } else {
+      setError("Invalid OTP. Please try again.");
+    }
   };
 
   return (
     <CardWrapper
       headerLabel="to continue to Dashboard"
-      // backButtonLabel="Don't have an account?"
       backButtonHref="/auth/register"
       showSocial
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onVerifyOTP)} className="space-y-6">
           <div className="space-y-4">
+            <FormField
+              control={form.control}
+              name="userType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>User Type</FormLabel>
+                  <Select
+                    disabled={isPending || isOTPSent}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select user type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="agent">Agent</SelectItem>
+                      <SelectItem value="owner">Transport Owner</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
             <FormField
               control={form.control}
               name="phoneNumber"
@@ -112,39 +125,41 @@ const OTPForm = () => {
                 </FormItem>
               )}
             />
+
             {!isOTPSent && (
               <Button 
                 onClick={onSendOTP} 
-                disabled={isPending || !form.getValues("phoneNumber")} 
+                disabled={isPending || !form.getValues("userType") || !form.getValues("phoneNumber")} 
                 type="button" 
                 className="w-full"
               >
                 Send OTP
               </Button>
             )}
+
             {isOTPSent && (
-              <>
-                <FormField
-                  control={form.control}
-                  name="code"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Code</FormLabel>
-                      <FormControl>
-                        <Input {...field} disabled={isPending} placeholder="123456" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button disabled={isPending} type="submit" className="w-full">
-                  Verify
-                </Button>
-              </>
+              <FormField
+                control={form.control}
+                name="code"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Code</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isPending} placeholder="123456" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             )}
           </div>
-          <FormError message={error || urlError} />
+          <FormError message={error} />
           <FormSucess message={success} />
+          {isOTPSent && (
+            <Button disabled={isPending} type="submit" className="w-full">
+              Verify OTP
+            </Button>
+          )}
         </form>
       </Form>
     </CardWrapper>
