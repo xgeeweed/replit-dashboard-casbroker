@@ -39,6 +39,10 @@ export function CancelLoadDialog({ isOpen, onClose, onConfirm, loadRate }: Cance
   const handlePenaltyAccept = () => {
     onConfirm();
     toast.success("Load cancelled successfully");
+    setStep("reason");
+    setReason("");
+    setOtherReason("");
+    onClose();
   };
 
   return (
