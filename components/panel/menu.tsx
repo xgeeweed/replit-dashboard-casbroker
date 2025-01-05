@@ -21,13 +21,12 @@ export function Menu({ isOpen }: MenuProps) {
   let menuList: Group[];
   
   // Determine which menu list to use based on the user type in the path
-  if (pathname.includes('agent-dashboard') || pathname.includes('/loadboard/post-load')) {
+  if (pathname.includes('agent-dashboard') || pathname.includes('/loadboard/post-load') || pathname.includes('/loadboard/agent-loadboard')) {
     menuList = getAgentMenuList(pathname);
-  } else if (pathname.includes('driver-dashboard') || pathname.includes('/trucks') || pathname.includes('/loadboard/view-loadboard')) {
+  } else if (pathname.includes('driver-dashboard') || pathname.includes('/trucks') || pathname.includes('/loadboard/view-loadboard') || pathname.includes('/loadboard/my-loadboard')) {
     menuList = getDriverMenuList(pathname);
   } else {
-    // Default to driver menu if accessing common paths like /loadboard/my-loadboard
-    menuList = getDriverMenuList(pathname);
+    menuList = [];
   }
 
   return (

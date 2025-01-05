@@ -1,4 +1,3 @@
-
 import {
   LayoutGrid,
   LucideIcon,
@@ -45,9 +44,9 @@ export function getAgentMenuList(pathname: string): Group[] {
           icon: BookOpen,
           submenus: [
             {
-              href: BASE_PATH + "/loadboard/my-loadboard",
+              href: BASE_PATH + "/loadboard/agent-loadboard",
               label: "My Loadboard",
-              active: pathname.includes(BASE_PATH + "/loadboard/my-loadboard"),
+              active: pathname.includes(BASE_PATH + "/loadboard/agent-loadboard"),
             },
             {
               href: BASE_PATH + "/loadboard/post-load",
