@@ -19,7 +19,15 @@ interface MenuProps {
 export function Menu({ isOpen }: MenuProps) {
   const pathname = usePathname();
   let menuList: Group[];
-  menuList = getMenuList(pathname);
+  
+  // Determine which menu list to use based on the pathname
+  if (pathname.includes('/dashboard/agent-dashboard')) {
+    menuList = getAgentMenuList(pathname);
+  } else if (pathname.includes('/dashboard/driver-dashboard')) {
+    menuList = getDriverMenuList(pathname);
+  } else {
+    menuList = [];
+  }
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
