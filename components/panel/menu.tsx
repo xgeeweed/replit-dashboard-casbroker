@@ -20,13 +20,14 @@ export function Menu({ isOpen }: MenuProps) {
   const pathname = usePathname();
   let menuList: Group[];
   
-  // Determine which menu list to use based on the pathname
-  if (pathname.includes('/dashboard/agent-dashboard')) {
+  // Determine which menu list to use based on the user type in the path
+  if (pathname.includes('agent-dashboard') || pathname.includes('/loadboard/post-load')) {
     menuList = getAgentMenuList(pathname);
-  } else if (pathname.includes('/dashboard/driver-dashboard')) {
+  } else if (pathname.includes('driver-dashboard') || pathname.includes('/trucks') || pathname.includes('/loadboard/view-loadboard')) {
     menuList = getDriverMenuList(pathname);
   } else {
-    menuList = [];
+    // Default to driver menu if accessing common paths like /loadboard/my-loadboard
+    menuList = getDriverMenuList(pathname);
   }
 
   return (
