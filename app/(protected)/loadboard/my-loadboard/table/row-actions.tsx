@@ -1,4 +1,3 @@
-
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Row } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
@@ -19,7 +18,9 @@ interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
 }
 
-export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
+export function DataTableRowActions<TData>({
+  row,
+}: DataTableRowActionsProps<TData>) {
   const rowData = row.original as any;
 
   const [showCompleteDialog, setShowCompleteDialog] = useState(false);
@@ -35,14 +36,14 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
 
   const handleDeliveryCompleted = () => {
     const updateLoadStatus = row.table?.options?.meta?.updateLoadStatus;
-    if (typeof updateLoadStatus === 'function') {
+    if (typeof updateLoadStatus === "function") {
       updateLoadStatus(rowData.rowId, "Completed");
     }
   };
 
   const handleLoadCancelled = () => {
     const updateLoadStatus = row.table?.options?.meta?.updateLoadStatus;
-    if (typeof updateLoadStatus === 'function') {
+    if (typeof updateLoadStatus === "function") {
       updateLoadStatus(rowData.rowId, "Cancelled");
     }
   };
@@ -51,7 +52,10 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
+          <Button
+            variant="ghost"
+            className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          >
             <DotsHorizontalIcon className="h-4 w-4" />
             <span className="sr-only">Open menu</span>
           </Button>
@@ -65,12 +69,18 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
           </Link>
           {rowData.status === "In Progress" && (
             <>
-              <DropdownMenuItem className="cursor-pointer" onClick={handleCompleteDelivery}>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={handleCompleteDelivery}
+              >
                 <Check className="mr-2 h-4 w-4" />
-                Complete Delivery
+                Completes Delivery
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer text-red-600" onClick={handleCancelLoad}>
+              <DropdownMenuItem
+                className="cursor-pointer text-red-600"
+                onClick={handleCancelLoad}
+              >
                 <Trash2 className="mr-2 h-4 w-4" />
                 Cancel Load
               </DropdownMenuItem>
@@ -78,7 +88,7 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
           )}
         </DropdownMenuContent>
       </DropdownMenu>
-      <CompleteDeliveryDialog 
+      <CompleteDeliveryDialog
         isOpen={showCompleteDialog}
         onClose={() => setShowCompleteDialog(false)}
         onComplete={handleDeliveryCompleted}
