@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Spinner } from "@/components/ui/spinner";
@@ -64,11 +63,19 @@ export default function LoadDetails() {
   const [load, setLoad] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showCompleteDialog, setShowCompleteDialog] = useState(false);
-  
+  const [showCancelDialog, setShowCancelDialog] = useState(false); // Added state for cancel dialog
+
   const handleDeliveryCompleted = () => {
     setLoad(prev => ({...prev, status: "Completed"}));
     setShowCompleteDialog(false);
   };
+
+  const handleLoadCancelled = () => {
+    // Add your logic to handle load cancellation here.  This is a placeholder.
+    console.log("Load cancelled!");
+    setShowCancelDialog(false);
+  };
+
 
   useEffect(() => {
     const findLoadById = () => {
@@ -168,6 +175,7 @@ export default function LoadDetails() {
           <Button 
             variant="outline" 
             className="w-full py-3 rounded-md border-gray-200 text-red-600 hover:text-red-700"
+            onClick={() => setShowCancelDialog(true)}
           >
             Cancel Load
           </Button>
@@ -175,6 +183,12 @@ export default function LoadDetails() {
             isOpen={showCompleteDialog}
             onClose={() => setShowCompleteDialog(false)}
             onComplete={handleDeliveryCompleted}
+            loadId={load.rowId}
+          />
+          <CancelLoadDialog
+            isOpen={showCancelDialog}
+            onClose={() => setShowCancelDialog(false)}
+            onConfirm={handleLoadCancelled}
             loadId={load.rowId}
           />
         </div>
