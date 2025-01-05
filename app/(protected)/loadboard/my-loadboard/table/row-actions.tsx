@@ -13,6 +13,7 @@ import { Check, Eye, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { CompleteDeliveryDialog } from "@/components/loadboard/complete-delivery-dialog";
+import { CancelLoadDialog } from "@/components/loadboard/cancel-load-dialog";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -22,17 +23,27 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
   const rowData = row.original as any;
 
   const [showCompleteDialog, setShowCompleteDialog] = useState(false);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
 
   const handleCompleteDelivery = () => {
     setShowCompleteDialog(true);
   };
 
+  const handleCancelLoad = () => {
+    setShowCancelDialog(true);
+  };
+
   const handleDeliveryCompleted = () => {
-    // Here you would make an API call to update the status
-    console.log("Delivery completed for:", rowData.rowId);
     const updateLoadStatus = row.table?.options?.meta?.updateLoadStatus;
     if (typeof updateLoadStatus === 'function') {
       updateLoadStatus(rowData.rowId, "Completed");
+    }
+  };
+
+  const handleLoadCancelled = () => {
+    const updateLoadStatus = row.table?.options?.meta?.updateLoadStatus;
+    if (typeof updateLoadStatus === 'function') {
+      updateLoadStatus(rowData.rowId, "Cancelled");
     }
   };
 
@@ -59,7 +70,7 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
                 Complete Delivery
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer text-red-600">
+              <DropdownMenuItem className="cursor-pointer text-red-600" onClick={handleCancelLoad}>
                 <Trash2 className="mr-2 h-4 w-4" />
                 Cancel Load
               </DropdownMenuItem>
@@ -72,6 +83,12 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         onClose={() => setShowCompleteDialog(false)}
         onComplete={handleDeliveryCompleted}
         loadId={rowData.rowId}
+      />
+      <CancelLoadDialog
+        isOpen={showCancelDialog}
+        onClose={() => setShowCancelDialog(false)}
+        onConfirm={handleLoadCancelled}
+        loadRate={rowData.rate}
       />
     </>
   );
