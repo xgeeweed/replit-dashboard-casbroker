@@ -54,12 +54,11 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Rate (GHS)" />
     ),
     cell: ({ row }) => {
-      const originalRate = Number(row.getValue("rate"));
-      const afterDeduction = originalRate * 0.9; // 10% deduction
+      const amount = parseFloat(row.getValue("rate"));
       const formatted = new Intl.NumberFormat("en-GH", {
         style: "currency",
         currency: "GHS",
-      }).format(afterDeduction);
+      }).format(amount);
       return formatted;
     },
   },
