@@ -42,11 +42,13 @@ export const columns: ColumnDef<any>[] = [
       title: "Rate (GHS)",
       cell: ({ row }) => {
         const originalRate = Number(row.getValue("rate"));
-        const afterDeduction = originalRate * 0.9; // 10% deduction
+        const user = auth()?.user;
+        const isDriver = user?.role === "DRIVER";
+        const finalRate = isDriver ? originalRate * 0.9 : originalRate; // 10% deduction for drivers only
         const formatted = new Intl.NumberFormat("en-GH", {
           style: "currency",
           currency: "GHS",
-        }).format(afterDeduction);
+        }).format(finalRate);
         return formatted;
       },
     },
