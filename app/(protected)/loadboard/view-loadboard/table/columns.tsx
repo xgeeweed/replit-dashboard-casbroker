@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { auth } from "@/auth/auth";
+import { auth } from "@/app/auth/auth";
 import { createIdenticalColumns } from "@/components/datatable/data-table-utils";
 import { Checkbox } from "@/components/ui/checkbox";
 // import { LoadboardEntry } from "@/model";
