@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { auth } from "@/app/auth/auth";
+
 import { createIdenticalColumns } from "@/components/datatable/data-table-utils";
 import { Checkbox } from "@/components/ui/checkbox";
 // import { LoadboardEntry } from "@/model";
@@ -38,14 +38,16 @@ export const columns: ColumnDef<any>[] = [
     // { accessorKey: "deliveryDate", title: "Delivery Date", options: { isDate: true } },
     { accessorKey: "weight", title: "Weight (lbs)" },
     {
-      accessorKey: "displayRate",
+      accessorKey: "rate",
       title: "Rate (GHS)",
       cell: ({ row }) => {
-        const rate = Number(row.getValue("displayRate"));
-        return new Intl.NumberFormat("en-GH", {
+        const originalRate = Number(row.getValue("rate"));
+        const afterDeduction = originalRate * 0.9; // 10% deduction
+        const formatted = new Intl.NumberFormat("en-GH", {
           style: "currency",
           currency: "GHS",
-        }).format(rate);
+        }).format(afterDeduction);
+        return formatted;
       },
     },
     // { accessorKey: "status", title: "Status", options: { isStatus: true } },

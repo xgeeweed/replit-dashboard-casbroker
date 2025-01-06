@@ -1,3 +1,4 @@
+
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -48,12 +49,12 @@ export const columns: ColumnDef<any>[] = [
     ),
   },
   {
-    accessorKey: "confirmedRate",
+    accessorKey: "rate",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Rate (GHS)" />
     ),
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("confirmedRate"));
+      const amount = parseFloat(row.getValue("rate"));
       const formatted = new Intl.NumberFormat("en-GH", {
         style: "currency",
         currency: "GHS",

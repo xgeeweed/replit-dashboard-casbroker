@@ -12,18 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 export default function Loadboard() {
   // Sample data with Ghanaian locations and details
-  const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
-  
-  useEffect(() => {
-    // Simulate getting user role - replace this with your actual auth logic
-    const userRole = localStorage.getItem('userRole') || 'AGENT';
-    setCurrentUserRole(userRole);
-  }, []);
-
-  const data = loadboardData.map(item => ({
-    ...item,
-    displayRate: currentUserRole === 'DRIVER' ? item.rate * 0.9 : item.rate
-  }));
+  const data = loadboardData;
 
   const meta = {
     name: "Load",
