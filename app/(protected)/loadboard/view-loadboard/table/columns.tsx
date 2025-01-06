@@ -38,18 +38,14 @@ export const columns: ColumnDef<any>[] = [
     // { accessorKey: "deliveryDate", title: "Delivery Date", options: { isDate: true } },
     { accessorKey: "weight", title: "Weight (lbs)" },
     {
-      accessorKey: "rate",
+      accessorKey: "displayRate",
       title: "Rate (GHS)",
-      cell: async ({ row }) => {
-        const originalRate = Number(row.getValue("rate"));
-        const session = await auth();
-        const isDriver = session?.user?.role === "DRIVER";
-        const finalRate = isDriver ? originalRate * 0.9 : originalRate; // 10% deduction for drivers only
-        const formatted = new Intl.NumberFormat("en-GH", {
+      cell: ({ row }) => {
+        const rate = Number(row.getValue("displayRate"));
+        return new Intl.NumberFormat("en-GH", {
           style: "currency",
           currency: "GHS",
-        }).format(finalRate);
-        return formatted;
+        }).format(rate);
       },
     },
     // { accessorKey: "status", title: "Status", options: { isStatus: true } },
