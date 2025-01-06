@@ -1,9 +1,10 @@
+
 const agentLoadboardData = [
     {
         id: "669875",
         rowId: "669875",
         pickupLocation: "Airport City, Accra",
-        deliveryLocation: "Adum, Kumasi",
+        deliveryLocation: "Adum, Kumasi", 
         pickupDate: "July 27, 2024",
         distance: "252 km",
         confirmedRate: 3200,
@@ -17,7 +18,7 @@ const agentLoadboardData = [
             length: "11.5 ft",
             weight: "1,800 kg",
             commodity: "Laptops & Electronics",
-            load: "Full",
+            load: "Full"
         },
         postedTime: "15 minutes ago",
         shipmentDetails: {
@@ -25,13 +26,12 @@ const agentLoadboardData = [
             pickUpHours: "9:00 AM - 4:00 PM",
             dockHours: "8:00 AM - 3:00 PM",
             reference: "GH8842235",
-            comments:
-                "Insurance included - Air-conditioned van required - No stacking",
+            comments: "Insurance included - Air-conditioned van required - No stacking"
         },
         rateDetails: {
             total: 3200,
             trip: "252 km",
-            ratePerKm: 12.7,
+            ratePerKm: 12.7
         },
         companyDetails: {
             name: "CompuGhana Distribution",
@@ -42,10 +42,10 @@ const agentLoadboardData = [
             daysToPay: "14 T/A",
             reviews: {
                 score: 4.5,
-                count: 43,
-            },
+                count: 43
+            }
         },
-        status: "In Progress",
+        status: "In Progress"
     },
     {
         id: "669876",
@@ -65,7 +65,7 @@ const agentLoadboardData = [
             length: "20 ft",
             weight: "2,500 kg",
             commodity: "Industrial Equipment",
-            load: "Full",
+            load: "Full"
         },
         postedTime: "30 minutes ago",
         shipmentDetails: {
@@ -73,12 +73,12 @@ const agentLoadboardData = [
             pickUpHours: "7:00 AM - 2:00 PM",
             dockHours: "6:00 AM - 1:00 PM",
             reference: "GH8842236",
-            comments: "Heavy machinery - Special handling required",
+            comments: "Heavy machinery - Special handling required"
         },
         rateDetails: {
             total: 2800,
             trip: "218 km",
-            ratePerKm: 12.8,
+            ratePerKm: 12.8
         },
         companyDetails: {
             name: "Tema Industrial Solutions",
@@ -89,10 +89,10 @@ const agentLoadboardData = [
             daysToPay: "30 T/A",
             reviews: {
                 score: 4.2,
-                count: 38,
-            },
+                count: 38
+            }
         },
-        status: "In Progress",
+        status: "In Progress"
     },
     {
         id: "669877",
@@ -112,7 +112,7 @@ const agentLoadboardData = [
             length: "15 ft",
             weight: "1,200 kg",
             commodity: "Fresh Produce",
-            load: "Full",
+            load: "Full"
         },
         postedTime: "1 hour ago",
         shipmentDetails: {
@@ -120,13 +120,12 @@ const agentLoadboardData = [
             pickUpHours: "6:00 AM - 12:00 PM",
             dockHours: "5:00 AM - 11:00 AM",
             reference: "GH8842237",
-            comments:
-                "Temperature-controlled transport required - Perishable goods",
+            comments: "Temperature-controlled transport required - Perishable goods"
         },
         rateDetails: {
             total: 1900,
             trip: "144 km",
-            ratePerKm: 13.2,
+            ratePerKm: 13.2
         },
         companyDetails: {
             name: "Fresh Foods GH",
@@ -137,11 +136,11 @@ const agentLoadboardData = [
             daysToPay: "7 T/A",
             reviews: {
                 score: 4.0,
-                count: 25,
-            },
+                count: 25
+            }
         },
-        status: "Completed",
-    },
+        status: "Completed"
+    }
 ];
 
 export default agentLoadboardData;
