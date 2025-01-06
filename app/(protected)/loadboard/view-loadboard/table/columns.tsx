@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-
+import { auth } from "@/auth/auth";
 import { createIdenticalColumns } from "@/components/datatable/data-table-utils";
 import { Checkbox } from "@/components/ui/checkbox";
 // import { LoadboardEntry } from "@/model";
@@ -40,10 +40,10 @@ export const columns: ColumnDef<any>[] = [
     {
       accessorKey: "rate",
       title: "Rate (GHS)",
-      cell: ({ row }) => {
+      cell: async ({ row }) => {
         const originalRate = Number(row.getValue("rate"));
-        const user = auth()?.user;
-        const isDriver = user?.role === "DRIVER";
+        const session = await auth();
+        const isDriver = session?.user?.role === "DRIVER";
         const finalRate = isDriver ? originalRate * 0.9 : originalRate; // 10% deduction for drivers only
         const formatted = new Intl.NumberFormat("en-GH", {
           style: "currency",
