@@ -11,19 +11,8 @@ import { Search } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Loadboard() {
-  const [currentUserRole, setCurrentUserRole] = useState<string | null>(null);
-  
-  useEffect(() => {
-    // Get user role from localStorage - replace this with your actual auth logic
-    const userRole = localStorage.getItem('userRole');
-    setCurrentUserRole(userRole);
-  }, []);
-
-  // Process data to include calculated rates
-  const data = loadboardData.map(item => ({
-    ...item,
-    calculatedRate: currentUserRole === 'DRIVER' ? item.rate * 0.9 : item.rate
-  }));
+  // Use loadboard data directly without rate modification
+  const data = loadboardData;
 
   const meta = {
     name: "Load",

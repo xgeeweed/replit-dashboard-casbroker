@@ -1,7 +1,2 @@
 
-export const calculateRateWithRole = (rate: number, userRole: string | null = null) => {
-  if (userRole === "DRIVER") {
-    return rate * 0.9; // 10% deduction for drivers
-  }
-  return rate;
-};
+// File can be removed as we no longer need role-based rate calculation

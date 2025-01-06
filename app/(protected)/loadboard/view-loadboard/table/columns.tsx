@@ -38,10 +38,10 @@ export const columns: ColumnDef<any>[] = [
     // { accessorKey: "deliveryDate", title: "Delivery Date", options: { isDate: true } },
     { accessorKey: "weight", title: "Weight (lbs)" },
     {
-      accessorKey: "calculatedRate",
+      accessorKey: "rate",
       title: "Rate (GHS)",
       cell: ({ row }) => {
-        const rate = Number(row.getValue("calculatedRate"));
+        const rate = Number(row.getValue("rate"));
         return new Intl.NumberFormat("en-GH", {
           style: "currency",
           currency: "GHS",
