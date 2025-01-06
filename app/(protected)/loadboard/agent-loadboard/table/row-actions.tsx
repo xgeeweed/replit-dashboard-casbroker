@@ -39,7 +39,7 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <Link href={`/loadboard/view-loadboard/${rowData.rowId}`}>
+          <Link href={`/loadboard/agent-loadboard/${rowData.rowId}`}>
             <DropdownMenuItem className="cursor-pointer">
               <Eye className="mr-2 h-4 w-4" />
               View
