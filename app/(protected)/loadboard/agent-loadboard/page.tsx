@@ -4,7 +4,7 @@ import { basicErrorToast } from "@/components/toast";
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/datatable/data-table";
 import { columns } from "./table/columns";
-import initialData from "../my-loadboard/data";
+import initialData from "./data";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
