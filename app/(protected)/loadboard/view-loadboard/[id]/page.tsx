@@ -152,12 +152,12 @@ export default function LoadDetails() {
         <DetailItem
           icon={BadgeCent}
           label="Rate"
-          value={`₵${(load.confirmedRate || 0).toLocaleString()}`}
+          value={`₵${load.rate.toLocaleString()}`}
         />
         <DetailItem
           icon={DollarSign}
           label="Market"
-          value={`₵${(load.marketRate || 0).toLocaleString()}`}
+          value={`₵${load.marketRate.toLocaleString()}`}
         />
       </div>
 

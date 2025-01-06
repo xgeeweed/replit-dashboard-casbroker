@@ -38,10 +38,10 @@ export const columns: ColumnDef<any>[] = [
     // { accessorKey: "deliveryDate", title: "Delivery Date", options: { isDate: true } },
     { accessorKey: "weight", title: "Weight (lbs)" },
     { 
-      accessorKey: "confirmedRate", 
+      accessorKey: "rate", 
       title: "Rate (GHS)", 
       cell: ({ row }) => {
-        const rate = parseFloat(row.getValue("confirmedRate"));
+        const rate = parseFloat(row.getValue("rate"));
         const rateWithFee = rate * 1.1; // Add 10% fee
         return new Intl.NumberFormat('en-GH', {
           style: 'currency',

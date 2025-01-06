@@ -6,7 +6,7 @@ const loadboardData = [
         deliveryLocation: "Adum, Kumasi", 
         pickupDate: "July 27, 2024",
         distance: "252 km",
-        confirmedRate: 3200,
+        rate: 3200,
         marketRate: 3000,
         weight: "1,800 kg",
         length: "11.5 ft",
