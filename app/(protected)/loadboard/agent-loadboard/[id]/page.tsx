@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { CancelLoadDialog } from "@/components/loadboard/cancel-load-dialog";
 import loadboardData from "../../my-loadboard/data";
 
 interface DetailItemProps {
@@ -143,6 +144,10 @@ export default function LoadDetails() {
             </div>
           </div>
         </div>
+        <div>
+          <p className="text-gray-500 text-sm">PICKUP DATE</p>
+          <p className="text-sm mt-1">{load.pickupDate}</p>
+        </div>
       </div>
 
       <div className="grid grid-cols-3 p-4 bg-white mt-2 text-center">
@@ -163,6 +168,39 @@ export default function LoadDetails() {
         />
       </div>
 
+      <DetailCard title="Equipment Details">
+        <DetailRow label="Type" value={load.equipmentType} />
+        <DetailRow label="Length" value={load.length} />
+        <DetailRow label="Weight" value={load.weight} />
+      </DetailCard>
+
+      <DetailCard title="Shipment Details">
+        <DetailRow
+          icon={Calendar}
+          label="Pick Up Date"
+          value={load.pickupDate}
+        />
+        <DetailRow
+          icon={Clock}
+          label="Status"
+          value={load.status}
+        />
+        {load.note && (
+          <DetailRow
+            label="Notes"
+            value={load.note}
+            multiLine
+          />
+        )}
+      </DetailCard>
+
+      <DetailCard title="Rate Details">
+        <DetailRow
+          label="Total Rate"
+          value={`₵${load.rate.toLocaleString()}`}
+        />
+      </DetailCard>
+
       {load.status === "In Progress" && (
         <div className="mt-auto p-4 bg-white flex flex-col gap-2">
           <Button 
@@ -174,6 +212,13 @@ export default function LoadDetails() {
           </Button>
         </div>
       )}
+
+      <CancelLoadDialog
+        isOpen={showCancelDialog}
+        onClose={() => setShowCancelDialog(false)}
+        onConfirm={handleLoadCancelled}
+        loadRate={load.rate}
+      />
     </div>
   );
 }
