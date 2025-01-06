@@ -38,16 +38,14 @@ export const columns: ColumnDef<any>[] = [
     // { accessorKey: "deliveryDate", title: "Delivery Date", options: { isDate: true } },
     { accessorKey: "weight", title: "Weight (lbs)" },
     {
-      accessorKey: "rate",
+      accessorKey: "calculatedRate",
       title: "Rate (GHS)",
       cell: ({ row }) => {
-        const originalRate = Number(row.getValue("rate"));
-        const afterDeduction = originalRate * 0.9; // 10% deduction
-        const formatted = new Intl.NumberFormat("en-GH", {
+        const rate = Number(row.getValue("calculatedRate"));
+        return new Intl.NumberFormat("en-GH", {
           style: "currency",
           currency: "GHS",
-        }).format(afterDeduction);
-        return formatted;
+        }).format(rate);
       },
     },
     // { accessorKey: "status", title: "Status", options: { isStatus: true } },
