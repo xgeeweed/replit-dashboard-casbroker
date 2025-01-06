@@ -1,11 +1,9 @@
-
 "use client";
 import { Spinner } from "@/components/ui/spinner";
 import { basicErrorToast } from "@/components/toast";
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/datatable/data-table";
-import { columns } from "../my-loadboard/table/columns";
-import { DataTableRowActions } from "./table/row-actions";
+import { columns } from "./table/columns";
 import initialData from "../my-loadboard/data";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
@@ -23,10 +21,10 @@ export default function AgentLoadboard() {
   const [loadboardData, setLoadboardData] = useState(initialData);
 
   const updateLoadStatus = (loadId: string, newStatus: string) => {
-    setLoadboardData(prev => 
-      prev.map(load => 
-        load.rowId === loadId ? { ...load, status: newStatus } : load
-      )
+    setLoadboardData((prev) =>
+      prev.map((load) =>
+        load.rowId === loadId ? { ...load, status: newStatus } : load,
+      ),
     );
   };
 
@@ -126,25 +124,25 @@ export default function AgentLoadboard() {
         </div>
 
         <TabsContent value="in-progress">
-          <DataTable 
-            columns={columns} 
-            data={loadboardData.filter(item => item.status === "In Progress")} 
+          <DataTable
+            columns={columns}
+            data={loadboardData.filter((item) => item.status === "In Progress")}
             meta={meta}
-            updateLoadStatus={updateLoadStatus} 
+            updateLoadStatus={updateLoadStatus}
           />
         </TabsContent>
         <TabsContent value="completed">
-          <DataTable 
-            columns={columns} 
-            data={loadboardData.filter(item => item.status === "Completed")} 
+          <DataTable
+            columns={columns}
+            data={loadboardData.filter((item) => item.status === "Completed")}
             meta={meta}
             updateLoadStatus={updateLoadStatus}
           />
         </TabsContent>
         <TabsContent value="saved">
-          <DataTable 
-            columns={columns} 
-            data={loadboardData.filter(item => item.status === "Saved")} 
+          <DataTable
+            columns={columns}
+            data={loadboardData.filter((item) => item.status === "Saved")}
             meta={meta}
             updateLoadStatus={updateLoadStatus}
           />
