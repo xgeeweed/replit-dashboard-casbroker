@@ -37,7 +37,19 @@ export const columns: ColumnDef<any>[] = [
     { accessorKey: "pickupDate", title: "Pickup Date", options: { isDate: true } },
     // { accessorKey: "deliveryDate", title: "Delivery Date", options: { isDate: true } },
     { accessorKey: "weight", title: "Weight (lbs)" },
-    { accessorKey: "rate", title: "Rate (GHS)" },
+    {
+      accessorKey: "rate",
+      title: "Rate (GHS)",
+      cell: ({ row }) => {
+        const originalRate = Number(row.getValue("rate"));
+        const afterDeduction = originalRate * 0.9; // 10% deduction
+        const formatted = new Intl.NumberFormat("en-GH", {
+          style: "currency",
+          currency: "GHS",
+        }).format(afterDeduction);
+        return formatted;
+      },
+    },
     // { accessorKey: "status", title: "Status", options: { isStatus: true } },
     { accessorKey: "length", title: "Length" },
     { accessorKey: "equipmentType", title: "Equipment Type", options: { isEquipmentType: true } },
