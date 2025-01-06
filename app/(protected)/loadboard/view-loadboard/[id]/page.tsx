@@ -221,8 +221,6 @@ export default function LoadDetails() {
 
       {/* Company Details */}
       <DetailCard title="Company Details">
-        <DetailRow label="Company" value={load.companyDetails.name} />
-        <DetailRow label="Telephone" value={load.companyDetails.telephone} />
         <DetailRow label="MC Number" value={load.companyDetails.mcNumber} />
         <DetailRow label="Location" value={load.companyDetails.location} />
         <DetailRow
