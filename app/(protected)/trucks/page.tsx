@@ -27,6 +27,10 @@ type Truck = {
   lastService: string;
   driverId?: string;
   driverName?: string;
+  assignedLoad?: {
+    id: string;
+    destination: string;
+  };
 };
 
 export default function TrucksPage() {
@@ -42,10 +46,14 @@ export default function TrucksPage() {
       plateNumber: "GH-1234-20",
       type: "Box Truck",
       capacity: 2500,
-      status: "Available",
+      status: "In Transit",
       lastService: "2024-01-15",
       driverId: "D-123",
-      driverName: "Kwame Mensah"
+      driverName: "Kwame Mensah",
+      assignedLoad: {
+        id: "L-789",
+        destination: "Kumasi"
+      }
     },
     {
       id: "2", 
@@ -245,6 +253,12 @@ export default function TrucksPage() {
               </div>
               {truck.driverName && (
                 <p className="text-sm mt-2 text-gray-600">Driver: {truck.driverName}</p>
+              )}
+              {truck.assignedLoad && (
+                <div className="mt-2 p-2 bg-gray-50 rounded-md">
+                  <p className="text-sm text-gray-600">Load ID: {truck.assignedLoad.id}</p>
+                  <p className="text-sm text-gray-600">Destination: {truck.assignedLoad.destination}</p>
+                </div>
               )}
             </div>
           </div>
