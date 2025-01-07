@@ -178,7 +178,7 @@ export default function LoadDetails() {
         <DetailRow
           icon={Calendar}
           label="Pick Up Date"
-          value={load.shipmentDetails.pickUpDate}
+          value={load.shipmentDetails?.pickUpDate || load.pickupDate || 'N/A'}
         />
         <DetailRow
           icon={Clock}
