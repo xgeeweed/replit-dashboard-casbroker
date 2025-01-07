@@ -58,6 +58,7 @@ export default function Loadboard() {
     <div className="font-light h-full w-full flex flex-col p-4">
       <Tabs defaultValue="in-progress" className="w-full">
         <TabsList>
+          <TabsTrigger value="pending">Pending Review</TabsTrigger>
           <TabsTrigger value="in-progress">In Progress</TabsTrigger>
           <TabsTrigger value="completed">Completed</TabsTrigger>
           <TabsTrigger value="saved">Saved</TabsTrigger>
@@ -124,6 +125,14 @@ export default function Loadboard() {
           </Button>
         </div>
 
+        <TabsContent value="pending">
+          <DataTable 
+            columns={columns} 
+            data={loadboardData.filter(item => item.status === "Pending")} 
+            meta={meta}
+            updateLoadStatus={updateLoadStatus}
+          />
+        </TabsContent>
         <TabsContent value="in-progress">
           <DataTable 
             columns={columns} 
