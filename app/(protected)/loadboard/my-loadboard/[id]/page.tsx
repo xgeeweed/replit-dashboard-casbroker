@@ -187,14 +187,16 @@ export default function LoadDetails() {
       </DetailCard>
 
       {/* Action Buttons */}
-      {load.status === "In Progress" && (
+      {(load.status === "In Progress" || load.status === "Pending") && (
         <div className="mt-auto p-4 bg-white flex flex-col gap-2">
-          <Button
-            className="w-full bg-black text-white py-3 rounded-md"
-            onClick={() => setShowCompleteDialog(true)}
-          >
-            Complete Delivery
-          </Button>
+          {load.status === "In Progress" && (
+            <Button
+              className="w-full bg-black text-white py-3 rounded-md"
+              onClick={() => setShowCompleteDialog(true)}
+            >
+              Complete Delivery
+            </Button>
+          )}
           <Button
             variant="outline"
             className="w-full py-3 rounded-md border-gray-200 text-red-600 hover:text-red-700"
@@ -202,12 +204,14 @@ export default function LoadDetails() {
           >
             Cancel Load
           </Button>
-          <CompleteDeliveryDialog
-            isOpen={showCompleteDialog}
-            onClose={() => setShowCompleteDialog(false)}
-            onComplete={handleDeliveryCompleted}
-            loadId={load.rowId}
-          />
+          {load.status === "In Progress" && (
+            <CompleteDeliveryDialog
+              isOpen={showCompleteDialog}
+              onClose={() => setShowCompleteDialog(false)}
+              onComplete={handleDeliveryCompleted}
+              loadId={load.rowId}
+            />
+          )}
           <CancelLoadDialog
             isOpen={showCancelDialog}
             onClose={() => setShowCancelDialog(false)}

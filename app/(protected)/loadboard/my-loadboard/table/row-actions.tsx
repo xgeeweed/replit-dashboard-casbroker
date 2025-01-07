@@ -24,6 +24,11 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   const rowData = row.original as any;
 
+  // Return null for completed loads
+  if (rowData.status === "Completed") {
+    return null;
+  }
+
   const [showCompleteDialog, setShowCompleteDialog] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
 
