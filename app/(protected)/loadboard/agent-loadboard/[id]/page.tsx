@@ -202,7 +202,8 @@ export default function LoadDetails() {
       </DetailCard>
 
       {/* Assigned Vehicle Details */}
-      <AssignedVehicleDetails id={id} />
+      <DetailCard title="Assigned Vehicle">
+        <AssignedVehicleDetails id={id} />
       </DetailCard>
 
       <DetailCard title="Company Details">
