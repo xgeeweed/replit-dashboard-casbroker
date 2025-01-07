@@ -45,6 +45,11 @@ const loadboardData = [
                 count: 43,
             },
         },
+        truck: {
+            plateNumber: "GH-XXXX-1",
+            type: "Box Truck",
+            driverName: "Driver 1"
+        }
     },
     {
         id: "669876",
@@ -92,6 +97,11 @@ const loadboardData = [
                 count: 38,
             },
         },
+        truck: {
+            plateNumber: "GH-XXXX-2",
+            type: "Refrigerated Truck",
+            driverName: "Driver 2"
+        }
     },
     {
         id: "669877",
@@ -138,6 +148,11 @@ const loadboardData = [
                 count: 25,
             },
         },
+        truck: {
+            plateNumber: "GH-XXXX-3",
+            type: "Flatbed Truck",
+            driverName: "Driver 3"
+        }
     },
     {
         id: "669878",
@@ -184,6 +199,11 @@ const loadboardData = [
                 count: 31,
             },
         },
+        truck: {
+            plateNumber: "GH-XXXX-4",
+            type: "Box Truck",
+            driverName: "Driver 4"
+        }
     },
     {
         id: "669879",
@@ -230,6 +250,11 @@ const loadboardData = [
                 count: 52,
             },
         },
+        truck: {
+            plateNumber: "GH-XXXX-5",
+            type: "Container Truck",
+            driverName: "Driver 5"
+        }
     },
     {
         id: "669880",
@@ -276,6 +301,11 @@ const loadboardData = [
                 count: 29,
             },
         },
+        truck: {
+            plateNumber: "GH-XXXX-6",
+            type: "Flatbed Truck",
+            driverName: "Driver 6"
+        }
     },
     {
         id: "669881",
@@ -322,6 +352,11 @@ const loadboardData = [
                 count: 45,
             },
         },
+        truck: {
+            plateNumber: "GH-XXXX-7",
+            type: "Tanker Truck",
+            driverName: "Driver 7"
+        }
     },
     {
         id: "669882",
@@ -368,6 +403,11 @@ const loadboardData = [
                 count: 33,
             },
         },
+        truck: {
+            plateNumber: "GH-XXXX-8",
+            type: "Box Truck",
+            driverName: "Driver 8"
+        }
     },
     {
         id: "669883",
@@ -415,6 +455,11 @@ const loadboardData = [
                 count: 37,
             },
         },
+        truck: {
+            plateNumber: "GH-XXXX-9",
+            type: "Refrigerated Truck",
+            driverName: "Driver 9"
+        }
     },
 ];
 
