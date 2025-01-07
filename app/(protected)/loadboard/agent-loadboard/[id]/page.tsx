@@ -19,6 +19,7 @@ import {
   Star,
   FileText,
   Package,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -198,6 +199,36 @@ export default function LoadDetails() {
           value={load.shipmentDetails.comments}
           multiLine
         />
+      </DetailCard>
+
+      {/* Assigned Vehicle Details */}
+      <DetailCard title="Assigned Vehicle">
+        {load.truck ? (
+          <>
+            <DetailRow 
+              icon={Truck}
+              label="Truck Type" 
+              value={load.truck.type || 'Not specified'} 
+            />
+            <DetailRow 
+              icon={FileText}
+              label="Plate Number" 
+              value={load.truck.plateNumber || 'Not specified'} 
+            />
+            <DetailRow 
+              icon={Phone}
+              label="Driver Contact" 
+              value={load.truck.driverContact || 'Not available'} 
+            />
+            <DetailRow 
+              icon={User}
+              label="Driver Name" 
+              value={load.truck.driverName || 'Not assigned'} 
+            />
+          </>
+        ) : (
+          <p className="text-gray-500 text-sm">No vehicle assigned yet</p>
+        )}
       </DetailCard>
 
       <DetailCard title="Company Details">
