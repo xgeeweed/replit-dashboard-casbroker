@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CancelLoadDialog } from "@/components/loadboard/cancel-load-dialog";
 import agentLoadboardData from "../data";
+import { AssignedVehicleDetails } from "../components/assigned-vehicle-details";
 
 interface DetailItemProps {
   icon: LucideIcon;
