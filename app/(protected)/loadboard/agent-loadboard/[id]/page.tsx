@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Spinner } from "@/components/ui/spinner";
@@ -19,7 +18,7 @@ import {
   Phone,
   Star,
   FileText,
-  Package
+  Package,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -48,16 +47,28 @@ const DetailItem = ({ icon: Icon, label, value }: DetailItemProps) => (
 );
 
 const DetailRow = ({ icon: Icon, label, value, multiLine }: DetailRowProps) => (
-  <div className={`py-2 ${multiLine ? "flex flex-col gap-2" : "flex justify-between items-center border-b border-gray-200"}`}>
+  <div
+    className={`py-2 ${multiLine ? "flex flex-col gap-2" : "flex justify-between items-center border-b border-gray-200"}`}
+  >
     <div className="flex items-center gap-2">
       {Icon && <Icon size={16} className="text-blue-500" />}
-      <span className={`text-gray-600 ${multiLine ? "underline" : ""}`}>{label}</span>
+      <span className={`text-gray-600 ${multiLine ? "underline" : ""}`}>
+        {label}
+      </span>
     </div>
-    <span className={multiLine ? "text-gray-600 -mt-2" : "font-medium"}>{value}</span>
+    <span className={multiLine ? "text-gray-600 -mt-2" : "font-medium"}>
+      {value}
+    </span>
   </div>
 );
 
-const DetailCard = ({ title, children }: { title: string; children: React.ReactNode }) => (
+const DetailCard = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => (
   <div className="p-4 bg-white mt-2">
     <h3 className="text-xl font-bold mb-4">{title}</h3>
     <div className="space-y-3">{children}</div>
@@ -75,7 +86,7 @@ export default function LoadDetails() {
   };
 
   const handleLoadCancelled = () => {
-    setLoad(prev => ({...prev, status: "Cancelled"}));
+    setLoad((prev) => ({ ...prev, status: "Cancelled" }));
     setShowCancelDialog(false);
   };
 
@@ -141,8 +152,16 @@ export default function LoadDetails() {
       <div className="grid grid-cols-4 p-4 bg-white mt-2 text-center">
         <DetailItem icon={Package} label="Weight" value={load.weight} />
         <DetailItem icon={Truck} label="Length" value={load.length} />
-        <DetailItem icon={DollarSign} label="Rate" value={`₵${load.confirmedRate.toLocaleString()}`} />
-        <DetailItem icon={BadgeCent} label="Market Rate" value={`₵${load.marketRate.toLocaleString()}`} />
+        <DetailItem
+          icon={BadgeCent}
+          label="Confirmed Rate"
+          value={`₵${load.confirmedRate.toLocaleString()}`}
+        />
+        <DetailItem
+          icon={BadgeCent}
+          label="Added Charges"
+          value={`₵${load.marketRate.toLocaleString()}`}
+        />
       </div>
 
       <DetailCard title="Equipment Details">
@@ -154,26 +173,72 @@ export default function LoadDetails() {
       </DetailCard>
 
       <DetailCard title="Shipment Details">
-        <DetailRow icon={Calendar} label="Pick Up Date" value={load.shipmentDetails.pickUpDate} />
-        <DetailRow icon={Clock} label="Pick Up Hours" value={load.shipmentDetails.pickUpHours} />
-        <DetailRow icon={Clock} label="Dock Hours" value={load.shipmentDetails.dockHours} />
-        <DetailRow icon={FileText} label="Reference" value={load.shipmentDetails.reference} />
-        <DetailRow label="Comments" value={load.shipmentDetails.comments} multiLine />
+        <DetailRow
+          icon={Calendar}
+          label="Pick Up Date"
+          value={load.shipmentDetails.pickUpDate}
+        />
+        <DetailRow
+          icon={Clock}
+          label="Pick Up Hours"
+          value={load.shipmentDetails.pickUpHours}
+        />
+        <DetailRow
+          icon={Clock}
+          label="Dock Hours"
+          value={load.shipmentDetails.dockHours}
+        />
+        <DetailRow
+          icon={FileText}
+          label="Reference"
+          value={load.shipmentDetails.reference}
+        />
+        <DetailRow
+          label="Comments"
+          value={load.shipmentDetails.comments}
+          multiLine
+        />
       </DetailCard>
 
       <DetailCard title="Company Details">
-        <DetailRow icon={Building2} label="Company" value={load.companyDetails.name} />
-        <DetailRow icon={Phone} label="Telephone" value={load.companyDetails.telephone} />
-        <DetailRow icon={FileText} label="MC Number" value={load.companyDetails.mcNumber} />
-        <DetailRow icon={MapPin} label="Location" value={load.companyDetails.location} />
-        <DetailRow icon={Star} label="Credit Score" value={`${load.companyDetails.creditScore}/100`} />
-        <DetailRow label="Payment Terms" value={load.companyDetails.daysToPay} />
-        <DetailRow label="Reviews" value={`${load.companyDetails.reviews.score}/5 (${load.companyDetails.reviews.count} reviews)`} />
+        <DetailRow
+          icon={Building2}
+          label="Company"
+          value={load.companyDetails.name}
+        />
+        <DetailRow
+          icon={Phone}
+          label="Telephone"
+          value={load.companyDetails.telephone}
+        />
+        <DetailRow
+          icon={FileText}
+          label="MC Number"
+          value={load.companyDetails.mcNumber}
+        />
+        <DetailRow
+          icon={MapPin}
+          label="Location"
+          value={load.companyDetails.location}
+        />
+        <DetailRow
+          icon={Star}
+          label="Credit Score"
+          value={`${load.companyDetails.creditScore}/100`}
+        />
+        <DetailRow
+          label="Payment Terms"
+          value={load.companyDetails.daysToPay}
+        />
+        <DetailRow
+          label="Reviews"
+          value={`${load.companyDetails.reviews.score}/5 (${load.companyDetails.reviews.count} reviews)`}
+        />
       </DetailCard>
 
       {load.status === "In Progress" && (
         <div className="mt-auto p-4 bg-white flex flex-col gap-2">
-          <Button 
+          <Button
             variant="outline"
             className="w-full py-3 rounded-md border-gray-200 text-red-600 hover:text-red-700"
             onClick={() => setShowCancelDialog(true)}
