@@ -4,6 +4,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header";
 import { DataTableRowActions } from "./row-actions";
+import { createIdenticalColumns } from "@/components/datatable/data-table-utils";
+import { calculateDiscountedRate } from "../utils/rate-calculator";
 
 export const columns: ColumnDef<any>[] = [
   {

@@ -98,6 +98,9 @@ export default function LoadDetails() {
   if (isLoading) return <Spinner />;
   if (!load) return basicErrorToast();
 
+  // Calculate the discounted rate (90% of original)
+  const discountedRate = load.rate * 0.9;
+
   return (
     <div className="flex flex-col h-full bg-gray-50">
       {/* Header */}
@@ -132,6 +135,7 @@ export default function LoadDetails() {
             <ArrowRight className="w-4 h-4 text-gray-400 mx-2" />
             <div className="h-[2px] w-16 bg-gray-300"></div>
           </div>
+
           <div className="flex items-start">
             <MapPin className="w-3 h-3 text-green-400 mt-1" strokeWidth={3} />
             <div>
@@ -149,11 +153,16 @@ export default function LoadDetails() {
       {/* Trip Details */}
       <div className="grid grid-cols-3 p-4 bg-white mt-2 text-center">
         <DetailItem icon={Truck} label="Trip" value={load.distance} />
+
+        {/* 
+          Updated: show discountedRate instead of load.rate
+        */}
         <DetailItem
           icon={BadgeCent}
           label="Rate"
-          value={`₵${load.rate.toLocaleString()}`}
+          value={`₵${discountedRate.toLocaleString()}`}
         />
+
         <DetailItem
           icon={DollarSign}
           label="Market"
@@ -163,8 +172,11 @@ export default function LoadDetails() {
 
       {/* Action Buttons */}
       <div className="mt-auto p-4 bg-white flex flex-col gap-2">
+        {/* 
+          Updated: Book Now uses discountedRate
+        */}
         <Button className="w-full bg-black text-white py-3 rounded-md">
-          Book Now ₵{load.rate.toLocaleString()}
+          Book Now ₵{discountedRate.toLocaleString()}
         </Button>
         <Button
           variant="outline"
@@ -210,7 +222,7 @@ export default function LoadDetails() {
       <DetailCard title="Rate Details">
         <DetailRow
           label="Total"
-          value={`₵${load.rateDetails.total.toLocaleString()}`}
+          value={`₵${load.rateDetails.total * (0.9).toLocaleString()}`}
         />
         <DetailRow label="Trip" value={load.rateDetails.trip} />
         <DetailRow
@@ -221,15 +233,13 @@ export default function LoadDetails() {
 
       {/* Company Details */}
       <DetailCard title="Company Details">
-        <DetailRow label="Company" value={load.companyDetails.name} />
-        <DetailRow label="Telephone" value={load.companyDetails.telephone} />
         <DetailRow label="MC Number" value={load.companyDetails.mcNumber} />
         <DetailRow label="Location" value={load.companyDetails.location} />
         <DetailRow
           label="Credit Score"
           value={load.companyDetails.creditScore}
         />
-        <DetailRow label="Days To Pay" value={load.companyDetails.daysToPay} />
+
         <DetailRow
           label="Reviews"
           value={`${load.companyDetails.reviews.score}/5 (${load.companyDetails.reviews.count} reviews)`}
