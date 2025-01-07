@@ -191,7 +191,7 @@ export default function LoadDetails() {
         <div className="mt-auto p-4 bg-white flex flex-col gap-2">
           {load.status === "In Progress" && (
             <Button
-              className="w-full bg-black text-white py-3 rounded-md"
+              className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-md"
               onClick={() => setShowCompleteDialog(true)}
             >
               Complete Delivery
@@ -204,22 +204,22 @@ export default function LoadDetails() {
           >
             Cancel Load
           </Button>
-          {load.status === "In Progress" && (
-            <CompleteDeliveryDialog
-              isOpen={showCompleteDialog}
-              onClose={() => setShowCompleteDialog(false)}
-              onComplete={handleDeliveryCompleted}
-              loadId={load.rowId}
-            />
-          )}
-          <CancelLoadDialog
-            isOpen={showCancelDialog}
-            onClose={() => setShowCancelDialog(false)}
-            onConfirm={handleLoadCancelled}
-            loadId={load.rowId}
-          />
         </div>
       )}
+      {load.status === "In Progress" && (
+        <CompleteDeliveryDialog
+          isOpen={showCompleteDialog}
+          onClose={() => setShowCompleteDialog(false)}
+          onComplete={handleDeliveryCompleted}
+          loadId={load.rowId}
+        />
+      )}
+      <CancelLoadDialog
+        isOpen={showCancelDialog}
+        onClose={() => setShowCancelDialog(false)}
+        onConfirm={handleLoadCancelled}
+        loadId={load.rowId}
+      />
     </div>
   );
 }
