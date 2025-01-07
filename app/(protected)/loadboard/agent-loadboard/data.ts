@@ -1,6 +1,116 @@
 
 const agentLoadboardData = [
     {
+        id: "669880",
+        rowId: "669880",
+        pickupLocation: "Tema Industrial Area",
+        deliveryLocation: "Ho Market",
+        pickupDate: "July 30, 2024",
+        distance: "165 km",
+        confirmedRate: 2200,
+        marketRate: 2000,
+        weight: "2,100 kg",
+        length: "13 ft",
+        age: "5 minutes",
+        equipmentType: "B: Box Truck",
+        equipment: {
+            type: "B: Box Truck",
+            length: "13 ft",
+            weight: "2,100 kg",
+            commodity: "General Merchandise",
+            load: "Full"
+        },
+        status: "Pending Review"
+    },
+    {
+        id: "669881",
+        rowId: "669881",
+        pickupLocation: "Spintex Road, Accra",
+        deliveryLocation: "Sunyani Central",
+        pickupDate: "July 31, 2024",
+        distance: "385 km",
+        confirmedRate: 4100,
+        marketRate: 3900,
+        weight: "2,800 kg",
+        length: "16 ft",
+        age: "10 minutes",
+        equipmentType: "F: Flatbed",
+        equipment: {
+            type: "F: Flatbed",
+            length: "16 ft",
+            weight: "2,800 kg",
+            commodity: "Construction Materials",
+            load: "Full"
+        },
+        status: "Pending Review"
+    },
+    {
+        id: "669882",
+        rowId: "669882",
+        pickupLocation: "Kumasi Adum",
+        deliveryLocation: "Tamale Central",
+        pickupDate: "August 1, 2024",
+        distance: "420 km",
+        confirmedRate: 4500,
+        marketRate: 4300,
+        weight: "3,200 kg",
+        length: "18 ft",
+        age: "15 minutes",
+        equipmentType: "R: Refrigerated",
+        equipment: {
+            type: "R: Refrigerated",
+            length: "18 ft",
+            weight: "3,200 kg",
+            commodity: "Perishable Goods",
+            load: "Full"
+        },
+        status: "Pending Review"
+    },
+    {
+        id: "669883",
+        rowId: "669883",
+        pickupLocation: "Takoradi Port",
+        deliveryLocation: "Wa Central",
+        pickupDate: "August 2, 2024",
+        distance: "780 km",
+        confirmedRate: 7800,
+        marketRate: 7500,
+        weight: "4,000 kg",
+        length: "20 ft",
+        age: "20 minutes",
+        equipmentType: "C: Container",
+        equipment: {
+            type: "C: Container",
+            length: "20 ft",
+            weight: "4,000 kg",
+            commodity: "Industrial Equipment",
+            load: "Full"
+        },
+        status: "Pending Review"
+    },
+    {
+        id: "669884",
+        rowId: "669884",
+        pickupLocation: "Accra Mall",
+        deliveryLocation: "Bolgatanga Market",
+        pickupDate: "August 3, 2024",
+        distance: "820 km",
+        confirmedRate: 8500,
+        marketRate: 8200,
+        weight: "2,500 kg",
+        length: "14 ft",
+        age: "25 minutes",
+        equipmentType: "V: Van",
+        equipment: {
+            type: "V: Van",
+            length: "14 ft",
+            weight: "2,500 kg",
+            commodity: "Retail Goods",
+            load: "Full"
+        },
+        status: "Pending Review"
+    },
+    {
         id: "669875",
         rowId: "669875",
         pickupLocation: "Airport City, Accra",
