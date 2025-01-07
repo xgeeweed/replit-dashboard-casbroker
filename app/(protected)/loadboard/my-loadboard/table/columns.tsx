@@ -1,4 +1,3 @@
-
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -57,10 +56,11 @@ export const columns: ColumnDef<any>[] = [
     ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("rate"));
+      const discounted = calculateDiscountedRate(amount);
       const formatted = new Intl.NumberFormat("en-GH", {
         style: "currency",
         currency: "GHS",
-      }).format(amount);
+      }).format(discounted);
       return formatted;
     },
   },
