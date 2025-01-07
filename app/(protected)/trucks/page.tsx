@@ -60,7 +60,7 @@ export default function TrucksPage() {
       plateNumber: "GH-5678-20",
       type: "Flatbed",
       capacity: 3500,
-      status: "In Transit",
+      status: "Available",
       lastService: "2024-01-10"
     },
   ]);
