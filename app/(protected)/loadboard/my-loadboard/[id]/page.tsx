@@ -163,7 +163,7 @@ export default function LoadDetails() {
         <DetailItem icon={Truck} label="Equipment" value={load.equipmentType} />
         <DetailItem
           icon={BadgeCent}
-          label="Rate"
+          label="Confirmed Rate"
           value={`₵${discountedRate.toLocaleString()}`}
         />
         <DetailItem icon={DollarSign} label="Weight" value={load.weight} />
