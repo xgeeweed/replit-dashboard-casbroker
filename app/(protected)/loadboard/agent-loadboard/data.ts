@@ -1,4 +1,3 @@
-
 const agentLoadboardData = [
     {
         id: "669880",
@@ -19,6 +18,25 @@ const agentLoadboardData = [
             weight: "2,100 kg",
             commodity: "General Merchandise",
             load: "Full"
+        },
+        shipmentDetails: {
+            pickUpDate: "07/30",
+            pickUpHours: "8:00 AM - 5:00 PM",
+            dockHours: "7:00 AM - 4:00 PM",
+            reference: "GH8842240",
+            comments: "Handle with care - Temperature controlled"
+        },
+        companyDetails: {
+            name: "Tema Logistics Ltd",
+            telephone: "0302-234-5678",
+            mcNumber: "GHA1567890",
+            location: "Tema Industrial Area",
+            creditScore: 88,
+            daysToPay: "30 T/A",
+            reviews: {
+                score: 4.2,
+                count: 28
+            }
         },
         status: "Pending Review"
     },
@@ -42,6 +60,25 @@ const agentLoadboardData = [
             commodity: "Construction Materials",
             load: "Full"
         },
+        shipmentDetails: {
+            pickUpDate: "07/31",
+            pickUpHours: "8:00 AM - 5:00 PM",
+            dockHours: "7:00 AM - 4:00 PM",
+            reference: "GH8842241",
+            comments: "Handle with care"
+        },
+        companyDetails: {
+            name: "Accra Construction Co.",
+            telephone: "0302-234-5679",
+            mcNumber: "GHA1567891",
+            location: "Spintex Road, Accra",
+            creditScore: 92,
+            daysToPay: "14 T/A",
+            reviews: {
+                score: 4.5,
+                count: 35
+            }
+        },
         status: "Pending Review"
     },
     {
@@ -63,6 +100,25 @@ const agentLoadboardData = [
             weight: "3,200 kg",
             commodity: "Perishable Goods",
             load: "Full"
+        },
+        shipmentDetails: {
+            pickUpDate: "08/01",
+            pickUpHours: "8:00 AM - 5:00 PM",
+            dockHours: "7:00 AM - 4:00 PM",
+            reference: "GH8842242",
+            comments: "Temperature sensitive goods"
+        },
+        companyDetails: {
+            name: "Kumasi Cold Storage",
+            telephone: "0302-234-5680",
+            mcNumber: "GHA1567892",
+            location: "Kumasi Adum",
+            creditScore: 85,
+            daysToPay: "7 T/A",
+            reviews: {
+                score: 4.0,
+                count: 22
+            }
         },
         status: "Pending Review"
     },
@@ -86,6 +142,25 @@ const agentLoadboardData = [
             commodity: "Industrial Equipment",
             load: "Full"
         },
+        shipmentDetails: {
+            pickUpDate: "08/02",
+            pickUpHours: "8:00 AM - 5:00 PM",
+            dockHours: "7:00 AM - 4:00 PM",
+            reference: "GH8842243",
+            comments: "Heavy equipment - Special handling"
+        },
+        companyDetails: {
+            name: "Takoradi Port Services",
+            telephone: "0302-234-5681",
+            mcNumber: "GHA1567893",
+            location: "Takoradi Port",
+            creditScore: 95,
+            daysToPay: "30 T/A",
+            reviews: {
+                score: 4.8,
+                count: 48
+            }
+        },
         status: "Pending Review"
     },
     {
@@ -108,13 +183,32 @@ const agentLoadboardData = [
             commodity: "Retail Goods",
             load: "Full"
         },
+        shipmentDetails: {
+            pickUpDate: "08/03",
+            pickUpHours: "8:00 AM - 5:00 PM",
+            dockHours: "7:00 AM - 4:00 PM",
+            reference: "GH8842244",
+            comments: "Fragile goods - careful handling"
+        },
+        companyDetails: {
+            name: "Accra Retail Group",
+            telephone: "0302-234-5682",
+            mcNumber: "GHA1567894",
+            location: "Accra Mall",
+            creditScore: 90,
+            daysToPay: "14 T/A",
+            reviews: {
+                score: 4.3,
+                count: 32
+            }
+        },
         status: "Pending Review"
     },
     {
         id: "669875",
         rowId: "669875",
         pickupLocation: "Airport City, Accra",
-        deliveryLocation: "Adum, Kumasi", 
+        deliveryLocation: "Adum, Kumasi",
         pickupDate: "July 27, 2024",
         distance: "252 km",
         confirmedRate: 3200,
