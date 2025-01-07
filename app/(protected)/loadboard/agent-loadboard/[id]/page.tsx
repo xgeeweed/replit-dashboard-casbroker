@@ -203,9 +203,11 @@ export default function LoadDetails() {
       </DetailCard>
 
       {/* Assigned Vehicle Details */}
-      <DetailCard title="Assigned Vehicle">
-        <AssignedVehicleDetails id={id} />
-      </DetailCard>
+      {load.status !== "Pending Review" && (
+        <DetailCard title="Assigned Vehicle">
+          <AssignedVehicleDetails id={id} />
+        </DetailCard>
+      )}
 
       <DetailCard title="Company Details">
         <DetailRow
