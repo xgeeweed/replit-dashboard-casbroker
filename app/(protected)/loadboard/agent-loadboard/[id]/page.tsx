@@ -183,21 +183,21 @@ export default function LoadDetails() {
         <DetailRow
           icon={Clock}
           label="Pick Up Hours"
-          value={load.shipmentDetails.pickUpHours}
+          value={load.shipmentDetails?.pickUpHours || 'N/A'}
         />
         <DetailRow
           icon={Clock}
           label="Dock Hours"
-          value={load.shipmentDetails.dockHours}
+          value={load.shipmentDetails?.dockHours || 'N/A'}
         />
         <DetailRow
           icon={FileText}
           label="Reference"
-          value={load.shipmentDetails.reference}
+          value={load.shipmentDetails?.reference || 'N/A'}
         />
         <DetailRow
           label="Comments"
-          value={load.shipmentDetails.comments}
+          value={load.shipmentDetails?.comments || 'N/A'}
           multiLine
         />
       </DetailCard>
