@@ -41,9 +41,9 @@ export function CompleteDeliveryDialog({ isOpen, onClose, onComplete, loadId }: 
       onComplete();
       onClose();
       toast.success(
-        `Delivery marked as complete. Payment will be processed on ${paymentDate.weekday}, ${paymentDate.month} ${paymentDate.day}, ${paymentDate.year}`,
+        `Delivery marked as complete. Payment will be received on Tuesday, January 7, 2025 at 2:00 PM`,
         {
-          duration: Infinity,
+          duration: 7000,
           dismissible: true
         }
       );
