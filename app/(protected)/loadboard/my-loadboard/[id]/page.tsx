@@ -43,16 +43,28 @@ const DetailItem = ({ icon: Icon, label, value }: DetailItemProps) => (
 );
 
 const DetailRow = ({ icon: Icon, label, value, multiLine }: DetailRowProps) => (
-  <div className={`py-2 ${multiLine ? "flex flex-col gap-2" : "flex justify-between items-center border-b border-gray-200"}`}>
+  <div
+    className={`py-2 ${multiLine ? "flex flex-col gap-2" : "flex justify-between items-center border-b border-gray-200"}`}
+  >
     <div className="flex items-center gap-2">
       {Icon && <Icon size={16} className="text-blue-500" />}
-      <span className={`text-gray-600 ${multiLine ? "underline" : ""}`}>{label}</span>
+      <span className={`text-gray-600 ${multiLine ? "underline" : ""}`}>
+        {label}
+      </span>
     </div>
-    <span className={multiLine ? "text-gray-600 -mt-2" : "font-medium"}>{value}</span>
+    <span className={multiLine ? "text-gray-600 -mt-2" : "font-medium"}>
+      {value}
+    </span>
   </div>
 );
 
-const DetailCard = ({ title, children }: { title: string; children: React.ReactNode }) => (
+const DetailCard = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => (
   <div className="p-4 bg-white mt-2">
     <h3 className="text-xl font-bold mb-4">{title}</h3>
     <div className="space-y-3">{children}</div>
@@ -67,7 +79,7 @@ export default function LoadDetails() {
   const [showCancelDialog, setShowCancelDialog] = useState(false); // Added state for cancel dialog
 
   const handleDeliveryCompleted = () => {
-    setLoad(prev => ({...prev, status: "Completed"}));
+    setLoad((prev) => ({ ...prev, status: "Completed" }));
     setShowCompleteDialog(false);
   };
 
@@ -76,7 +88,6 @@ export default function LoadDetails() {
     console.log("Load cancelled!");
     setShowCancelDialog(false);
   };
-
 
   useEffect(() => {
     const findLoadById = () => {
@@ -94,6 +105,9 @@ export default function LoadDetails() {
 
   if (isLoading) return <Spinner />;
   if (!load) return basicErrorToast();
+
+  // Calculate the discounted rate (90% of original)
+  const discountedRate = load.rate * 0.9;
 
   return (
     <div className="flex flex-col h-full bg-gray-50">
@@ -147,7 +161,11 @@ export default function LoadDetails() {
       {/* Load Details */}
       <div className="grid grid-cols-3 p-4 bg-white mt-2 text-center">
         <DetailItem icon={Truck} label="Equipment" value={load.equipmentType} />
-        <DetailItem icon={BadgeCent} label="Rate" value={`₵${load.rate.toLocaleString()}`} />
+        <DetailItem
+          icon={BadgeCent}
+          label="Rate"
+          value={`₵${discountedRate.toLocaleString()}`}
+        />
         <DetailItem icon={DollarSign} label="Weight" value={load.weight} />
       </div>
 
@@ -160,21 +178,25 @@ export default function LoadDetails() {
 
       {/* Shipment Details */}
       <DetailCard title="Shipment Details">
-        <DetailRow icon={Calendar} label="Pick Up Date" value={load.pickupDate} />
+        <DetailRow
+          icon={Calendar}
+          label="Pick Up Date"
+          value={load.pickupDate}
+        />
         <DetailRow icon={Clock} label="Status" value={load.status} />
       </DetailCard>
 
       {/* Action Buttons */}
       {load.status === "In Progress" && (
         <div className="mt-auto p-4 bg-white flex flex-col gap-2">
-          <Button 
+          <Button
             className="w-full bg-black text-white py-3 rounded-md"
             onClick={() => setShowCompleteDialog(true)}
           >
             Complete Delivery
           </Button>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="w-full py-3 rounded-md border-gray-200 text-red-600 hover:text-red-700"
             onClick={() => setShowCancelDialog(true)}
           >

@@ -1,10 +1,21 @@
-
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
@@ -15,17 +26,22 @@ interface CancelLoadDialogProps {
   loadRate: number;
 }
 
-export function CancelLoadDialog({ isOpen, onClose, onConfirm, loadRate }: CancelLoadDialogProps) {
+export function CancelLoadDialog({
+  isOpen,
+  onClose,
+  onConfirm,
+  loadRate,
+}: CancelLoadDialogProps) {
   const [step, setStep] = useState<"reason" | "penalty">("reason");
   const [reason, setReason] = useState("");
   const [otherReason, setOtherReason] = useState("");
 
   const reasons = [
     "Equipment unavailable",
-    "Rate too low",
+    "Faulty Truck",
     "Route changed",
     "Weather conditions",
-    "Other"
+    "Other",
   ];
 
   const handleReasonSubmit = () => {
@@ -62,7 +78,9 @@ export function CancelLoadDialog({ isOpen, onClose, onConfirm, loadRate }: Cance
               </SelectTrigger>
               <SelectContent>
                 {reasons.map((r) => (
-                  <SelectItem key={r} value={r}>{r}</SelectItem>
+                  <SelectItem key={r} value={r}>
+                    {r}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -76,15 +94,22 @@ export function CancelLoadDialog({ isOpen, onClose, onConfirm, loadRate }: Cance
             )}
 
             <DialogFooter>
-              <Button variant="outline" onClick={onClose}>Back</Button>
+              <Button variant="outline" onClick={onClose}>
+                Back
+              </Button>
               <Button onClick={handleReasonSubmit}>Continue</Button>
             </DialogFooter>
           </div>
         ) : (
           <div className="space-y-4">
-            <p className="text-sm">A penalty fee of 10% (₵{(loadRate * 0.1).toFixed(2)}) may apply upon review.</p>
+            <p className="text-sm">
+              A penalty fee of 10% (₵{(loadRate * 0.1).toFixed(2)}) may apply
+              upon review.
+            </p>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setStep("reason")}>Back</Button>
+              <Button variant="outline" onClick={() => setStep("reason")}>
+                Back
+              </Button>
               <Button onClick={handlePenaltyAccept}>Accept & Continue</Button>
             </DialogFooter>
           </div>
