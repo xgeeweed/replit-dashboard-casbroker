@@ -77,6 +77,8 @@ const DetailCard = ({
 export default function LoadDetails() {
   const { id } = useParams();
   const [showBookDialog, setShowBookDialog] = useState(false);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
+  const [isBooked, setIsBooked] = useState(false);
 
   // Sample data lookup based on id
   const findLoadById = (loadId: string) => {
@@ -176,12 +178,22 @@ export default function LoadDetails() {
     
 
       <div className="mt-auto p-4 bg-white flex flex-col gap-2">
-        <Button 
-          className="w-full bg-black text-white py-3 rounded-md"
-          onClick={() => setShowBookDialog(true)}
-        >
-          Book Now ₵{discountedRate.toLocaleString()}
-        </Button>
+        {!isBooked ? (
+          <Button 
+            className="w-full bg-black text-white py-3 rounded-md"
+            onClick={() => setShowBookDialog(true)}
+          >
+            Book Now ₵{discountedRate.toLocaleString()}
+          </Button>
+        ) : (
+          <Button 
+            variant="destructive"
+            className="w-full py-3 rounded-md"
+            onClick={() => setShowCancelDialog(true)}
+          >
+            Cancel Booking
+          </Button>
+        )}
         <Button
           variant="outline"
           className="w-full py-3 rounded-md border-gray-200"
@@ -193,18 +205,36 @@ export default function LoadDetails() {
           open={showBookDialog}
           onClose={() => setShowBookDialog(false)}
           requiredEquipment={load.equipment.type}
+          onComplete={() => {
+            setIsBooked(true);
+            setShowBookDialog(false);
+          }}
+        />
+
+        <CancelLoadDialog
+          isOpen={showCancelDialog}
+          onClose={() => setShowCancelDialog(false)}
+          onConfirm={() => {
+            setIsBooked(false);
+            setShowCancelDialog(false);
+          }}
+          loadRate={load.rate}
         />
       </div>
 
       {/* Truck and Driver Details */}
-      {load.truck && (
-        <DetailCard title="Assigned Vehicle">
-          <DetailRow label="Truck" value={`${load.truck.plateNumber} (${load.truck.type})`} />
-          {load.truck.driverName && (
-            <DetailRow label="Driver" value={load.truck.driverName} />
-          )}
-        </DetailCard>
-      )}
+      <DetailCard title="Assigned Vehicle">
+        {load.assignedTruck ? (
+          <>
+            <DetailRow label="Truck" value={`${load.assignedTruck.plateNumber} (${load.assignedTruck.type})`} />
+            {load.assignedTruck.driverName && (
+              <DetailRow label="Driver" value={load.assignedTruck.driverName} />
+            )}
+          </>
+        ) : (
+          <p className="text-gray-500 text-sm">No vehicle assigned yet</p>
+        )}
+      </DetailCard>
 
       {/* Equipment Details */}
       <DetailCard title="Equipment Details">

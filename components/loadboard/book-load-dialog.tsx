@@ -23,10 +23,12 @@ export function BookLoadDialog({
   open,
   onClose,
   requiredEquipment,
+  onComplete,
 }: { 
   open: boolean;
   onClose: () => void;
   requiredEquipment: string;
+  onComplete?: () => void;
 }) {
   const [trucks, setTrucks] = useState<Truck[]>([]);
   const [selectedTruck, setSelectedTruck] = useState<string>("");
