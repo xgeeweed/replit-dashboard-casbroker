@@ -18,6 +18,17 @@ export function CompleteDeliveryDialog({ isOpen, onClose, onComplete, loadId }: 
   const [step, setStep] = useState<"confirm" | "otp">("confirm");
   const [otp, setOtp] = useState("");
 
+  const calculatePaymentDate = () => {
+    const completionDate = new Date();
+    const paymentDate = new Date(completionDate.getTime() + 24 * 60 * 60 * 1000);
+    return {
+      weekday: paymentDate.toLocaleString('en-US', { weekday: 'long' }),
+      day: paymentDate.getDate(),
+      month: paymentDate.toLocaleString('en-US', { month: 'long' }),
+      year: paymentDate.getFullYear()
+    };
+  };
+
   const handleRequestOTP = () => {
     // Here you would integrate SMS gateway
     toast.success("OTP sent to agent's phone");
@@ -26,9 +37,12 @@ export function CompleteDeliveryDialog({ isOpen, onClose, onComplete, loadId }: 
 
   const handleVerifyOTP = () => {
     if (otp === "1111") {
+      const paymentDate = calculatePaymentDate();
       onComplete();
       onClose();
-      toast.success("Delivery marked as complete");
+      toast.success(
+        `Delivery marked as complete. Payment will be processed on ${paymentDate.weekday}, ${paymentDate.month} ${paymentDate.day}, ${paymentDate.year}`
+      );
     } else {
       toast.error("Invalid OTP");
     }
