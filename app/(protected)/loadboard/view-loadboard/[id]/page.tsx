@@ -225,11 +225,11 @@ export default function LoadDetails() {
 
       {/* Truck and Driver Details */}
       <DetailCard title="Assigned Vehicle">
-        {load.assignedTruck ? (
+        {load.truck ? (
           <>
-            <DetailRow label="Truck" value={`${load.assignedTruck.plateNumber} (${load.assignedTruck.type})`} />
-            {load.assignedTruck.driverName && (
-              <DetailRow label="Driver" value={load.assignedTruck.driverName} />
+            <DetailRow label="Truck" value={`${load.truck.plateNumber} (${load.truck.type})`} />
+            {load.truck.driverName && (
+              <DetailRow label="Driver" value={load.truck.driverName} />
             )}
           </>
         ) : (
