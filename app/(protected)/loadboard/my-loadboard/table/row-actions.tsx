@@ -1,3 +1,4 @@
+
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Row } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
@@ -61,23 +62,6 @@ export function DataTableRowActions<TData>({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          {rowData.status === "Pending" ? (
-            <>
-              <Link href={`/loadboard/my-loadboard/${rowData.rowId}`}>
-                <DropdownMenuItem className="cursor-pointer">
-                  <Eye className="mr-2 h-4 w-4" />
-                  View
-                </DropdownMenuItem>
-              </Link>
-              <DropdownMenuItem
-                className="cursor-pointer text-red-600"
-                onClick={handleCancelLoad}
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Cancel Load
-              </DropdownMenuItem>
-            </>
-          ) : (
           <Link href={`/loadboard/my-loadboard/${rowData.rowId}`}>
             <DropdownMenuItem className="cursor-pointer">
               <Eye className="mr-2 h-4 w-4" />
@@ -91,7 +75,7 @@ export function DataTableRowActions<TData>({
                 onClick={handleCompleteDelivery}
               >
                 <Check className="mr-2 h-4 w-4" />
-                Completes Delivery
+                Complete Delivery
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -102,6 +86,15 @@ export function DataTableRowActions<TData>({
                 Cancel Load
               </DropdownMenuItem>
             </>
+          )}
+          {rowData.status === "Pending" && (
+            <DropdownMenuItem
+              className="cursor-pointer text-red-600"
+              onClick={handleCancelLoad}
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              Cancel Load
+            </DropdownMenuItem>
           )}
         </DropdownMenuContent>
       </DropdownMenu>
