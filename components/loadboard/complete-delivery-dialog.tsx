@@ -37,11 +37,22 @@ export function CompleteDeliveryDialog({ isOpen, onClose, onComplete, loadId }: 
 
   const handleVerifyOTP = () => {
     if (otp === "1111") {
-      const paymentDate = calculatePaymentDate();
+      const completionTime = new Date();
+      const paymentTime = new Date(completionTime.getTime() + 24 * 60 * 60 * 1000);
+      const formattedPaymentTime = paymentTime.toLocaleString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      });
+      
       onComplete();
       onClose();
       toast.success(
-        `Delivery marked as complete. Payment will be received on Tuesday, January 7, 2025 at 2:00 PM`,
+        `Delivery marked as complete. Payment will be received on ${formattedPaymentTime}`,
         {
           duration: 7000,
           dismissible: true
