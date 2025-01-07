@@ -6,6 +6,12 @@ import { DataTableRowActions } from "./row-actions";
 
 export const columns: ColumnDef<any>[] = [
   {
+    accessorKey: "rowId",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Load ID" />
+    ),
+  },
+  {
     accessorKey: "pickupLocation",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Pickup Location" />
