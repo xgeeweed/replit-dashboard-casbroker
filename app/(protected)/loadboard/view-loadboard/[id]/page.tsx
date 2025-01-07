@@ -171,11 +171,13 @@ export default function LoadDetails() {
       </div>
 
       {/* Action Buttons */}
+      const [showBookDialog, setShowBookDialog] = useState(false);
+
       <div className="mt-auto p-4 bg-white flex flex-col gap-2">
-        {/* 
-          Updated: Book Now uses discountedRate
-        */}
-        <Button className="w-full bg-black text-white py-3 rounded-md">
+        <Button 
+          className="w-full bg-black text-white py-3 rounded-md"
+          onClick={() => setShowBookDialog(true)}
+        >
           Book Now ₵{discountedRate.toLocaleString()}
         </Button>
         <Button
@@ -184,6 +186,12 @@ export default function LoadDetails() {
         >
           Call
         </Button>
+
+        <BookLoadDialog
+          open={showBookDialog}
+          onClose={() => setShowBookDialog(false)}
+          requiredEquipment={load.equipment.type}
+        />
       </div>
 
       {/* Equipment Details */}
