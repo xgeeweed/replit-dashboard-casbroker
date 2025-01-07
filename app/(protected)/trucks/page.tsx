@@ -181,59 +181,63 @@ export default function TrucksPage() {
             <DialogHeader>
               <DialogTitle>Add New Truck</DialogTitle>
               <DialogDescription>
-                Enter the details of your new truck below.
+                {!newTruck.type ? "Enter the plate number to search for truck details" : "Confirm truck details"}
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
-              <div className="grid gap-2">
-                <Label htmlFor="plateNumber">Plate Number</Label>
-                <Input
-                  id="plateNumber"
-                  value={newTruck.plateNumber}
-                  onChange={(e) => setNewTruck({...newTruck, plateNumber: e.target.value})}
-                  placeholder="e.g. GH-1234-20"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="type">Type</Label>
-                <Select 
-                  value={newTruck.type} 
-                  onValueChange={(value) => setNewTruck({...newTruck, type: value})}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select truck type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Box Truck">Box Truck</SelectItem>
-                    <SelectItem value="Flatbed">Flatbed</SelectItem>
-                    <SelectItem value="Refrigerated">Refrigerated</SelectItem>
-                    <SelectItem value="Tanker">Tanker</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="capacity">Capacity (kg)</Label>
-                <Input
-                  id="capacity"
-                  type="number"
-                  value={newTruck.capacity}
-                  onChange={(e) => setNewTruck({...newTruck, capacity: parseInt(e.target.value)})}
-                  placeholder="Enter capacity in kg"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="lastService">Last Service Date</Label>
-                <Input
-                  id="lastService"
-                  type="date"
-                  value={newTruck.lastService}
-                  onChange={(e) => setNewTruck({...newTruck, lastService: e.target.value})}
-                />
-              </div>
+              {!newTruck.type ? (
+                <div className="grid gap-2">
+                  <Label htmlFor="plateNumber">Plate Number</Label>
+                  <div className="flex gap-2">
+                    <Input
+                      id="plateNumber"
+                      value={newTruck.plateNumber}
+                      onChange={(e) => setNewTruck({...newTruck, plateNumber: e.target.value})}
+                      placeholder="e.g. GH-1234-20"
+                    />
+                    <Button onClick={() => {
+                      // Simulate API call to fetch truck details
+                      setIsLoading(true);
+                      setTimeout(() => {
+                        setNewTruck({
+                          ...newTruck,
+                          type: "Box Truck",
+                          capacity: 2500,
+                          lastService: new Date().toISOString().split('T')[0]
+                        });
+                        setIsLoading(false);
+                      }, 1000);
+                    }}>
+                      Search
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="grid gap-4">
+                    <div>
+                      <Label>Type</Label>
+                      <p className="text-sm text-gray-600 mt-1">{newTruck.type}</p>
+                    </div>
+                    <div>
+                      <Label>Capacity</Label>
+                      <p className="text-sm text-gray-600 mt-1">{newTruck.capacity} kg</p>
+                    </div>
+                    <div>
+                      <Label>Last Service Date</Label>
+                      <p className="text-sm text-gray-600 mt-1">{newTruck.lastService}</p>
+                    </div>
+                  </div>
+                  <DialogFooter className="flex gap-2">
+                    <Button variant="outline" onClick={() => setNewTruck({ plateNumber: "", type: "", capacity: 0, lastService: new Date().toISOString().split('T')[0] })}>
+                      Back
+                    </Button>
+                    <Button onClick={handleAddTruck}>Confirm & Add</Button>
+                  </DialogFooter>
+                </>
+              )}
             </div>
-            <DialogFooter>
-              <Button onClick={handleAddTruck}>Add Truck</Button>
-            </DialogFooter>
+          </DialogContent>
           </DialogContent>
         </Dialog>
       </div>
