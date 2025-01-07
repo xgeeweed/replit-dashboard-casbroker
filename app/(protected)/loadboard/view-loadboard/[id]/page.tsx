@@ -173,7 +173,7 @@ export default function LoadDetails() {
       </div>
 
       {/* Action Buttons */}
-      const [showBookDialog, setShowBookDialog] = useState(false);
+    
 
       <div className="mt-auto p-4 bg-white flex flex-col gap-2">
         <Button 

@@ -3,7 +3,7 @@ const loadboardData = [
         id: "669875",
         rowId: "669875",
         pickupLocation: "Airport City, Accra",
-        deliveryLocation: "Adum, Kumasi", 
+        deliveryLocation: "Adum, Kumasi",
         pickupDate: "July 27, 2024",
         distance: "252 km",
         rate: 3200,
@@ -13,11 +13,11 @@ const loadboardData = [
         age: "15 minutes",
         equipmentType: "V: Van",
         equipment: {
-            type: "V: Van",
+            type: "Flatbed",
             length: "11.5 ft",
             weight: "1,800 kg",
             commodity: "Laptops & Electronics",
-            load: "Full"
+            load: "Full",
         },
         postedTime: "15 minutes ago",
         shipmentDetails: {
@@ -25,12 +25,13 @@ const loadboardData = [
             pickUpHours: "9:00 AM - 4:00 PM",
             dockHours: "8:00 AM - 3:00 PM",
             reference: "GH8842235",
-            comments: "Insurance included - Air-conditioned van required - No stacking"
+            comments:
+                "Insurance included - Air-conditioned van required - No stacking",
         },
         rateDetails: {
             total: 3200,
             trip: "252 km",
-            ratePerKm: 12.7
+            ratePerKm: 12.7,
         },
         companyDetails: {
             name: "CompuGhana Distribution",
@@ -41,9 +42,9 @@ const loadboardData = [
             daysToPay: "14 T/A",
             reviews: {
                 score: 4.5,
-                count: 43
-            }
-        }
+                count: 43,
+            },
+        },
     },
     {
         id: "669876",
@@ -61,9 +62,9 @@ const loadboardData = [
         equipment: {
             type: "R: Refrigerated",
             length: "13.8 ft",
-            weight: "2,200 kg", 
+            weight: "2,200 kg",
             commodity: "Fresh Produce",
-            load: "Full"
+            load: "Full",
         },
         postedTime: "45 minutes ago",
         shipmentDetails: {
@@ -71,12 +72,13 @@ const loadboardData = [
             pickUpHours: "6:00 AM - 12:00 PM",
             dockHours: "5:00 AM - 11:00 AM",
             reference: "GH8842236",
-            comments: "Temperature controlled vehicle required - Perishable goods"
+            comments:
+                "Temperature controlled vehicle required - Perishable goods",
         },
         rateDetails: {
             total: 2800,
             trip: "218 km",
-            ratePerKm: 12.8
+            ratePerKm: 12.8,
         },
         companyDetails: {
             name: "Fresh Foods GH",
@@ -87,9 +89,9 @@ const loadboardData = [
             daysToPay: "7 T/A",
             reviews: {
                 score: 4.2,
-                count: 38
-            }
-        }
+                count: 38,
+            },
+        },
     },
     {
         id: "669877",
@@ -103,13 +105,13 @@ const loadboardData = [
         weight: "3,500 kg",
         length: "19.7 ft",
         age: "1 hour",
-        equipmentType: "F: Flatbed",
+        equipmentType: "Flatbed",
         equipment: {
             type: "F: Flatbed",
             length: "19.7 ft",
             weight: "3,500 kg",
             commodity: "Construction Materials",
-            load: "Full"
+            load: "Full",
         },
         postedTime: "1 hour ago",
         shipmentDetails: {
@@ -117,12 +119,12 @@ const loadboardData = [
             pickUpHours: "7:00 AM - 2:00 PM",
             dockHours: "6:00 AM - 1:00 PM",
             reference: "GH8842237",
-            comments: "Heavy machinery - Crane required for loading/unloading"
+            comments: "Heavy machinery - Crane required for loading/unloading",
         },
         rateDetails: {
             total: 1800,
             trip: "144 km",
-            ratePerKm: 12.5
+            ratePerKm: 12.5,
         },
         companyDetails: {
             name: "BuildGhana Ltd",
@@ -133,9 +135,9 @@ const loadboardData = [
             daysToPay: "30 T/A",
             reviews: {
                 score: 4.0,
-                count: 25
-            }
-        }
+                count: 25,
+            },
+        },
     },
     {
         id: "669878",
@@ -155,7 +157,7 @@ const loadboardData = [
             length: "13.1 ft",
             weight: "2,000 kg",
             commodity: "Textiles",
-            load: "Partial"
+            load: "Partial",
         },
         postedTime: "2 hours ago",
         shipmentDetails: {
@@ -163,12 +165,12 @@ const loadboardData = [
             pickUpHours: "8:00 AM - 3:00 PM",
             dockHours: "7:00 AM - 2:00 PM",
             reference: "GH8842238",
-            comments: "Dry van required - Multiple pickup points"
+            comments: "Dry van required - Multiple pickup points",
         },
         rateDetails: {
             total: 2100,
             trip: "164 km",
-            ratePerKm: 12.8
+            ratePerKm: 12.8,
         },
         companyDetails: {
             name: "Northern Textiles",
@@ -179,9 +181,9 @@ const loadboardData = [
             daysToPay: "21 T/A",
             reviews: {
                 score: 4.3,
-                count: 31
-            }
-        }
+                count: 31,
+            },
+        },
     },
     {
         id: "669879",
@@ -201,7 +203,7 @@ const loadboardData = [
             length: "20 ft",
             weight: "4,000 kg",
             commodity: "Import Goods",
-            load: "Full"
+            load: "Full",
         },
         postedTime: "3 hours ago",
         shipmentDetails: {
@@ -209,12 +211,12 @@ const loadboardData = [
             pickUpHours: "10:00 AM - 5:00 PM",
             dockHours: "9:00 AM - 4:00 PM",
             reference: "GH8842239",
-            comments: "Container chassis required - Customs cleared"
+            comments: "Container chassis required - Customs cleared",
         },
         rateDetails: {
             total: 2300,
             trip: "166 km",
-            ratePerKm: 13.9
+            ratePerKm: 13.9,
         },
         companyDetails: {
             name: "Volta Imports",
@@ -225,9 +227,9 @@ const loadboardData = [
             daysToPay: "14 T/A",
             reviews: {
                 score: 4.6,
-                count: 52
-            }
-        }
+                count: 52,
+            },
+        },
     },
     {
         id: "669880",
@@ -247,7 +249,7 @@ const loadboardData = [
             length: "16.4 ft",
             weight: "2,800 kg",
             commodity: "Auto Parts",
-            load: "Full"
+            load: "Full",
         },
         postedTime: "4 hours ago",
         shipmentDetails: {
@@ -255,12 +257,12 @@ const loadboardData = [
             pickUpHours: "8:30 AM - 3:30 PM",
             dockHours: "7:30 AM - 2:30 PM",
             reference: "GH8842240",
-            comments: "Secured strapping required - Multiple items"
+            comments: "Secured strapping required - Multiple items",
         },
         rateDetails: {
             total: 1600,
             trip: "126 km",
-            ratePerKm: 12.7
+            ratePerKm: 12.7,
         },
         companyDetails: {
             name: "Suame Parts Ltd",
@@ -271,9 +273,9 @@ const loadboardData = [
             daysToPay: "21 T/A",
             reviews: {
                 score: 4.1,
-                count: 29
-            }
-        }
+                count: 29,
+            },
+        },
     },
     {
         id: "669881",
@@ -293,7 +295,7 @@ const loadboardData = [
             length: "23 ft",
             weight: "5,000 kg",
             commodity: "Industrial Chemicals",
-            load: "Full"
+            load: "Full",
         },
         postedTime: "5 hours ago",
         shipmentDetails: {
@@ -301,12 +303,12 @@ const loadboardData = [
             pickUpHours: "7:00 AM - 2:00 PM",
             dockHours: "6:00 AM - 1:00 PM",
             reference: "GH8842241",
-            comments: "Hazmat certification required - Sealed tanker"
+            comments: "Hazmat certification required - Sealed tanker",
         },
         rateDetails: {
             total: 2500,
             trip: "183 km",
-            ratePerKm: 13.7
+            ratePerKm: 13.7,
         },
         companyDetails: {
             name: "Mining Solutions GH",
@@ -317,9 +319,9 @@ const loadboardData = [
             daysToPay: "14 T/A",
             reviews: {
                 score: 4.7,
-                count: 45
-            }
-        }
+                count: 45,
+            },
+        },
     },
     {
         id: "669882",
@@ -339,7 +341,7 @@ const loadboardData = [
             length: "12.5 ft",
             weight: "1,500 kg",
             commodity: "Retail Goods",
-            load: "Partial"
+            load: "Partial",
         },
         postedTime: "6 hours ago",
         shipmentDetails: {
@@ -347,12 +349,12 @@ const loadboardData = [
             pickUpHours: "9:00 AM - 4:00 PM",
             dockHours: "8:00 AM - 3:00 PM",
             reference: "GH8842242",
-            comments: "Multiple drop points - Hand unloading required"
+            comments: "Multiple drop points - Hand unloading required",
         },
         rateDetails: {
             total: 1200,
             trip: "85 km",
-            ratePerKm: 14.1
+            ratePerKm: 14.1,
         },
         companyDetails: {
             name: "Eastern Distributors",
@@ -363,9 +365,9 @@ const loadboardData = [
             daysToPay: "21 T/A",
             reviews: {
                 score: 4.2,
-                count: 33
-            }
-        }
+                count: 33,
+            },
+        },
     },
     {
         id: "669883",
@@ -385,7 +387,7 @@ const loadboardData = [
             length: "14.8 ft",
             weight: "2,400 kg",
             commodity: "Seafood",
-            load: "Full"
+            load: "Full",
         },
         postedTime: "7 hours ago",
         shipmentDetails: {
@@ -393,12 +395,13 @@ const loadboardData = [
             pickUpHours: "5:00 AM - 12:00 PM",
             dockHours: "4:00 AM - 11:00 AM",
             reference: "GH8842243",
-            comments: "Temperature monitoring required - Fresh seafood transport"
+            comments:
+                "Temperature monitoring required - Fresh seafood transport",
         },
         rateDetails: {
             total: 1100,
             trip: "76 km",
-            ratePerKm: 14.5
+            ratePerKm: 14.5,
         },
         companyDetails: {
             name: "Coastal Seafoods",
@@ -409,10 +412,10 @@ const loadboardData = [
             daysToPay: "7 T/A",
             reviews: {
                 score: 4.4,
-                count: 37
-            }
-        }
-    }
+                count: 37,
+            },
+        },
+    },
 ];
 
 export default loadboardData;

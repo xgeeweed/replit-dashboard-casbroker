@@ -1,4 +1,3 @@
-
 export const data = [
   {
     rowId: "ML001",
@@ -9,7 +8,7 @@ export const data = [
     weight: "4,500 kg",
     length: "20 ft",
     equipmentType: "Container",
-    rate: 2800
+    rate: 2800,
   },
   {
     rowId: "ML002",
@@ -19,8 +18,8 @@ export const data = [
     status: "In Progress",
     weight: "2,200 kg",
     length: "15 ft",
-    equipmentType: "Van",
-    rate: 1900
+    equipmentType: "Flatbed",
+    rate: 1900,
   },
   {
     rowId: "ML003",
@@ -31,8 +30,8 @@ export const data = [
     weight: "3,800 kg",
     length: "18 ft",
     equipmentType: "Flatbed",
-    rate: 2200
-  }
+    rate: 2200,
+  },
 ];
 
 export default data;
