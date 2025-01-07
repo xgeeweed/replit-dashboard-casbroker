@@ -224,18 +224,20 @@ export default function LoadDetails() {
       </div>
 
       {/* Truck and Driver Details */}
-      <DetailCard title="Assigned Vehicle">
-        {load.truck ? (
-          <>
-            <DetailRow label="Truck" value={`${load.truck.plateNumber} (${load.truck.type})`} />
-            {load.truck.driverName && (
-              <DetailRow label="Driver" value={load.truck.driverName} />
-            )}
-          </>
-        ) : (
-          <p className="text-gray-500 text-sm">No vehicle assigned yet</p>
-        )}
-      </DetailCard>
+      {isBooked && (
+        <DetailCard title="Assigned Vehicle">
+          {load.truck ? (
+            <>
+              <DetailRow label="Truck" value={`${load.truck.plateNumber} (${load.truck.type})`} />
+              {load.truck.driverName && (
+                <DetailRow label="Driver" value={load.truck.driverName} />
+              )}
+            </>
+          ) : (
+            <p className="text-gray-500 text-sm">No vehicle assigned yet</p>
+          )}
+        </DetailCard>
+      )}
 
       {/* Equipment Details */}
       <DetailCard title="Equipment Details">
