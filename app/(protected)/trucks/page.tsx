@@ -238,7 +238,6 @@ export default function TrucksPage() {
               )}
             </div>
           </DialogContent>
-          </DialogContent>
         </Dialog>
       </div>
 
