@@ -48,7 +48,7 @@ const DetailItem = ({ icon: Icon, label, value }: DetailItemProps) => (
   </div>
 );
 
-const DetailRow = ({ icon: Icon, label, value, multiLine }: DetailRowProps) => (
+export const DetailRow = ({ icon: Icon, label, value, multiLine }: DetailRowProps) => (
   <div
     className={`py-2 ${multiLine ? "flex flex-col gap-2" : "flex justify-between items-center border-b border-gray-200"}`}
   >

@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { DetailRow } from "../[id]/page";
+import { DetailRow } from "../[id]/page.tsx";
 import { Spinner } from "@/components/ui/spinner";
 import { Truck, FileText, Phone, User } from "lucide-react";
 
