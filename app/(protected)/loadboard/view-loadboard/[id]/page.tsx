@@ -196,6 +196,16 @@ export default function LoadDetails() {
         />
       </div>
 
+      {/* Truck and Driver Details */}
+      {load.truck && (
+        <DetailCard title="Assigned Vehicle">
+          <DetailRow label="Truck" value={`${load.truck.plateNumber} (${load.truck.type})`} />
+          {load.truck.driverName && (
+            <DetailRow label="Driver" value={load.truck.driverName} />
+          )}
+        </DetailCard>
+      )}
+
       {/* Equipment Details */}
       <DetailCard title="Equipment Details">
         {Object.entries(load.equipment).map(([key, value]) => (

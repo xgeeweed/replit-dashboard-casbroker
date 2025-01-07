@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -31,6 +30,7 @@ export function BookLoadDialog({
 }) {
   const [trucks, setTrucks] = useState<Truck[]>([]);
   const [selectedTruck, setSelectedTruck] = useState<string>("");
+  const [showReviewMessage, setShowReviewMessage] = useState(false);
 
   // Fetch trucks with drivers
   useEffect(() => {
@@ -57,9 +57,10 @@ export function BookLoadDialog({
       return;
     }
 
-    // Handle booking
-    toast.success("Load booked successfully");
-    onClose();
+    // Handle booking - Show review message instead of direct success
+    setShowReviewMessage(true);
+    //toast.success("Load booked successfully");
+    //onClose();
   };
 
   const isEquipmentCompatible = (truckType: string, requiredType: string) => {
@@ -67,6 +68,7 @@ export function BookLoadDialog({
   };
 
   return (
+    <>
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
@@ -92,5 +94,27 @@ export function BookLoadDialog({
         </DialogFooter>
       </DialogContent>
     </Dialog>
+
+    <Dialog open={showReviewMessage} onOpenChange={() => {
+      setShowReviewMessage(false);
+      onClose();
+    }}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Booking Under Review</DialogTitle>
+        </DialogHeader>
+        <div className="py-4">
+          <p className="mb-2">Your booking request is under review. You will be notified once it is confirmed.</p>
+          <p className="text-sm text-gray-500">Note: Rates shown may change due to certain conditions.</p>
+        </div>
+        <DialogFooter>
+          <Button onClick={() => {
+            setShowReviewMessage(false);
+            onClose();
+          }}>Close</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }
