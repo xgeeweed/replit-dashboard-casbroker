@@ -6,6 +6,7 @@ import { createIdenticalColumns } from "@/components/datatable/data-table-utils"
 import { Checkbox } from "@/components/ui/checkbox";
 // import { LoadboardEntry } from "@/model";
 import { DataTableRowActions } from "./row-actions";
+import { calculateDiscountedRate } from "../utils/rate-calculator";
 
 // Define your columns using the reusable function
 export const columns: ColumnDef<any>[] = [
@@ -41,11 +42,12 @@ export const columns: ColumnDef<any>[] = [
       accessorKey: "rate",
       title: "Rate (GHS)",
       cell: ({ row }) => {
-        const rate = Number(row.getValue("rate"));
+        const originalRate = Number(row.getValue("rate"));
+        const discountedRate = calculateDiscountedRate(originalRate);
         return new Intl.NumberFormat("en-GH", {
           style: "currency",
           currency: "GHS",
-        }).format(rate);
+        }).format(discountedRate);
       },
     },
     // { accessorKey: "status", title: "Status", options: { isStatus: true } },
