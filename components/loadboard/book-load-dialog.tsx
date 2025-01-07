@@ -112,6 +112,7 @@ export function BookLoadDialog({
         <DialogFooter>
           <Button onClick={() => {
             setShowReviewMessage(false);
+            if (onComplete) onComplete();
             onClose();
           }}>Close</Button>
         </DialogFooter>
