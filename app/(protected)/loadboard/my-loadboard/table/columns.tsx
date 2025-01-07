@@ -8,6 +8,12 @@ import { calculateDiscountedRate } from "../utils/rate-calculator";
 
 export const columns: ColumnDef<any>[] = [
   {
+    accessorKey: "rowId",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Load ID" />
+    ),
+  },
+  {
     accessorKey: "pickupLocation",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Pickup Location" />
