@@ -167,11 +167,11 @@ export default function LoadDetails() {
       </div>
 
       <DetailCard title="Equipment Details">
-        <DetailRow label="Type" value={load.equipment.type} />
-        <DetailRow label="Length" value={load.equipment.length} />
-        <DetailRow label="Weight" value={load.equipment.weight} />
-        <DetailRow label="Commodity" value={load.equipment.commodity} />
-        <DetailRow label="Load Type" value={load.equipment.load} />
+        <DetailRow label="Type" value={load.equipment?.type || 'N/A'} />
+        <DetailRow label="Length" value={load.equipment?.length || 'N/A'} />
+        <DetailRow label="Weight" value={load.equipment?.weight || 'N/A'} />
+        <DetailRow label="Commodity" value={load.equipment?.commodity || 'N/A'} />
+        <DetailRow label="Load Type" value={load.equipment?.load || 'N/A'} />
       </DetailCard>
 
       <DetailCard title="Shipment Details">
@@ -211,35 +211,37 @@ export default function LoadDetails() {
         <DetailRow
           icon={Building2}
           label="Company"
-          value={load.companyDetails.name}
+          value={load.companyDetails?.name || 'N/A'}
         />
         <DetailRow
           icon={Phone}
           label="Telephone"
-          value={load.companyDetails.telephone}
+          value={load.companyDetails?.telephone || 'N/A'}
         />
         <DetailRow
           icon={FileText}
           label="MC Number"
-          value={load.companyDetails.mcNumber}
+          value={load.companyDetails?.mcNumber || 'N/A'}
         />
         <DetailRow
           icon={MapPin}
           label="Location"
-          value={load.companyDetails.location}
+          value={load.companyDetails?.location || 'N/A'}
         />
         <DetailRow
           icon={Star}
           label="Credit Score"
-          value={`${load.companyDetails.creditScore}/100`}
+          value={load.companyDetails?.creditScore ? `${load.companyDetails.creditScore}/100` : 'N/A'}
         />
         <DetailRow
           label="Payment Terms"
-          value={load.companyDetails.daysToPay}
+          value={load.companyDetails?.daysToPay || 'N/A'}
         />
         <DetailRow
           label="Reviews"
-          value={`${load.companyDetails.reviews.score}/5 (${load.companyDetails.reviews.count} reviews)`}
+          value={load.companyDetails?.reviews ? 
+            `${load.companyDetails.reviews.score}/5 (${load.companyDetails.reviews.count} reviews)` : 
+            'No reviews'}
         />
       </DetailCard>
 
