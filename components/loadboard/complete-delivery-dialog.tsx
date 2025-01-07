@@ -41,7 +41,11 @@ export function CompleteDeliveryDialog({ isOpen, onClose, onComplete, loadId }: 
       onComplete();
       onClose();
       toast.success(
-        `Delivery marked as complete. Payment will be processed on ${paymentDate.weekday}, ${paymentDate.month} ${paymentDate.day}, ${paymentDate.year}`
+        `Delivery marked as complete. Payment will be processed on ${paymentDate.weekday}, ${paymentDate.month} ${paymentDate.day}, ${paymentDate.year}`,
+        {
+          duration: Infinity,
+          dismissible: true
+        }
       );
     } else {
       toast.error("Invalid OTP");
