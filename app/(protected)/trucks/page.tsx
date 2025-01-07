@@ -117,6 +117,12 @@ export default function TrucksPage() {
   };
 
   const handleRemoveDriver = (truckId: string) => {
+    const truck = trucks.find(t => t.id === truckId);
+    if (truck?.assignedLoad) {
+      toast.error("Cannot remove driver while truck has an assigned load");
+      return;
+    }
+
     setIsLoading(true);
     // Simulate API call to remove driver
     setTimeout(() => {
@@ -133,6 +139,12 @@ export default function TrucksPage() {
   };
 
   const handleRemoveTruck = (truckId: string) => {
+    const truck = trucks.find(t => t.id === truckId);
+    if (truck?.assignedLoad) {
+      toast.error("Cannot remove truck while it has an assigned load");
+      return;
+    }
+    
     setIsLoading(true);
     // Simulate API call to remove truck
     setTimeout(() => {
