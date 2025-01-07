@@ -76,6 +76,7 @@ const DetailCard = ({
 
 export default function LoadDetails() {
   const { id } = useParams();
+  const [showBookDialog, setShowBookDialog] = useState(false);
 
   // Sample data lookup based on id
   const findLoadById = (loadId: string) => {
