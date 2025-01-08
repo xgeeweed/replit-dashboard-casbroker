@@ -115,7 +115,18 @@ export function getAdminMenuList(pathname: string): Group[] {
           label: "Payments",
           active: pathname.includes(BASE_PATH + "/payments"),
           icon: DollarSign,
-          submenus: [],
+          submenus: [
+            {
+              href: BASE_PATH + "/payments/drivers",
+              label: "Drivers",
+              active: pathname.includes(BASE_PATH + "/payments/drivers"),
+            },
+            {
+              href: BASE_PATH + "/payments/agents",
+              label: "Agents",
+              active: pathname.includes(BASE_PATH + "/payments/agents"),
+            },
+          ],
         },
         {
           href: BASE_PATH + "/settings",
