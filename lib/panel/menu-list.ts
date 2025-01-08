@@ -137,47 +137,66 @@ export function getAdminMenuList(pathname: string): Group[] {
             {
               href: BASE_PATH + "/admin/global-settings/container-types",
               label: "Container Types",
-              active: pathname.includes(BASE_PATH + "/admin/global-settings/container-types"),
+              active: pathname.includes(
+                BASE_PATH + "/admin/global-settings/container-types",
+              ),
             },
             {
-              href: BASE_PATH + "/admin/global-settings/dropoff-location-regions",
+              href:
+                BASE_PATH + "/admin/global-settings/dropoff-location-regions",
               label: "Dropoff Location Regions",
-              active: pathname.includes(BASE_PATH + "/admin/global-settings/dropoff-location-regions"),
+              active: pathname.includes(
+                BASE_PATH + "/admin/global-settings/dropoff-location-regions",
+              ),
             },
             {
               href: BASE_PATH + "/admin/global-settings/dropoff-locations",
               label: "Dropoff Locations",
-              active: pathname.includes(BASE_PATH + "/admin/global-settings/dropoff-locations"),
+              active: pathname.includes(
+                BASE_PATH + "/admin/global-settings/dropoff-locations",
+              ),
             },
             {
               href: BASE_PATH + "/admin/global-settings/external-user-types",
               label: "External User Types",
-              active: pathname.includes(BASE_PATH + "/admin/global-settings/external-user-types"),
+              active: pathname.includes(
+                BASE_PATH + "/admin/global-settings/external-user-types",
+              ),
             },
             {
               href: BASE_PATH + "/admin/global-settings/external-users",
               label: "External Users",
-              active: pathname.includes(BASE_PATH + "/admin/global-settings/external-users"),
+              active: pathname.includes(
+                BASE_PATH + "/admin/global-settings/external-users",
+              ),
             },
             {
               href: BASE_PATH + "/admin/global-settings/pickup-locations",
               label: "Pickup Locations",
-              active: pathname.includes(BASE_PATH + "/admin/global-settings/pickup-locations"),
+              active: pathname.includes(
+                BASE_PATH + "/admin/global-settings/pickup-locations",
+              ),
             },
             {
               href: BASE_PATH + "/admin/global-settings/rates",
               label: "Rates",
-              active: pathname.includes(BASE_PATH + "/admin/global-settings/rates"),
+              active: pathname.includes(
+                BASE_PATH + "/admin/global-settings/rates",
+              ),
             },
             {
               href: BASE_PATH + "/admin/global-settings/terminal-locations",
               label: "Terminal Locations",
-              active: pathname.includes(BASE_PATH + "/admin/global-settings/terminal-locations"),
+              active: pathname.includes(
+                BASE_PATH + "/admin/global-settings/terminal-locations",
+              ),
             },
             {
               href: BASE_PATH + "/admin/global-settings/transaction-types",
               label: "Transaction Types",
-              active: pathname.includes(BASE_PATH + "/admin/global-settings/transaction-types"),
+              active: pathname.includes(
+                BASE_PATH + "/admin/global-settings/transaction-types",
+              ),
             },
           ],
         },
@@ -208,7 +227,9 @@ export function getAgentMenuList(pathname: string): Group[] {
             {
               href: BASE_PATH + "/loadboard/agent-loadboard",
               label: "My Loadboard",
-              active: pathname.includes(BASE_PATH + "/loadboard/agent-loadboard"),
+              active: pathname.includes(
+                BASE_PATH + "/loadboard/agent-loadboard",
+              ),
             },
             {
               href: BASE_PATH + "/loadboard/post-load",
@@ -244,7 +265,9 @@ export function getDriverMenuList(pathname: string): Group[] {
             {
               href: BASE_PATH + "/loadboard/view-loadboard",
               label: "View Loadboard",
-              active: pathname.includes(BASE_PATH + "/loadboard/view-loadboard"),
+              active: pathname.includes(
+                BASE_PATH + "/loadboard/view-loadboard",
+              ),
             },
             {
               href: BASE_PATH + "/loadboard/my-loadboard",
