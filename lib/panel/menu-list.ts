@@ -59,7 +59,28 @@ export function getAdminMenuList(pathname: string): Group[] {
           label: "Agents",
           active: pathname.includes(BASE_PATH + "/agents"),
           icon: Users,
-          submenus: [],
+          submenus: [
+            {
+              href: BASE_PATH + "/agents/all-agents",
+              label: "View All Agents",
+              active: pathname.includes(BASE_PATH + "/agents/all-agents"),
+            },
+            {
+              href: BASE_PATH + "/agents/pending-agents",
+              label: "Approve New Agents",
+              active: pathname.includes(BASE_PATH + "/agents/pending-agents"),
+            },
+            {
+              href: BASE_PATH + "/agents/canceled-loads",
+              label: "Canceled Loads",
+              active: pathname.includes(BASE_PATH + "/agents/canceled-loads"),
+            },
+            {
+              href: BASE_PATH + "/agents/pending-loads",
+              label: "Pending Loads",
+              active: pathname.includes(BASE_PATH + "/agents/pending-loads"),
+            },
+          ],
         },
         {
           href: BASE_PATH + "/drivers",
