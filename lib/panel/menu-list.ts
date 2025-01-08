@@ -131,9 +131,55 @@ export function getAdminMenuList(pathname: string): Group[] {
         {
           href: BASE_PATH + "/settings",
           label: "General Settings",
-          active: pathname.includes(BASE_PATH + "/settings"),
+          active: pathname.includes(BASE_PATH + "/global-settings"),
           icon: Settings,
-          submenus: [],
+          submenus: [
+            {
+              href: BASE_PATH + "/global-settings/container-types",
+              label: "Container Types",
+              active: pathname.includes(BASE_PATH + "/global-settings/container-types"),
+            },
+            {
+              href: BASE_PATH + "/global-settings/dropoff-location-regions",
+              label: "Dropoff Location Regions",
+              active: pathname.includes(BASE_PATH + "/global-settings/dropoff-location-regions"),
+            },
+            {
+              href: BASE_PATH + "/global-settings/dropoff-locations",
+              label: "Dropoff Locations",
+              active: pathname.includes(BASE_PATH + "/global-settings/dropoff-locations"),
+            },
+            {
+              href: BASE_PATH + "/global-settings/external-user-types",
+              label: "External User Types",
+              active: pathname.includes(BASE_PATH + "/global-settings/external-user-types"),
+            },
+            {
+              href: BASE_PATH + "/global-settings/external-users",
+              label: "External Users",
+              active: pathname.includes(BASE_PATH + "/global-settings/external-users"),
+            },
+            {
+              href: BASE_PATH + "/global-settings/pickup-locations",
+              label: "Pickup Locations",
+              active: pathname.includes(BASE_PATH + "/global-settings/pickup-locations"),
+            },
+            {
+              href: BASE_PATH + "/global-settings/rates",
+              label: "Rates",
+              active: pathname.includes(BASE_PATH + "/global-settings/rates"),
+            },
+            {
+              href: BASE_PATH + "/global-settings/terminal-locations",
+              label: "Terminal Locations",
+              active: pathname.includes(BASE_PATH + "/global-settings/terminal-locations"),
+            },
+            {
+              href: BASE_PATH + "/global-settings/transaction-types",
+              label: "Transaction Types",
+              active: pathname.includes(BASE_PATH + "/global-settings/transaction-types"),
+            },
+          ],
         },
       ],
     },
