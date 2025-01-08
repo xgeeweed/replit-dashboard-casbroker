@@ -3,6 +3,9 @@ import {
   LucideIcon,
   BookOpen,
   Truck,
+  Users,
+  Settings,
+  DollarSign,
 } from "lucide-react";
 
 type Submenu = {
