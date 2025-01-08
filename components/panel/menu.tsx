@@ -21,7 +21,9 @@ export function Menu({ isOpen }: MenuProps) {
   let menuList: Group[];
   
   // Determine which menu list to use based on the user type in the path
-  if (pathname.includes('agent-dashboard') || pathname.includes('/loadboard/post-load') || pathname.includes('/loadboard/agent-loadboard')) {
+  if (pathname.includes('admin')) {
+    menuList = getAdminMenuList(pathname);
+  } else if (pathname.includes('agent-dashboard') || pathname.includes('/loadboard/post-load') || pathname.includes('/loadboard/agent-loadboard')) {
     menuList = getAgentMenuList(pathname);
   } else if (pathname.includes('driver-dashboard') || pathname.includes('/trucks') || pathname.includes('/loadboard/view-loadboard') || pathname.includes('/loadboard/my-loadboard')) {
     menuList = getDriverMenuList(pathname);
