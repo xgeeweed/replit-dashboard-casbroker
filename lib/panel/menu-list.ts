@@ -129,7 +129,7 @@ export function getAdminMenuList(pathname: string): Group[] {
           ],
         },
         {
-          href: BASE_PATH + "/settings",
+          href: BASE_PATH + "/global-settings",
           label: "General Settings",
           active: pathname.includes(BASE_PATH + "/global-settings"),
           icon: Settings,
