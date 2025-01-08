@@ -87,7 +87,28 @@ export function getAdminMenuList(pathname: string): Group[] {
           label: "Drivers",
           active: pathname.includes(BASE_PATH + "/drivers"),
           icon: Users,
-          submenus: [],
+          submenus: [
+            {
+              href: BASE_PATH + "/drivers/all-drivers",
+              label: "View All Transport Owners/Drivers",
+              active: pathname.includes(BASE_PATH + "/drivers/all-drivers"),
+            },
+            {
+              href: BASE_PATH + "/drivers/pending-drivers",
+              label: "Approve Transport Owners/Drivers",
+              active: pathname.includes(BASE_PATH + "/drivers/pending-drivers"),
+            },
+            {
+              href: BASE_PATH + "/drivers/canceled-loads",
+              label: "Canceled Loads by Drivers",
+              active: pathname.includes(BASE_PATH + "/drivers/canceled-loads"),
+            },
+            {
+              href: BASE_PATH + "/drivers/pending-loads",
+              label: "Pending Loads by Drivers",
+              active: pathname.includes(BASE_PATH + "/drivers/pending-loads"),
+            },
+          ],
         },
         {
           href: BASE_PATH + "/payments",
