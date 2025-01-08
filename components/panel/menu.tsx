@@ -5,7 +5,7 @@ import { Ellipsis, LogOut } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/app/auth/lib/utils";
-import { getAgentMenuList, getDriverMenuList, Group } from "@/lib/panel/menu-list";
+import { getAgentMenuList, getDriverMenuList, getAdminMenuList, Group } from "@/lib/panel/menu-list";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CollapseMenuButton } from "@/components/panel/collapse-menu-button";
