@@ -22,7 +22,14 @@ export default function ActiveLoads() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Active Loads</h1>
-      <DataTable columns={columns} data={data} />
+      <DataTable 
+        columns={columns} 
+        data={data} 
+        meta={{
+          name: "Active Load",
+          plural: "Active Loads"
+        }}
+      />
     </div>
   );
 }
