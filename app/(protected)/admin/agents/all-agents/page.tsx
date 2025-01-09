@@ -12,7 +12,7 @@ export default function AllAgents() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setData(pendingAgentsData);
+      setData(allAgentsData);
       setIsLoading(false);
     }, 700);
 
