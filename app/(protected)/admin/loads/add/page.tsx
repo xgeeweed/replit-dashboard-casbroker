@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -38,7 +37,7 @@ type LoadDetails = {
   comments: string;
 };
 
-export default function AddLoad() {
+export default function PostLoad() {
   const [step, setStep] = useState(1);
   const [blData, setBlData] = useState<BLData>({ blNumber: "" });
   const [selectedContainers, setSelectedContainers] = useState<Container[]>([]);
@@ -47,6 +46,7 @@ export default function AddLoad() {
   const [newEquipment, setNewEquipment] = useState<EquipmentCount>({ equipmentType: '', loadType: '', count: 0 });
 
   const fetchBLData = async (blNumber: string) => {
+    // TODO: Replace with actual API call
     const mockData = {
       blNumber,
       containers: blNumber === "BL5678" ? [
@@ -87,7 +87,7 @@ export default function AddLoad() {
   };
 
   const handleSubmit = async () => {
-    toast.success("Load added successfully! It is now under review.");
+    toast.success("Load posted successfully! It is now under review.");
     setStep(1);
     setBlData({ blNumber: "" });
     setSelectedContainers([]);
@@ -176,7 +176,7 @@ export default function AddLoad() {
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div>
                     <label className="text-sm">Delivery Location</label>
                     <Select
@@ -197,7 +197,7 @@ export default function AddLoad() {
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div className="col-span-2">
                     <div className="flex justify-between items-center mb-2">
                       <label className="text-sm">Equipment Selection</label>
@@ -298,13 +298,13 @@ export default function AddLoad() {
                     <label className="text-sm">Pickup Date</label>
                     <Input
                       type="date"
+                      required
                       onChange={(e) =>
                         handleLoadDetails({
                           ...loadDetails.bulk,
                           pickupDate: e.target.value
                         })
                       }
-                      required
                     />
                   </div>
 
@@ -324,9 +324,21 @@ export default function AddLoad() {
               <div className="space-x-2">
                 <Button onClick={() => setStep(2)}>Back</Button>
                 <Button onClick={() => {
-                  if (!loadDetails.bulk?.pickupLocation || !loadDetails.bulk?.deliveryLocation || !loadDetails.bulk?.pickupDate) {
-                    toast.error("Please fill in all mandatory fields");
-                    return;
+                  if (isBulkCargo) {
+                    if (!loadDetails.bulk?.pickupLocation || !loadDetails.bulk?.deliveryLocation || !loadDetails.bulk?.pickupDate) {
+                      toast.error("Please fill in all mandatory fields (Pickup Location, Delivery Location, Pickup Date)");
+                      return;
+                    }
+                  } else {
+                    const hasInvalidContainer = selectedContainers.some(container => {
+                      const details = loadDetails[container.id];
+                      return !details?.pickupLocation || !details?.deliveryLocation || !details?.pickupDate;
+                    });
+
+                    if (hasInvalidContainer) {
+                      toast.error("Please fill in all mandatory fields for each container (Pickup Location, Delivery Location, Pickup Date)");
+                      return;
+                    }
                   }
                   setStep(4);
                 }}>Review</Button>
@@ -361,7 +373,7 @@ export default function AddLoad() {
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div>
                     <label className="text-sm">Delivery Location</label>
                     <Select
@@ -382,7 +394,7 @@ export default function AddLoad() {
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div>
                     <label className="text-sm">Pickup Date</label>
                     <Input
@@ -414,17 +426,24 @@ export default function AddLoad() {
             <div className="space-x-2">
               <Button onClick={() => setStep(2)}>Back</Button>
               <Button onClick={() => {
-                const hasInvalidContainer = selectedContainers.some(container => {
-                  const details = loadDetails[container.id];
-                  return !details?.pickupLocation || !details?.deliveryLocation || !details?.pickupDate;
-                });
-                
-                if (hasInvalidContainer) {
-                  toast.error("Please fill in all mandatory fields for each container");
-                  return;
-                }
-                setStep(4);
-              }}>Review</Button>
+                  if (isBulkCargo) {
+                    if (!loadDetails.bulk?.pickupLocation || !loadDetails.bulk?.deliveryLocation || !loadDetails.bulk?.pickupDate) {
+                      toast.error("Please fill in all mandatory fields (Pickup Location, Delivery Location, Pickup Date)");
+                      return;
+                    }
+                  } else {
+                    const hasInvalidContainer = selectedContainers.some(container => {
+                      const details = loadDetails[container.id];
+                      return !details?.pickupLocation || !details?.deliveryLocation || !details?.pickupDate;
+                    });
+
+                    if (hasInvalidContainer) {
+                      toast.error("Please fill in all mandatory fields for each container (Pickup Location, Delivery Location, Pickup Date)");
+                      return;
+                    }
+                  }
+                  setStep(4);
+                }}>Review</Button>
             </div>
           </div>
         );
@@ -518,7 +537,7 @@ export default function AddLoad() {
 
   return (
     <div className="font-light h-full w-full p-4">
-      <h1 className="text-2xl font-bold mb-6">Add a New Load</h1>
+      <h1 className="text-2xl font-bold mb-6">Post a New Load</h1>
       <div className="max-w-2xl">
         {renderStep()}
       </div>
