@@ -4,7 +4,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { Eye, MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -59,6 +60,12 @@ export const columns: ColumnDef<any>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <Link href={`/admin/loads/active/${load.id}`}>
+              <DropdownMenuItem className="cursor-pointer">
+                <Eye className="mr-2 h-4 w-4" />
+                View
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuItem
               onClick={() => {
                 toast.info(`Cancelling load ${load.id}`);
