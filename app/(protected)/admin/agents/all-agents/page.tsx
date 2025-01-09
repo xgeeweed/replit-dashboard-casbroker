@@ -4,7 +4,7 @@ import { basicErrorToast } from "@/components/toast";
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/datatable/data-table";
 import { columns } from "./table/columns";
-import pendingAgentsData from "../pending-agents/data";
+import allAgentsData from "./data";
 
 export default function AllAgents() {
   const [data, setData] = useState([]);
