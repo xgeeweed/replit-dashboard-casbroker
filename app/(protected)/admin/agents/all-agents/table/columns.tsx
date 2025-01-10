@@ -62,6 +62,12 @@ export const columns: ColumnDef<any>[] = [
               <MessageCircle className="mr-2 h-4 w-4" />
               Send Message
             </DropdownMenuItem>
+            <Link href={`/admin/agents/all-agents/${agent.rowId}/payment-history`}>
+              <DropdownMenuItem className="cursor-pointer">
+                <Eye className="mr-2 h-4 w-4" />
+                View Payment History
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuItem
               onClick={() => {
                 toast.info(`Changing status for ${agent.fullName}`);
