@@ -2,11 +2,28 @@
 @media print {
   .print-content {
     padding: 20px;
+    display: block !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-show {
+    display: block !important;
   }
   
   button {
     display: none !important;
   }
+
+  @page {
+    margin: 20mm;
+  }
+}
+
+.print-show {
+  display: none;
 }
 
 @tailwind base;

@@ -16,12 +16,13 @@ export default function AgentPaymentHistory({ params }: { params: { id: string }
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: 'Payment History Report',
+    removeAfterPrint: true,
     onAfterPrint: () => console.log('Printed successfully')
   });
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6 no-print">
         <h1 className="text-2xl font-bold">Payment History</h1>
         <Button onClick={handlePrint}>
           <Printer className="h-4 w-4 mr-2" />
@@ -30,6 +31,7 @@ export default function AgentPaymentHistory({ params }: { params: { id: string }
       </div>
 
       <div ref={componentRef} className="print-content">
+        <h1 className="text-2xl font-bold mb-6 print-show">Payment History Report</h1>
         <div className="rounded-md border">
           <Table>
             <TableHeader>
