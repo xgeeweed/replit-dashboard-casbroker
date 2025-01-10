@@ -11,10 +11,12 @@ import { useRef } from "react";
 
 export default function AgentPaymentHistory({ params }: { params: { id: string } }) {
   const [payments] = useState(agentPaymentHistory);
-  const printRef = useRef<HTMLDivElement>(null);
+  const componentRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
-    content: () => printRef.current,
+    content: () => componentRef.current,
+    documentTitle: 'Payment History Report',
+    onAfterPrint: () => console.log('Printed successfully')
   });
 
   return (
@@ -27,7 +29,7 @@ export default function AgentPaymentHistory({ params }: { params: { id: string }
         </Button>
       </div>
 
-      <div ref={printRef}>
+      <div ref={componentRef} className="print-content">
         <div className="rounded-md border">
           <Table>
             <TableHeader>
