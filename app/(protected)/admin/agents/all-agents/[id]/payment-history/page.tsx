@@ -1,13 +1,11 @@
-
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { agentPaymentHistory } from "./data";
 import { Printer } from "lucide-react";
-import { useReactToPrint } from "react-to-print";
-import { useRef } from "react";
+import { useReactToPrint, UseReactToPrintProps } from "react-to-print";
 
 export default function AgentPaymentHistory({ params }: { params: { id: string } }) {
   const [payments] = useState(agentPaymentHistory);
@@ -15,16 +13,17 @@ export default function AgentPaymentHistory({ params }: { params: { id: string }
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'Payment History Report',
+    documentTitle: "Payment History Report",
     removeAfterPrint: true,
-    onAfterPrint: () => console.log('Printed successfully')
-  });
+    onAfterPrint: () => console.log("Printed successfully"),
+  } as UseReactToPrintProps);
 
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6 no-print">
         <h1 className="text-2xl font-bold">Payment History</h1>
-        <Button onClick={handlePrint}>
+        {/* Use an arrow callback so types line up */}
+        <Button onClick={() => handlePrint()}>
           <Printer className="h-4 w-4 mr-2" />
           Print Report
         </Button>
