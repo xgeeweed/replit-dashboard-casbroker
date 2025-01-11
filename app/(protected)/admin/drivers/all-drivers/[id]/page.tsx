@@ -94,7 +94,7 @@ export default function DriverView() {
               <p className="text-2xl font-bold text-green-600">
                 GH₵ {filteredTransactions
                   .filter(transaction => transaction.status === "Completed")
-                  .reduce((sum, transaction) => sum + transaction.amount, 0)
+                  .reduce((sum, transaction) => sum + (transaction.amount * 0.9), 0)
                   .toLocaleString()}
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function DriverView() {
                     <TableCell>{transaction.id}</TableCell>
                     <TableCell>{transaction.pickupLocation}</TableCell>
                     <TableCell>{transaction.deliveryLocation}</TableCell>
-                    <TableCell>GH₵ {transaction.amount}</TableCell>
+                    <TableCell>GH₵ {(transaction.amount * 0.9).toLocaleString()}</TableCell>
                     <TableCell>{transaction.agent?.name || 'N/A'}</TableCell>
                     <TableCell>{transaction.truck?.number || 'N/A'}</TableCell>
                     <TableCell>
