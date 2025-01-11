@@ -61,8 +61,9 @@ export function ChangeStatusDialog({ agent }: { agent: any }) {
             </Select>
           </div>
         </div>
-        <div className="flex justify-end">
-          <Button onClick={handleStatusChange}>Update Status</Button>
+        <div className="flex justify-end gap-2">
+          <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+          <Button type="button" onClick={handleStatusChange}>Update Status</Button>
         </div>
       </DialogContent>
     </Dialog>
