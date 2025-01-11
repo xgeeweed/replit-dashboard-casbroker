@@ -34,3 +34,17 @@ export const driverTransactions = [
     agent: { name: "Mike Brown" }
   }
 ];
+export const driverData = {
+  fullName: "Daniel Mensah",
+  dateOfBirth: "1988-05-15",
+  nationality: "Ghanaian",
+  contact: "+233 24 555 7890",
+  email: "daniel.m@example.com",
+  gpsAddress: "123 Spintex Road, Accra",
+  licenseNumber: "GHA-DL-123456",
+  vehicleType: "Box Truck",
+  vehiclePlate: "GT 5678-22",
+  experience: "5 years",
+  status: "Active",
+  rating: 4.8
+};

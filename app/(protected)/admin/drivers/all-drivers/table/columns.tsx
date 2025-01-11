@@ -80,11 +80,23 @@ export const columns: ColumnDef<any>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => {
-                toast.info(`Changing status for ${driver.fullName}`);
+                const updateStatus = row.table?.options?.meta?.updateStatus;
+                if (typeof updateStatus === "function") {
+                  updateStatus(driver.rowId);
+                }
               }}
             >
               <RefreshCw className="mr-2 h-4 w-4" />
               Change Status
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                toast.info(`Removing ${driver.fullName}`);
+              }}
+              className="text-red-600"
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              Remove
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
