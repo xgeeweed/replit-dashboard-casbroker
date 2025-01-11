@@ -12,7 +12,7 @@ export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "amount",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Amount" />,
-    cell: ({ row }) => `GH₵ ${row.getValue("amount").toLocaleString()}`,
+    cell: ({ row }) => `GH₵ ${(row.getValue("amount") * 0.9).toLocaleString()}`,
   },
   {
     accessorKey: "date",

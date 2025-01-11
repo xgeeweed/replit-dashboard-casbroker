@@ -53,26 +53,7 @@ export default function DriverPayments() {
         </div>
       </div>
 
-      <div className="flex gap-4 mb-4">
-        <Input
-          placeholder="Search payments..."
-          className="max-w-sm"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
-            <SelectItem value="Delivery">Delivery</SelectItem>
-            <SelectItem value="Bonus">Bonus</SelectItem>
-            <SelectItem value="Advance">Advance</SelectItem>
-            <SelectItem value="Other">Other</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      
 
       <DataTable 
         columns={columns} 
