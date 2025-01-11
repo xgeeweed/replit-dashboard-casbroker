@@ -33,7 +33,12 @@ export default function PendingDrivers() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Pending Transport Owners</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Pending Transport Owners</h1>
+        <Link href="/admin/drivers/pending-drivers/add">
+          <Button>Add New Transport Owner</Button>
+        </Link>
+      </div>
       <DataTable columns={columns} data={nonApprovedData} meta={meta} />
     </div>
   );
