@@ -99,7 +99,17 @@ export default function AgentView() {
         </TabsContent>
 
         <TabsContent value="transactions">
-          <div className="flex items-center py-4 gap-2">
+          <div className="flex flex-col gap-4 py-4">
+            <div className="bg-white p-4 rounded-lg shadow">
+              <h3 className="text-lg font-medium">Total Completed Transactions</h3>
+              <p className="text-2xl font-bold text-green-600">
+                GH₵ {filteredTransactions
+                  .filter(transaction => transaction.status === "Completed")
+                  .reduce((sum, transaction) => sum + transaction.amount, 0)
+                  .toLocaleString()}
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
             <Input
               placeholder="Search transactions..."
               className="max-w-sm"
@@ -132,6 +142,7 @@ export default function AgentView() {
                 <SelectItem value="In Progress">In Progress</SelectItem>
               </SelectContent>
             </Select>
+          </div>
           </div>
           <div className="rounded-md border">
             <Table>
