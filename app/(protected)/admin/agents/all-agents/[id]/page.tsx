@@ -22,6 +22,7 @@ export default function AgentView() {
   const { id } = useParams();
   const [agent, setAgent] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [filteredTransactions, setFilteredTransactions] = useState(agentTransactions);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -96,6 +97,24 @@ export default function AgentView() {
         </TabsContent>
 
         <TabsContent value="transactions">
+          <div className="flex items-center py-4 gap-2">
+            <Select onValueChange={(value) => {
+              const filtered = value === "all" 
+                ? agentTransactions 
+                : filterTransactions(value);
+              setFilteredTransactions(filtered);
+            }}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Transactions</SelectItem>
+                <SelectItem value="Completed">Completed</SelectItem>
+                <SelectItem value="Pending">Pending</SelectItem>
+                <SelectItem value="In Progress">In Progress</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="rounded-md border">
             <Table>
               <TableHeader>
@@ -107,7 +126,7 @@ export default function AgentView() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {agentTransactions.map((transaction) => (
+                {filteredTransactions.map((transaction) => (
                   <TableRow key={transaction.id}>
                     <TableCell>{transaction.date}</TableCell>
                     <TableCell>{transaction.id}</TableCell>
