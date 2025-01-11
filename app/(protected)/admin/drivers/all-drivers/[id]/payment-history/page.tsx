@@ -23,7 +23,7 @@ export default function DriverPaymentHistory({
   const [payments] = useState(driverPaymentHistory);
   const totalAmount = payments
     .filter((payment) => payment.status === "Completed")
-    .reduce((sum, payment) => sum + payment.amount, 0);
+    .reduce((sum, payment) => sum + (payment.amount * 0.9), 0);
   const componentRef = useRef<HTMLDivElement>(null);
 
   const handlePrint = useReactToPrint({
@@ -71,7 +71,7 @@ export default function DriverPaymentHistory({
                   <TableCell>{payment.date}</TableCell>
                   <TableCell>{payment.loadId}</TableCell>
                   <TableCell>{payment.transactionId}</TableCell>
-                  <TableCell>GH₵ {payment.amount}</TableCell>
+                  <TableCell>GH₵ {(payment.amount * 0.9).toLocaleString()}</TableCell>
                   <TableCell>{payment.paymentMethod}</TableCell>
                   <TableCell>{payment.description}</TableCell>
                   <TableCell>
