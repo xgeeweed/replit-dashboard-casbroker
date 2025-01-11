@@ -4,7 +4,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header";
 import { Button } from "@/components/ui/button";
-import { Eye, MessageCircle, MoreHorizontal, RefreshCw, Truck } from "lucide-react";
+import { Eye, MessageCircle, MoreHorizontal, RefreshCw, Truck, Trash2 } from "lucide-react";
 import Link from "next/link";
 import {
   DropdownMenu,
