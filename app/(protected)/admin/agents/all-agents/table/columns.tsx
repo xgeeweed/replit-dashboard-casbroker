@@ -62,7 +62,7 @@ export const columns: ColumnDef<any>[] = [
             <Link href={`/admin/agents/all-agents/${agent.rowId}`}>
               <DropdownMenuItem className="cursor-pointer">
                 <Eye className="mr-2 h-4 w-4" />
-                Agent Details
+                View
               </DropdownMenuItem>
             </Link>
             <DropdownMenuItem
