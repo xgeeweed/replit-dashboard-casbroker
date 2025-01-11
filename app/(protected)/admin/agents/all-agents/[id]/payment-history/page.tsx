@@ -58,6 +58,7 @@ export default function AgentPaymentHistory({
             <TableHeader>
               <TableRow>
                 <TableHead>Date</TableHead>
+                <TableHead>Load ID</TableHead>
                 <TableHead>Transaction ID</TableHead>
                 <TableHead>Amount</TableHead>
                 <TableHead>Payment Method</TableHead>
@@ -69,6 +70,7 @@ export default function AgentPaymentHistory({
               {payments.map((payment) => (
                 <TableRow key={payment.id}>
                   <TableCell>{payment.date}</TableCell>
+                  <TableCell>{payment.loadId}</TableCell>
                   <TableCell>{payment.transactionId}</TableCell>
                   <TableCell>GH₵ {payment.amount}</TableCell>
                   <TableCell>{payment.paymentMethod}</TableCell>

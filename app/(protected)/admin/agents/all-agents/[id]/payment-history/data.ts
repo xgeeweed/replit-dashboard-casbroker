@@ -7,6 +7,7 @@ interface AgentPayment {
   transactionId: string;
   paymentMethod: string;
   description: string;
+  loadId: string;
 }
 
 export const agentPaymentHistory: AgentPayment[] = [
@@ -17,7 +18,8 @@ export const agentPaymentHistory: AgentPayment[] = [
     status: "Completed",
     transactionId: "TXN-001",
     paymentMethod: "Bank Transfer",
-    description: "Load delivery payment"
+    description: "Load delivery payment",
+    loadId: "LD-001"
   },
   {
     id: "2",
@@ -26,7 +28,8 @@ export const agentPaymentHistory: AgentPayment[] = [
     status: "Completed",
     transactionId: "TXN-002",
     paymentMethod: "Mobile Money",
-    description: "Container transport"
+    description: "Container transport",
+    loadId: "LD-002"
   },
   {
     id: "3",
@@ -35,6 +38,7 @@ export const agentPaymentHistory: AgentPayment[] = [
     status: "Failed",
     transactionId: "TXN-003",
     paymentMethod: "Bank Transfer",
-    description: "Bulk cargo delivery"
+    description: "Bulk cargo delivery",
+    loadId: "LD-003"
   }
 ];
