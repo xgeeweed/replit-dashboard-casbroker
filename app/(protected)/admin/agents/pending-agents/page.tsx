@@ -32,8 +32,10 @@ export default function PendingAgents() {
   if (nonApprovedData.length === 0) return basicErrorToast();
 
   return (
-    <div className="font-light h-full w-full flex flex-col items-center">
-      <DataTable columns={columns} data={nonApprovedData} meta={meta} />
+    <div className="p-6 w-full max-w-[1600px] mx-auto">
+      <div className="rounded-lg border bg-card">
+        <DataTable columns={columns} data={nonApprovedData} meta={meta} />
+      </div>
     </div>
   );
 }
