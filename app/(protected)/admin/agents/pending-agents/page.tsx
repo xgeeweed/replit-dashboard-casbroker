@@ -32,10 +32,9 @@ export default function PendingAgents() {
   if (nonApprovedData.length === 0) return basicErrorToast();
 
   return (
-    <div className="p-6 w-full max-w-[1600px] mx-auto">
-      <div className="rounded-lg border bg-card">
-        <DataTable columns={columns} data={nonApprovedData} meta={meta} />
-      </div>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Pending Agents</h1>
+      <DataTable columns={columns} data={nonApprovedData} meta={meta} />
     </div>
   );
 }
