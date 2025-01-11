@@ -3,6 +3,7 @@
 
 import { useParams } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { agentTransactions } from "./data";
 import allAgentsData from "../data";
@@ -99,6 +100,22 @@ export default function AgentView() {
 
         <TabsContent value="transactions">
           <div className="flex items-center py-4 gap-2">
+            <Input
+              placeholder="Search transactions..."
+              className="max-w-sm"
+              onChange={(e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const filtered = searchTerm === "" 
+                  ? agentTransactions 
+                  : agentTransactions.filter(transaction => 
+                      Object.values(transaction)
+                        .join(" ")
+                        .toLowerCase()
+                        .includes(searchTerm)
+                    );
+                setFilteredTransactions(filtered);
+              }}
+            />
             <Select onValueChange={(value) => {
               const filtered = value === "all" 
                 ? agentTransactions 
