@@ -5,7 +5,8 @@ import { Spinner } from "@/components/ui/spinner";
 import { basicErrorToast } from "@/components/toast";
 import { DataTable } from "@/components/datatable/data-table";
 import { Button } from "@/components/ui/button";
-import { XCircle } from "lucide-react"; 
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { XCircle, Plus } from "lucide-react"; 
 import { columns } from "./table/columns";
 import pendingAgentsData from "./data";
 
@@ -89,185 +90,190 @@ export default function PendingAgents() {
   if (nonApprovedData.length === 0) return basicErrorToast();
 
   return (
-    <div className="font-light h-full w-full flex flex-col items-center">
-      <div className="mb-4 flex justify-end w-full pr-4">
+    <div className="h-full w-full space-y-4 p-8 pt-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-3xl font-bold tracking-tight">Pending Agents</h2>
         <Button
-          className="bg-blue-500 text-white py-2 px-4 rounded-md"
           onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-2"
         >
-          Add New Agent
+          <Plus className="h-4 w-4" /> Add New Agent
         </Button>
       </div>
 
-      <DataTable columns={columns} data={nonApprovedData} meta={meta} />
+      <div className="bg-white rounded-lg shadow">
+        <DataTable columns={columns} data={nonApprovedData} meta={meta} />
+      </div>
 
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-96 relative">
-            <XCircle
-              className="absolute top-4 right-4 w-6 h-6 text-gray-400 hover:text-red-500 hover:scale-110 transition duration-200 cursor-pointer"
-              onClick={() => setIsModalOpen(false)}
-            />
-            <h3 className="text-xl font-bold mb-4">Add New Agent</h3>
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-between">
+              <span>Add New Agent</span>
+              <XCircle
+                className="h-6 w-6 text-gray-400 hover:text-red-500 cursor-pointer transition-colors"
+                onClick={() => setIsModalOpen(false)}
+              />
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="mt-4">
             <form className="space-y-4">
               {currentStep === 1 && (
-                <>
+                <div className="space-y-4">
                   <div>
-                    <label className="block text-gray-700">Full Name</label>
+                    <label className="block text-sm font-medium text-gray-700">Full Name</label>
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.fullName}
                       onChange={(e) => setNewAgent({ ...newAgent, fullName: e.target.value })}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700">Date of Birth</label>
+                    <label className="block text-sm font-medium text-gray-700">Date of Birth</label>
                     <input
                       type="date"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.dateOfBirth}
                       onChange={(e) => setNewAgent({ ...newAgent, dateOfBirth: e.target.value })}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700">Town of Birth</label>
+                    <label className="block text-sm font-medium text-gray-700">Town of Birth</label>
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.townOfBirth}
                       onChange={(e) => setNewAgent({ ...newAgent, townOfBirth: e.target.value })}
                       required
                     />
                   </div>
-                </>
+                </div>
               )}
 
               {currentStep === 2 && (
-                <>
+                <div className="space-y-4">
                   <div>
-                    <label className="block text-gray-700">Contact</label>
+                    <label className="block text-sm font-medium text-gray-700">Contact</label>
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.contact}
                       onChange={(e) => setNewAgent({ ...newAgent, contact: e.target.value })}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700">Email</label>
+                    <label className="block text-sm font-medium text-gray-700">Email</label>
                     <input
                       type="email"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.email}
                       onChange={(e) => setNewAgent({ ...newAgent, email: e.target.value })}
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700">GPS Address</label>
+                    <label className="block text-sm font-medium text-gray-700">GPS Address</label>
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.gpsAddress}
                       onChange={(e) => setNewAgent({ ...newAgent, gpsAddress: e.target.value })}
                     />
                   </div>
-                </>
+                </div>
               )}
 
               {currentStep === 3 && (
-                <>
+                <div className="space-y-4">
                   <div>
-                    <label className="block text-gray-700">Guarantor 1 Full Name</label>
+                    <label className="block text-sm font-medium text-gray-700">Guarantor 1 Full Name</label>
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.guarantor1FullName}
-                      onChange={(e) =>
-                        setNewAgent({ ...newAgent, guarantor1FullName: e.target.value })
-                      }
+                      onChange={(e) => setNewAgent({ ...newAgent, guarantor1FullName: e.target.value })}
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700">Guarantor 1 Contact</label>
+                    <label className="block text-sm font-medium text-gray-700">Guarantor 1 Contact</label>
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.guarantor1Contact}
-                      onChange={(e) =>
-                        setNewAgent({ ...newAgent, guarantor1Contact: e.target.value })
-                      }
+                      onChange={(e) => setNewAgent({ ...newAgent, guarantor1Contact: e.target.value })}
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700">Guarantor 1 Ghana Card</label>
+                    <label className="block text-sm font-medium text-gray-700">Guarantor 1 Ghana Card</label>
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.guarantor1GhanaCard}
-                      onChange={(e) =>
-                        setNewAgent({ ...newAgent, guarantor1GhanaCard: e.target.value })
-                      }
+                      onChange={(e) => setNewAgent({ ...newAgent, guarantor1GhanaCard: e.target.value })}
                     />
                   </div>
-                </>
+                </div>
               )}
 
               {currentStep === 4 && (
-                <>
+                <div className="space-y-4">
                   <div>
-                    <label className="block text-gray-700">Affiliate</label>
+                    <label className="block text-sm font-medium text-gray-700">Affiliate</label>
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.affiliateAssoc}
-                      onChange={(e) =>
-                        setNewAgent({ ...newAgent, affiliateAssoc: e.target.value })
-                      }
+                      onChange={(e) => setNewAgent({ ...newAgent, affiliateAssoc: e.target.value })}
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700">Agent Picture (URL)</label>
+                    <label className="block text-sm font-medium text-gray-700">Agent Picture (URL)</label>
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-md p-2"
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                       value={newAgent.agentPicture}
-                      onChange={(e) =>
-                        setNewAgent({ ...newAgent, agentPicture: e.target.value })
-                      }
+                      onChange={(e) => setNewAgent({ ...newAgent, agentPicture: e.target.value })}
                     />
                   </div>
-                </>
+                </div>
               )}
             </form>
 
-            <div className="mt-4 flex justify-between">
+            <div className="mt-6 flex justify-between">
               {currentStep > 1 && (
-                <Button onClick={handleBack} className="py-2 px-4 rounded-md">
+                <Button 
+                  onClick={handleBack}
+                  variant="outline"
+                  className="px-4 py-2"
+                >
                   Back
                 </Button>
               )}
               {currentStep < 4 && (
-                <Button onClick={handleNext} className="py-2 px-4 rounded-md">
+                <Button 
+                  onClick={handleNext}
+                  className="px-4 py-2 ml-auto"
+                >
                   Next
                 </Button>
               )}
               {currentStep === 4 && (
                 <Button
                   onClick={handleAddAgent}
-                  className="py-2 px-4 bg-blue-500 text-white rounded-md"
+                  className="px-4 py-2 ml-auto"
                 >
                   Add Agent
                 </Button>
               )}
             </div>
           </div>
-        </div>
-      )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
