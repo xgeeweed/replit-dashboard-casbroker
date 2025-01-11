@@ -4,7 +4,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, CheckCircle, XCircle, Route } from "lucide-react";
+import { Eye, MoreHorizontal, CheckCircle, XCircle, CornerUpRight } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { CanceledLoad } from "../data";
+import Link from "next/link";
 
 export const columns: ColumnDef<CanceledLoad>[] = [
   {
@@ -28,8 +29,12 @@ export const columns: ColumnDef<CanceledLoad>[] = [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Cancel Date" />,
   },
   {
-    accessorKey: "reason",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Reason" />,
+    accessorKey: "pickupLocation",
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Pickup" />,
+  },
+  {
+    accessorKey: "deliveryLocation",
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Delivery" />,
   },
   {
     accessorKey: "amount",
@@ -38,14 +43,6 @@ export const columns: ColumnDef<CanceledLoad>[] = [
       const amount = parseFloat(row.getValue("amount"));
       return `GH₵ ${amount.toLocaleString()}`;
     },
-  },
-  {
-    accessorKey: "pickupLocation",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Pickup" />,
-  },
-  {
-    accessorKey: "deliveryLocation",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Delivery" />,
   },
   {
     accessorKey: "status",
@@ -76,6 +73,12 @@ export const columns: ColumnDef<CanceledLoad>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <Link href={`/admin/agents/canceled-loads/${load.id}`}>
+              <DropdownMenuItem className="cursor-pointer">
+                <Eye className="mr-2 h-4 w-4" />
+                View Details
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuItem
               onClick={() => {
                 toast.success(`Approved cancellation for load ${load.loadId}`);
@@ -87,7 +90,7 @@ export const columns: ColumnDef<CanceledLoad>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => {
-                toast.success(`Denied cancellation for load ${load.loadId}`);
+                toast.error(`Denied cancellation for load ${load.loadId}`);
               }}
               className="text-red-600"
             >
@@ -96,10 +99,10 @@ export const columns: ColumnDef<CanceledLoad>[] = [
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => {
-                toast.success(`Initiating re-route for load ${load.loadId}`);
+                toast.info(`Re-routing load ${load.loadId}`);
               }}
             >
-              <Route className="mr-2 h-4 w-4" />
+              <CornerUpRight className="mr-2 h-4 w-4" />
               Re-route
             </DropdownMenuItem>
           </DropdownMenuContent>

@@ -12,7 +12,7 @@ export type CanceledLoad = {
   deliveryLocation: string;
 };
 
-export const canceledLoads: CanceledLoad[] = [
+export const canceledLoads = [
   {
     id: "CL001",
     loadId: "LD123",
