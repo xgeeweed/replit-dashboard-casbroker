@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DataTable } from "@/components/datatable/data-table";
 import { columns } from "./table/columns";
 import { driversData } from "./data";
