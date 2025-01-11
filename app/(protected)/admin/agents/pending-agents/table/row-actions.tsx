@@ -28,7 +28,7 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <Link href={`/admin/agents/pending-agents/${rowData.rowId}`}>
+        <Link href={`/agents/pending-agents/${rowData.rowId}`}>
           <DropdownMenuItem className="cursor-pointer">
             <Eye className="mr-2 h-4 w-4" />
             View
