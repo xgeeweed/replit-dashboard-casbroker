@@ -3,6 +3,7 @@
 
 import { useParams } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { agentTransactions } from "./data";
 import allAgentsData from "../data";
 import {
