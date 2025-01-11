@@ -38,7 +38,7 @@ export default function DriverPayments() {
 
   const totalAmount = data
     .filter(payment => payment.status === "Completed")
-    .reduce((sum, payment) => sum + payment.amount, 0);
+    .reduce((sum, payment) => sum + (payment.amount * 0.9), 0);
 
   if (isLoading) return <Spinner />;
 
