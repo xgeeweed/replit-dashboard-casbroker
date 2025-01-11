@@ -1,0 +1,156 @@
+Error: 
+  × the name `NextResponse` is defined multiple times
+    ╭─[/home/runner/workspace/app/api/driver-lookup/route.ts:1:1]
+  1 │ 
+  2 │ import { NextResponse } from "next/server";
+    ·          ──────┬─────
+    ·                ╰── previous definition of `NextResponse` here
+  3 │ 
+  4 │ const mockDriverData = [
+  5 │   {
+  6 │     licenseId: "GHA-DL-123456",
+  7 │     phone: "+233 24 555 1234",
+  8 │     fullName: "James Anderson",
+  9 │     dateOfBirth: "1990-08-15",
+ 10 │     nationality: "Ghanaian",
+ 11 │     gpsAddress: "123 Ring Road, Accra",
+ 12 │     vehicleType: "Box Truck",
+ 13 │     vehiclePlate: "GT 1234-22",
+ 14 │     experience: "5 years",
+ 15 │   },
+ 16 │   {
+ 17 │     licenseId: "GHA-DL-789012",
+ 18 │     phone: "+233 20 123 4567",
+ 19 │     fullName: "Kwame Mensah",
+ 20 │     dateOfBirth: "1985-05-22",
+ 21 │     nationality: "Ghanaian",
+ 22 │     gpsAddress: "456 Tema Port Area",
+ 23 │     vehicleType: "Container Truck",
+ 24 │     vehiclePlate: "GT 5678-23",
+ 25 │     experience: "8 years",
+ 26 │   }
+ 27 │ ];
+ 28 │ 
+ 29 │ export async function POST(req: Request) {
+ 30 │   const { searchType, searchValue } = await req.json();
+ 31 │   
+ 32 │   // Simulate API delay
+ 33 │   await new Promise(resolve => setTimeout(resolve, 1000));
+ 34 │   
+ 35 │   const driver = mockDriverData.find(driver => 
+ 36 │     searchType === 'phone' ? driver.phone === searchValue : driver.licenseId === searchValue
+ 37 │   );
+ 38 │ 
+ 39 │   if (!driver) {
+ 40 │     return NextResponse.json(
+ 41 │       { error: "Driver not found" },
+ 42 │       { status: 404 }
+ 43 │     );
+ 44 │   }
+ 45 │ 
+ 46 │   return NextResponse.json(driver);
+ 47 │ }
+ 48 │ import { NextResponse } from "next/server";
+    ·          ──────┬─────
+    ·                ╰── `NextResponse` redefined here
+ 49 │ import { mockDriverData } from "./data";
+ 50 │ 
+ 51 │ export async function POST(req: Request) {
+    ╰────
+
+  × the name `mockDriverData` is defined multiple times
+    ╭─[/home/runner/workspace/app/api/driver-lookup/route.ts:1:1]
+  1 │ 
+  2 │ import { NextResponse } from "next/server";
+  3 │ 
+  4 │ const mockDriverData = [
+    ·       ───────┬──────
+    ·              ╰── previous definition of `mockDriverData` here
+  5 │   {
+  6 │     licenseId: "GHA-DL-123456",
+  7 │     phone: "+233 24 555 1234",
+  8 │     fullName: "James Anderson",
+  9 │     dateOfBirth: "1990-08-15",
+ 10 │     nationality: "Ghanaian",
+ 11 │     gpsAddress: "123 Ring Road, Accra",
+ 12 │     vehicleType: "Box Truck",
+ 13 │     vehiclePlate: "GT 1234-22",
+ 14 │     experience: "5 years",
+ 15 │   },
+ 16 │   {
+ 17 │     licenseId: "GHA-DL-789012",
+ 18 │     phone: "+233 20 123 4567",
+ 19 │     fullName: "Kwame Mensah",
+ 20 │     dateOfBirth: "1985-05-22",
+ 21 │     nationality: "Ghanaian",
+ 22 │     gpsAddress: "456 Tema Port Area",
+ 23 │     vehicleType: "Container Truck",
+ 24 │     vehiclePlate: "GT 5678-23",
+ 25 │     experience: "8 years",
+ 26 │   }
+ 27 │ ];
+ 28 │ 
+ 29 │ export async function POST(req: Request) {
+ 30 │   const { searchType, searchValue } = await req.json();
+ 31 │   
+ 32 │   // Simulate API delay
+ 33 │   await new Promise(resolve => setTimeout(resolve, 1000));
+ 34 │   
+ 35 │   const driver = mockDriverData.find(driver => 
+ 36 │     searchType === 'phone' ? driver.phone === searchValue : driver.licenseId === searchValue
+ 37 │   );
+ 38 │ 
+ 39 │   if (!driver) {
+ 40 │     return NextResponse.json(
+ 41 │       { error: "Driver not found" },
+ 42 │       { status: 404 }
+ 43 │     );
+ 44 │   }
+ 45 │ 
+ 46 │   return NextResponse.json(driver);
+ 47 │ }
+ 48 │ import { NextResponse } from "next/server";
+ 49 │ import { mockDriverData } from "./data";
+    ·          ───────┬──────
+    ·                 ╰── `mockDriverData` redefined here
+ 50 │ 
+ 51 │ export async function POST(req: Request) {
+ 52 │   try {
+    ╰────
+
+  × the name `POST` is defined multiple times
+    ╭─[/home/runner/workspace/app/api/driver-lookup/route.ts:26:1]
+ 26 │   }
+ 27 │ ];
+ 28 │ 
+ 29 │ export async function POST(req: Request) {
+    ·                       ──┬─
+    ·                         ╰── previous definition of `POST` here
+ 30 │   const { searchType, searchValue } = await req.json();
+ 31 │   
+ 32 │   // Simulate API delay
+ 33 │   await new Promise(resolve => setTimeout(resolve, 1000));
+ 34 │   
+ 35 │   const driver = mockDriverData.find(driver => 
+ 36 │     searchType === 'phone' ? driver.phone === searchValue : driver.licenseId === searchValue
+ 37 │   );
+ 38 │ 
+ 39 │   if (!driver) {
+ 40 │     return NextResponse.json(
+ 41 │       { error: "Driver not found" },
+ 42 │       { status: 404 }
+ 43 │     );
+ 44 │   }
+ 45 │ 
+ 46 │   return NextResponse.json(driver);
+ 47 │ }
+ 48 │ import { NextResponse } from "next/server";
+ 49 │ import { mockDriverData } from "./data";
+ 50 │ 
+ 51 │ export async function POST(req: Request) {
+    ·                       ──┬─
+    ·                         ╰── `POST` redefined here
+ 52 │   try {
+ 53 │     const { searchType, searchValue } = await req.json();
+ 54 │     
+    ╰────
