@@ -62,6 +62,12 @@ export const columns: ColumnDef<any>[] = [
                 View Details
               </DropdownMenuItem>
             </Link>
+            <Link href={`/admin/drivers/all-drivers/${driver.rowId}/trucks`}>
+              <DropdownMenuItem className="cursor-pointer">
+                <Truck className="mr-2 h-4 w-4" />
+                View Trucks
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuItem
               onClick={() => {
                 toast.info(`Sending message to ${driver.fullName}`);
@@ -69,14 +75,6 @@ export const columns: ColumnDef<any>[] = [
             >
               <MessageCircle className="mr-2 h-4 w-4" />
               Send Message
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => {
-                toast.info(`Viewing vehicles for ${driver.fullName}`);
-              }}
-            >
-              <Truck className="mr-2 h-4 w-4" />
-              View Vehicles
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => {
