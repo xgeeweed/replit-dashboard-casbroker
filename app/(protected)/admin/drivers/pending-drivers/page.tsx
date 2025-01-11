@@ -2,6 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { basicErrorToast } from "@/components/toast";
 import { DataTable } from "@/components/datatable/data-table";
