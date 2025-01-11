@@ -8,25 +8,29 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
+  TableRow,
 } from "@/components/ui/table";
 import { agentPaymentHistory } from "./data";
 import { Printer } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 
-export default function AgentPaymentHistory({ params }: { params: { id: string } }) {
+export default function AgentPaymentHistory({
+  params,
+}: {
+  params: { id: string };
+}) {
   const [payments] = useState(agentPaymentHistory);
   const totalAmount = payments
-    .filter(payment => payment.status === "Completed")
+    .filter((payment) => payment.status === "Completed")
     .reduce((sum, payment) => sum + payment.amount, 0);
   const componentRef = useRef<HTMLDivElement>(null);
 
   // TypeScript infers the correct type automatically here:
   const handlePrint = useReactToPrint({
-      trigger: () => componentRef.current,
-      documentTitle: "Payment History Report",
-      removeAfterPrint: true,
-      onAfterPrint: () => console.log("Printed successfully"),
+    trigger: () => componentRef.current,
+    documentTitle: "Payment History Report",
+    removeAfterPrint: true,
+    onAfterPrint: () => console.log("Printed successfully"),
   });
 
   return (
@@ -34,7 +38,9 @@ export default function AgentPaymentHistory({ params }: { params: { id: string }
       <div className="flex justify-between items-center mb-6 no-print">
         <div>
           <h1 className="text-2xl font-bold">Payment History</h1>
-          <p className="text-muted-foreground">Total Transactions: GH₵ {totalAmount.toLocaleString()}</p>
+          <p className="text-muted-foreground">
+            Total Completed Transactions: GH₵ {totalAmount.toLocaleString()}
+          </p>
         </div>
         {/* Wrap handlePrint in an arrow function to avoid TS mismatch */}
         <Button onClick={() => handlePrint()}>
@@ -44,7 +50,9 @@ export default function AgentPaymentHistory({ params }: { params: { id: string }
       </div>
 
       <div ref={componentRef} className="print-content">
-        <h1 className="text-2xl font-bold mb-6 print-show">Payment History Report</h1>
+        <h1 className="text-2xl font-bold mb-6 print-show">
+          Payment History Report
+        </h1>
         <div className="rounded-md border">
           <Table>
             <TableHeader>
@@ -71,8 +79,8 @@ export default function AgentPaymentHistory({ params }: { params: { id: string }
                         payment.status === "Completed"
                           ? "bg-green-100 text-green-800"
                           : payment.status === "Failed"
-                          ? "bg-red-100 text-red-800"
-                          : "bg-yellow-100 text-yellow-800"
+                            ? "bg-red-100 text-red-800"
+                            : "bg-yellow-100 text-yellow-800"
                       }`}
                     >
                       {payment.status}
