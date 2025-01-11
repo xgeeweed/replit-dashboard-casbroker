@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { DataTable } from "@/components/datatable/data-table";
 import { columns } from "./table/columns";
-import { driversData } from "./data";
+import allDriversData from "./data";
 import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +23,7 @@ import {
 
 
 export default function AllDrivers() {
-  const [data, setData] = useState(driversData);
+  const [data, setData] = useState(allDriversData || []);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDriverId, setSelectedDriverId] = useState<string>("");
