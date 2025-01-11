@@ -15,14 +15,20 @@ import { toast } from "sonner";
 
 export function ChangeStatusDialog({ agent }: { agent: any }) {
   const [status, setStatus] = useState(agent.status);
+  const [open, setOpen] = useState(false);
 
   const handleStatusChange = () => {
+    if (status === agent.status) {
+      toast.error("Please select a different status");
+      return;
+    }
     // TODO: Implement actual status change logic here
     toast.success(`Status updated for ${agent.fullName}`);
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="ghost" className="flex items-center">
           Change Status
