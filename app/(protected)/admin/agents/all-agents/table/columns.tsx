@@ -4,8 +4,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/datatable/data-table-column-header";
 import { Button } from "@/components/ui/button";
-import { Eye, MessageCircle, MoreHorizontal, Trash2 } from "lucide-react";
-import { ChangeStatusDialog } from "@/components/agents/change-status-dialog";
+import { Eye, MessageCircle, MoreHorizontal, RefreshCw, Trash2 } from "lucide-react";
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -69,8 +68,13 @@ export const columns: ColumnDef<any>[] = [
                 View Payment History
               </DropdownMenuItem>
             </Link>
-            <DropdownMenuItem>
-              <ChangeStatusDialog agent={agent} />
+            <DropdownMenuItem
+              onClick={() => {
+                toast.info(`Changing status for ${agent.fullName}`);
+              }}
+            >
+              <RefreshCw className="mr-2 h-4 w-4" />
+              Change Status
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => {
