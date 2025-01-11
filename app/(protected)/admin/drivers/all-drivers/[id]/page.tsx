@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useParams } from "next/navigation";
@@ -21,6 +20,7 @@ import { basicErrorToast } from "@/components/toast";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function DriverView() {
   const { id } = useParams();
@@ -43,6 +43,16 @@ export default function DriverView() {
 
   return (
     <div className="p-6">
+      <div className="flex items-center gap-4 mb-6">
+        <Link href="/admin/drivers/all-drivers">
+          <Button variant="ghost">
+            <ChevronLeft className="w-4 h-4 mr-2" />
+            Back
+          </Button>
+        </Link>
+        <h1 className="text-2xl font-bold">Driver Details</h1>
+      </div>
+
       <Tabs defaultValue="details" className="w-full">
         <TabsList>
           <TabsTrigger value="details">Driver Details</TabsTrigger>
@@ -179,109 +189,6 @@ export default function DriverView() {
           </div>
         </TabsContent>
       </Tabs>
-    </div>
-  );
-}
-"use client";
-
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
-import { driverData } from "./data";
-
-export default function DriverDetails({ params }: { params: { id: string } }) {
-  const [driver] = useState(driverData);
-
-  return (
-    <div className="p-6">
-      <div className="flex items-center gap-4 mb-6">
-        <Link href="/admin/drivers/all-drivers">
-          <Button variant="ghost">
-            <ChevronLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-        </Link>
-        <h1 className="text-2xl font-bold">Driver Details</h1>
-      </div>
-
-      <div className="grid grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <div>
-            <h2 className="font-semibold mb-2">Personal Information</h2>
-            <div className="grid gap-2">
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">Full Name</span>
-                <span>{driver.fullName}</span>
-              </div>
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">Date of Birth</span>
-                <span>{driver.dateOfBirth}</span>
-              </div>
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">Nationality</span>
-                <span>{driver.nationality}</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h2 className="font-semibold mb-2">Contact Information</h2>
-            <div className="grid gap-2">
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">Contact</span>
-                <span>{driver.contact}</span>
-              </div>
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">Email</span>
-                <span>{driver.email}</span>
-              </div>
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">GPS Address</span>
-                <span>{driver.gpsAddress}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <h2 className="font-semibold mb-2">Vehicle Information</h2>
-            <div className="grid gap-2">
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">License Number</span>
-                <span>{driver.licenseNumber}</span>
-              </div>
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">Vehicle Type</span>
-                <span>{driver.vehicleType}</span>
-              </div>
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">Vehicle Plate</span>
-                <span>{driver.vehiclePlate}</span>
-              </div>
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">Experience</span>
-                <span>{driver.experience}</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h2 className="font-semibold mb-2">Status Information</h2>
-            <div className="grid gap-2">
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">Status</span>
-                <span>{driver.status}</span>
-              </div>
-              <div className="flex justify-between p-2 bg-secondary/20 rounded">
-                <span className="text-muted-foreground">Rating</span>
-                <span>{driver.rating}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
