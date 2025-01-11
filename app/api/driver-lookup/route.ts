@@ -1,4 +1,3 @@
-
 import { NextResponse } from "next/server";
 
 const mockDriverData = [
@@ -27,45 +26,28 @@ const mockDriverData = [
 ];
 
 export async function POST(req: Request) {
-  const { searchType, searchValue } = await req.json();
-  
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  const driver = mockDriverData.find(driver => 
-    searchType === 'phone' ? driver.phone === searchValue : driver.licenseId === searchValue
-  );
-
-  if (!driver) {
-    return NextResponse.json(
-      { error: "Driver not found" },
-      { status: 404 }
-    );
-  }
-
-  return NextResponse.json(driver);
-}
-import { NextResponse } from "next/server";
-import { mockDriverData } from "./data";
-
-export async function POST(req: Request) {
   try {
     const { searchType, searchValue } = await req.json();
-    
-    const driver = mockDriverData.find(driver => {
-      if (searchType === "phone") {
-        return driver.contact.replace(/\s/g, "") === searchValue.replace(/\s/g, "");
-      } else {
-        return driver.licenseNumber === searchValue;
-      }
-    });
+
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const driver = mockDriverData.find(driver => 
+      searchType === 'phone' ? driver.phone === searchValue : driver.licenseId === searchValue
+    );
 
     if (!driver) {
-      return new NextResponse("Driver not found", { status: 404 });
+      return NextResponse.json(
+        { error: "Driver not found" },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(driver);
   } catch (error) {
-    return new NextResponse("Internal Error", { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Error" },
+      { status: 500 }
+    );
   }
 }
