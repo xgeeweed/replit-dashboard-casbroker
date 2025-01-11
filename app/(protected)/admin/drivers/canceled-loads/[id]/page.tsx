@@ -7,17 +7,34 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import {
   ChevronLeft,
+  MapPin,
+  BadgeCent,
   Calendar,
   FileText,
-  CheckCircle,
   XCircle,
+  CheckCircle,
   CornerUpRight,
+  ArrowRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { toast } from "sonner";
 import { driverCanceledLoads } from "../data";
 import { DetailRow } from "@/components/ui/detail-row";
+
+interface DetailItemProps {
+  icon: LucideIcon;
+  label: string;
+  value: string | number;
+}
+
+const DetailItem = ({ icon: Icon, label, value }: DetailItemProps) => (
+  <div className="flex flex-col items-center justify-center">
+    <Icon className="w-5 h-5 text-gray-500 mb-1" />
+    <p className="text-xs text-gray-500">{label}</p>
+    <p className="font-semibold">{value}</p>
+  </div>
+);
 
 const DetailCard = ({
   title,
@@ -68,6 +85,40 @@ export default function CanceledLoadDetails() {
       <div className="p-4 bg-white mt-2">
         <h2 className="text-2xl font-bold">Load #{load.loadId}</h2>
         <p className="text-gray-500 text-sm mt-1">Status: {load.status}</p>
+      </div>
+
+      <div className="flex justify-between items-center p-4 bg-white mt-2">
+        <div className="flex items-center gap-10">
+          <div className="flex items-start">
+            <MapPin className="w-3 h-3 text-red-400 mt-1" strokeWidth={3} />
+            <div>
+              <p className="text-gray-500 text-sm">PICK UP</p>
+              <p className="font-medium">{load.pickupLocation}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center">
+            <div className="h-[2px] w-16 bg-gray-300"></div>
+            <ArrowRight className="w-4 h-4 text-gray-400 mx-2" />
+            <div className="h-[2px] w-16 bg-gray-300"></div>
+          </div>
+
+          <div className="flex items-start">
+            <MapPin className="w-3 h-3 text-green-400 mt-1" strokeWidth={3} />
+            <div>
+              <p className="text-gray-500 text-sm">DROP OFF</p>
+              <p className="font-medium">{load.deliveryLocation}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 p-4 bg-white mt-2 text-center">
+        <DetailItem 
+          icon={BadgeCent} 
+          label="Load Amount" 
+          value={`₵${load.amount.toLocaleString()}`} 
+        />
       </div>
 
       <DetailCard title="Cancellation Details">
