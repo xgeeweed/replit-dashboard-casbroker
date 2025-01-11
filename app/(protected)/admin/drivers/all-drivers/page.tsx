@@ -31,7 +31,7 @@ export default function AllDrivers() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setData(driversData);
+      setData(allDriversData);
       setIsLoading(false);
     }, 700);
 
