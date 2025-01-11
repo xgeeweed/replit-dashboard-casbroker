@@ -16,7 +16,9 @@ import { useReactToPrint } from "react-to-print";
 
 export default function AgentPaymentHistory({ params }: { params: { id: string } }) {
   const [payments] = useState(agentPaymentHistory);
-  const totalAmount = payments.reduce((sum, payment) => sum + payment.amount, 0);
+  const totalAmount = payments
+    .filter(payment => payment.status === "Completed")
+    .reduce((sum, payment) => sum + payment.amount, 0);
   const componentRef = useRef<HTMLDivElement>(null);
 
   // TypeScript infers the correct type automatically here:
