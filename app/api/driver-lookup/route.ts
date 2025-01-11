@@ -45,3 +45,27 @@ export async function POST(req: Request) {
 
   return NextResponse.json(driver);
 }
+import { NextResponse } from "next/server";
+import { mockDriverData } from "./data";
+
+export async function POST(req: Request) {
+  try {
+    const { searchType, searchValue } = await req.json();
+    
+    const driver = mockDriverData.find(driver => {
+      if (searchType === "phone") {
+        return driver.contact.replace(/\s/g, "") === searchValue.replace(/\s/g, "");
+      } else {
+        return driver.licenseNumber === searchValue;
+      }
+    });
+
+    if (!driver) {
+      return new NextResponse("Driver not found", { status: 404 });
+    }
+
+    return NextResponse.json(driver);
+  } catch (error) {
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+}
