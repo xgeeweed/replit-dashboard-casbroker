@@ -89,6 +89,12 @@ export const columns: ColumnDef<any>[] = [
               <RefreshCw className="mr-2 h-4 w-4" />
               Change Status
             </DropdownMenuItem>
+            <Link href={`/admin/drivers/all-drivers/${driver.rowId}/payment-history`}>
+              <DropdownMenuItem className="cursor-pointer">
+                <Eye className="mr-2 h-4 w-4" />
+                View Payment History
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuItem
               onClick={() => {
                 toast.info(`Removing ${driver.fullName}`);
