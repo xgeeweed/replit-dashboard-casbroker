@@ -16,6 +16,7 @@ import { useReactToPrint } from "react-to-print";
 
 export default function AgentPaymentHistory({ params }: { params: { id: string } }) {
   const [payments] = useState(agentPaymentHistory);
+  const totalAmount = payments.reduce((sum, payment) => sum + payment.amount, 0);
   const componentRef = useRef<HTMLDivElement>(null);
 
   // TypeScript infers the correct type automatically here:
@@ -29,7 +30,10 @@ export default function AgentPaymentHistory({ params }: { params: { id: string }
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6 no-print">
-        <h1 className="text-2xl font-bold">Payment History</h1>
+        <div>
+          <h1 className="text-2xl font-bold">Payment History</h1>
+          <p className="text-muted-foreground">Total Transactions: GH₵ {totalAmount.toLocaleString()}</p>
+        </div>
         {/* Wrap handlePrint in an arrow function to avoid TS mismatch */}
         <Button onClick={() => handlePrint()}>
           <Printer className="h-4 w-4 mr-2" />
