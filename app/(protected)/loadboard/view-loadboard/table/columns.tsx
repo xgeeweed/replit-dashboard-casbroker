@@ -51,7 +51,7 @@ export const columns: ColumnDef<any>[] = [
       },
     },
     // { accessorKey: "status", title: "Status", options: { isStatus: true } },
-    { accessorKey: "length", title: "Length" },
+    { accessorKey: "container_size", title: "Container Size" },
     { accessorKey: "equipmentType", title: "Equipment Type", options: { isEquipmentType: true } },
   ]),
   {

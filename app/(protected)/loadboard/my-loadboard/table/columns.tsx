@@ -44,9 +44,9 @@ export const columns: ColumnDef<any>[] = [
     ),
   },
   {
-    accessorKey: "length",
+    accessorKey: "container_size",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Length" />
+      <DataTableColumnHeader column={column} title="Container Size" />
     ),
   },
   {

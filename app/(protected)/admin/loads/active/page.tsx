@@ -1,19 +1,21 @@
-
 "use client";
+
 import { Spinner } from "@/components/ui/spinner";
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/datatable/data-table";
 import { columns } from "./table/columns";
-import { initialData } from "./data";
+import { data as initialData } from "./data";
 
 export default function ActiveLoads() {
-  const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(initialData);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Simulate API loading
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 700);
+    }, 500);
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -21,13 +23,18 @@ export default function ActiveLoads() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Active Loads</h1>
-      <DataTable 
-        columns={columns} 
-        data={data} 
+      <div className="mb-4">
+        <h1 className="text-2xl font-semibold">Active Loads</h1>
+        <p className="text-muted-foreground">
+          Manage and monitor all currently active loads in the system
+        </p>
+      </div>
+      <DataTable
+        columns={columns}
+        data={data}
         meta={{
-          name: "Active Load",
-          plural: "Active Loads"
+          name: "Load",
+          plural: "Loads",
         }}
       />
     </div>

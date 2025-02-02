@@ -1,6 +1,6 @@
 "use client";
 import { Spinner } from "@/components/ui/spinner";
-import { basicErrorToast } from "@/components/toast";
+import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/datatable/data-table";
 import { columns } from "./table/columns";
@@ -26,11 +26,36 @@ export default function AgentLoadboard() {
         load.rowId === loadId ? { ...load, status: newStatus } : load,
       ),
     );
+    
+    if (newStatus === "Removed") {
+      toast.success("Load removed successfully");
+    } else if (newStatus === "Cancelled") {
+      toast.success("Load cancelled successfully");
+    }
+  };
+
+  const updateLoadDestination = (loadId: string, newDestination: string, newRate: number) => {
+    setLoadboardData((prev) =>
+      prev.map((load) =>
+        load.rowId === loadId
+          ? {
+              ...load,
+              deliveryLocation: newDestination,
+              confirmedRate: newRate,
+              // You might want to update other fields like distance
+              // In a real app, these would come from the API
+            }
+          : load,
+      ),
+    );
+    toast.success("Route updated successfully");
   };
 
   const meta = {
     name: "Load",
     plural: "Loads",
+    updateLoadStatus,
+    updateLoadDestination,
   };
 
   const [filters, setFilters] = useState({
@@ -129,7 +154,6 @@ export default function AgentLoadboard() {
             columns={columns}
             data={loadboardData.filter((item) => item.status === "Pending Review")}
             meta={meta}
-            updateLoadStatus={updateLoadStatus}
           />
         </TabsContent>
         <TabsContent value="in-progress">
@@ -137,7 +161,6 @@ export default function AgentLoadboard() {
             columns={columns}
             data={loadboardData.filter((item) => item.status === "In Progress")}
             meta={meta}
-            updateLoadStatus={updateLoadStatus}
           />
         </TabsContent>
         <TabsContent value="completed">
@@ -145,7 +168,6 @@ export default function AgentLoadboard() {
             columns={columns}
             data={loadboardData.filter((item) => item.status === "Completed")}
             meta={meta}
-            updateLoadStatus={updateLoadStatus}
           />
         </TabsContent>
         <TabsContent value="saved">
@@ -153,7 +175,6 @@ export default function AgentLoadboard() {
             columns={columns}
             data={loadboardData.filter((item) => item.status === "Saved")}
             meta={meta}
-            updateLoadStatus={updateLoadStatus}
           />
         </TabsContent>
       </Tabs>
