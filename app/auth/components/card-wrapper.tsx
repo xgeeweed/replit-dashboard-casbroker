@@ -31,16 +31,19 @@ const CardWrapper = ({
         <Header label={headerLabel} />
       </CardHeader>
       <CardContent>{children}</CardContent>
-      {/* {showSocial && (
-        <CardFooter>
+      {showSocial && (
+        <CardFooter className="flex flex-col gap-4">
           <Social />
+          <BackButton label={backButtonLabel} href={backButtonHref} />
         </CardFooter>
-      )} */}
-      <CardFooter>
-        <BackButton label={backButtonLabel} href={backButtonHref} />
-      </CardFooter>
+      )}
+      {!showSocial && (
+        <CardFooter>
+          <BackButton label={backButtonLabel} href={backButtonHref} />
+        </CardFooter>
+      )}
     </Card>
   );
 };
-
 export default CardWrapper;
+

@@ -4,9 +4,8 @@ import * as z from "zod";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { useRouter } from "next/navigation";
 import { RegisterSchema } from "@/app/auth/schemas";
-
 import {
   Form,
   FormControl,
@@ -15,18 +14,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 import CardWrapper from "@/app/auth/components/card-wrapper";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FormError } from "@/app/auth/components/form-error";
 import { FormSucess } from "@/app/auth/components/form-sucesss";
 import { register } from "@/app/auth/actions/register";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
-  const [sucess, setSucess] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -34,19 +34,47 @@ const RegisterForm = () => {
       email: "",
       password: "",
       name: "",
+      userType: "user",
     },
   });
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("");
-    setSucess("");
+    setSuccess("");
+
+    if (values.userType === "driver") {
+      router.push("/auth/driver-signup");
+      return;
+    }
+
+    if (values.userType === "agent") {
+      router.push("/auth/agent-signup");
+      return;
+    }
 
     startTransition(() => {
       register(values).then((data) => {
         setError(data.error);
-        setSucess(data.sucess);
+        setSuccess(data.success);
+        
+        // Only redirect if registration was successful
+        if (data.success) {
+          setTimeout(() => {
+            router.push("/auth/login");
+          }, 2000);
+        }
       });
     });
+  };
+
+  const onUserTypeChange = (value: "user" | "driver" | "agent") => {
+    if (value === "driver") {
+      router.push("/auth/driver-signup");
+    } else if (value === "agent") {
+      router.push("/auth/agent-signup");
+    } else {
+      form.setValue("userType", value);
+    }
   };
 
   return (
@@ -59,13 +87,41 @@ const RegisterForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
+            {/* User Type */}
+            <FormField
+              control={form.control}
+              name="userType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Account Type</FormLabel>
+                  <Select
+                    disabled={isPending}
+                    onValueChange={onUserTypeChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select account type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="user">Regular User</SelectItem>
+                      <SelectItem value="driver">Driver</SelectItem>
+                      <SelectItem value="agent">Agent</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Name */}
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Full Name</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -119,7 +175,7 @@ const RegisterForm = () => {
             />
           </div>
           <FormError message={error} />
-          <FormSucess message={sucess} />
+          <FormSucess message={success} />
           <Button disabled={isPending} type="submit" className="w-full">
             Create an account
           </Button>

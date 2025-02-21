@@ -1,62 +1,64 @@
-// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  ADMIN
-  USER
-}
-
 model User {
-  id                      String                 @id @default(auto()) @map("_id") @db.ObjectId
+  id                      String                 @id @default(uuid())
   name                    String?
   email                   String?                @unique
+  phone_number            String?                @unique
   emailVerified           DateTime?
   image                   String?
   password                String?
   role                    UserRole               @default(USER)
-  accounts                Account[]
   isTwoFactorEnabled      Boolean                @default(false)
+  twoFactorConfirmationId String?
+  accounts                Account[]
   twoFactorConfirmation   TwoFactorConfirmation?
-  twoFactorConfirmationId String?                @db.ObjectId
+  first_name              String
+  last_name               String
+  status                  String
+  company_id              String?
+  company                 Company?               @relation(fields: [company_id], references: [id])
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
 }
 
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
+  id                String  @id @default(uuid())
+  userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.String
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
 model VerificationToken {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  email   String
-  token   String   @unique
-  expires DateTime
+  id         String   @id @default(uuid())
+  identifier String
+  token      String
+  expires    DateTime
+  createdAt  DateTime @default(now())
 
-  @@unique([email, token])
+  @@unique([identifier, token])
 }
 
 model PasswordResetToken {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  id      String   @id @default(uuid())
   email   String
   token   String   @unique
   expires DateTime
@@ -65,7 +67,7 @@ model PasswordResetToken {
 }
 
 model TwoFactorToken {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  id      String   @id @default(uuid())
   email   String
   token   String   @unique
   expires DateTime
@@ -74,38 +76,140 @@ model TwoFactorToken {
 }
 
 model TwoFactorConfirmation {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-
-  userId String @db.ObjectId
+  id     String @id @default(uuid())
+  userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId])
 }
 
 model BillOfLading {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  blNumber String @unique
-  containers Container[]
+  id              String      @id @default(uuid())
+  blNumber        String      @unique
   bulkCargoWeight Float?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  containers      Container[]
 }
 
 model Container {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  containerNumber String @unique
-  billOfLading BillOfLading @relation(fields: [blId], references: [id])
-  blId String @db.ObjectId
-  isPosted Boolean @default(false)
+  id              String       @id @default(uuid())
+  containerNumber String       @unique
+  blId            String
+  isPosted        Boolean      @default(false)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  billOfLading    BillOfLading @relation(fields: [blId], references: [id])
+}
+
+model Rate {
+  id          String   @id @default(uuid())
+  origin      String
+  destination String
+  rate        Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model OTP {
+  id           String   @id @default(uuid())
+  phone_number String
+  otp          String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+
+  @@unique([phone_number, otp])
+}
+
+model Driver {
+  japtu_id               String    @id @db.VarChar(255)
+  full_name              String?   @db.VarChar(255)
+  national_id            String?   @db.VarChar(255)
+  dob                    DateTime? @db.Date
+  email                  String?   @db.VarChar(255)
+  phone_number           String?   @db.VarChar(255)
+  status                 String?   @db.VarChar(50)
+  created_at             DateTime? @default(now()) @db.Timestamp(6)
+  updated_at             DateTime? @default(now()) @db.Timestamp(6)
+  drivers_license_number String?   @db.VarChar(255)
+  vehicles               Vehicle[]
+}
+
+model Vehicle {
+  driver_id               String?   @db.VarChar(255)
+  make                    String?   @db.VarChar(255)
+  model                   String?   @db.VarChar(255)
+  year                    Int?
+  color                   String?   @db.VarChar(50)
+  license_plate           String?   @db.VarChar(255)
+  vin                     String?   @db.VarChar(255)
+  insurance_provider      String?   @db.VarChar(255)
+  insurance_policy_number String?   @db.VarChar(255)
+  created_at              DateTime? @default(now()) @db.Timestamp(6)
+  updated_at              DateTime? @default(now()) @db.Timestamp(6)
+  id                      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  driver                  Driver?   @relation(fields: [driver_id], references: [japtu_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Company {
+  id        String   @id @default(uuid())
+  name      String
+  tax_id    String   @unique
+  contacts  CompanyContact[]
+  users     User[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Rate {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  origin String
-  destination String
-  rate Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model CompanyContact {
+  id                 String   @id @default(uuid())
+  full_name         String
+  email             String
+  phone_number      String
+  is_referral_contact Boolean @default(false)
+  company_id        String
+  company           Company  @relation(fields: [company_id], references: [id])
+  referral_requests AgentReferralRequest[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model tempAgentRegistration {
+  id           String   @id @default(uuid())
+  phone_number String
+  email        String
+  first_name   String
+  last_name    String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+}
+
+model AgentReferralRequest {
+  id                 String   @id @default(uuid())
+  token             String   @unique
+  status            String   // PENDING, APPROVED, DECLINED
+  agent_data        Json
+  referral_contact_id String
+  referral_contact   CompanyContact @relation(fields: [referral_contact_id], references: [id])
+  expires           DateTime
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model ExternalUser {
+  id                String    @id @default(uuid())
+  japtu_id          String    @unique
+  full_name         String?
+  national_id       String?
+  dob               DateTime?
+  email             String?
+  phone_number      String?
+  status            String?
+  created_at        DateTime? @default(now())
+  updated_at        DateTime? @default(now())
+  drivers_license_number String?
+}
+
+enum UserRole {
+  ADMIN
+  USER
+  DRIVER
 }

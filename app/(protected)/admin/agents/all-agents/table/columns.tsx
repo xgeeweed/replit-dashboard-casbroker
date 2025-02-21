@@ -52,50 +52,50 @@ export const columns: ColumnDef<any>[] = [
 
       return (
         <>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <Link href={`/admin/agents/all-agents/${agent.rowId}`}>
-              <DropdownMenuItem className="cursor-pointer">
-                <Eye className="mr-2 h-4 w-4" />
-                View
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <Link href={`/admin/agents/all-agents/${agent.rowId}`}>
+                <DropdownMenuItem className="cursor-pointer">
+                  <Eye className="mr-2 h-4 w-4" />
+                  View
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem
+                onClick={() => {
+                  toast.info(`Sending message to ${agent.fullName}`);
+                }}
+              >
+                <MessageCircle className="mr-2 h-4 w-4" />
+                Send Message
               </DropdownMenuItem>
-            </Link>
-            <DropdownMenuItem
-              onClick={() => {
-                toast.info(`Sending message to ${agent.fullName}`);
-              }}
-            >
-              <MessageCircle className="mr-2 h-4 w-4" />
-              Send Message
-            </DropdownMenuItem>
-            <Link href={`/admin/agents/all-agents/${agent.rowId}/payment-history`}>
-              <DropdownMenuItem className="cursor-pointer">
-                <Eye className="mr-2 h-4 w-4" />
-                View Payment History
+              <Link href={`/admin/agents/all-agents/${agent.rowId}/payment-history`}>
+                <DropdownMenuItem className="cursor-pointer">
+                  <Eye className="mr-2 h-4 w-4" />
+                  View Payment History
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem
+                onClick={() => setIsModalOpen(true)}
+              >
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Change Status
               </DropdownMenuItem>
-            </Link>
-            <DropdownMenuItem
-              onClick={() => setIsModalOpen(true)}
-            >
-              <RefreshCw className="mr-2 h-4 w-4" />
-              Change Status
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => {
-                toast.info(`Removing ${agent.fullName}`);
-              }}
-              className="text-red-600"
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Remove
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <DropdownMenuItem
+                onClick={() => {
+                  toast.info(`Removing ${agent.fullName}`);
+                }}
+                className="text-red-600"
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Remove
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {/* Modal for Status Update */}
           {isModalOpen && (
@@ -107,11 +107,10 @@ export const columns: ColumnDef<any>[] = [
                     (status) => (
                       <div
                         key={status}
-                        className={`p-2 cursor-pointer rounded-md border ${
-                          selectedStatus === status
+                        className={`p-2 cursor-pointer rounded-md border ${selectedStatus === status
                             ? "bg-blue-100 border-blue-500"
                             : "border-gray-300"
-                        }`}
+                          }`}
                         onClick={() => setSelectedStatus(status)}
                       >
                         {status}

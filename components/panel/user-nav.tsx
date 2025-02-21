@@ -1,23 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { LayoutGrid, LogOut, Presentation, User, UserCog2, Currency, MessageCircleQuestion, BadgeCent } from "lucide-react";
-
+import { LogOut, MessageCircleQuestion, BadgeCent } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogoutButton } from "../../app/auth/components/logout-button";
-import AccountSettingsBody from "@/app/(protected)/dashboard/account-settings/body";
-import BaseModalButton from "../base/BaseModalButton";
 
 export function UserNav() {
   return (
@@ -58,7 +54,7 @@ export function UserNav() {
           Support
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <LogoutButton>  
+        <LogoutButton>
           <DropdownMenuItem className="hover:cursor-pointer">
             <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
             Sign out

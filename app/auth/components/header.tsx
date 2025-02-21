@@ -1,6 +1,5 @@
 import { Poppins } from "next/font/google";
-
-import { cn } from "@/app/auth/lib/utils";
+import { cn } from "@/lib/utils";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -9,15 +8,16 @@ const font = Poppins({
 
 interface HeaderProps {
   label: string;
+  title?: string;
 }
 
-const Header = ({ label }: HeaderProps) => {
+const Header = ({ label, title = "Sign In" }: HeaderProps) => {
   return (
     <div className="w-full flex flex-col gap-y-4 items-center justify-center">
-      <h1 className={cn("text-3xl font-semibold", font.className)}>Sign In</h1>
+      <h1 className={cn("text-3xl font-semibold", font.className)}>{title}</h1>
       <p className="text-muted-foreground">{label}</p>
     </div>
   );
 };
-
 export default Header;
+

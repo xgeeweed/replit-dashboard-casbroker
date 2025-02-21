@@ -37,6 +37,11 @@ import { ChangeRouteWizard } from "@/components/loadboard/change-route-wizard";
 import { UpdateTransportWizard } from "@/components/loadboard/update-transport-wizard";
 import { RateManagementDialog } from "@/components/loadboard/rate-management-dialog";
 
+interface Coordinates {
+  lat: number;
+  lng: number;
+}
+
 interface DetailRowProps {
   icon: React.ElementType;
   label: string;
@@ -218,15 +223,20 @@ export default function LoadDetails() {
     router.push("/admin/loads/active");
   };
 
-  const handleRouteChange = (newDestination: string, newRate: number, distanceKm: number) => {
+  const handleRouteChange = (data: {
+    destination: string;
+    rate: number;
+    distanceKm: number;
+    coordinates: Coordinates;
+  }) => {
     setLoad((prev) => prev ? {
       ...prev,
       deliveryLocation: {
-        name: newDestination,
-        coordinates: prev.deliveryLocation.coordinates
+        name: data.destination,
+        coordinates: data.coordinates
       },
-      rate: newRate,
-      distance: `${distanceKm.toFixed(2)} km`,
+      rate: data.rate,
+      distance: `${data.distanceKm.toFixed(2)} km`,
     } : null);
     setShowRouteWizard(false);
     toast.success("Route updated successfully");
@@ -723,8 +733,7 @@ export default function LoadDetails() {
             onClose={() => setShowRouteWizard(false)}
             onConfirm={handleRouteChange}
             currentDestination={load.deliveryLocation.name}
-            distance={load.distance}
-            currentRate={load.rate}
+            currentCoordinates={load.deliveryLocation.coordinates}
             containerSize={load.equipment.container_size}
           />
           <UpdateTransportWizard

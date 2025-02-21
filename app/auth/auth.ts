@@ -1,6 +1,7 @@
-import NextAuth, { type DefaultSession } from "next-auth";
+import NextAuth, { type DefaultSession, User } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { UserRole } from "@prisma/client";
+import { JWT } from "next-auth/jwt";
 
 import { getUserById } from "@/app/auth/data/user";
 import { getTwoFactorConfirmationByUserId } from "@/app/auth/data/two-factor-confirmation";
@@ -8,33 +9,46 @@ import { db } from "@/app/auth/lib/db";
 import authConfig from "@/app/auth/auth.config";
 import { getAccountByUserId } from "./data/account";
 
+declare module "next-auth" {
+  interface Session {
+    user: User & {
+      role: UserRole;
+      isTwoFactorEnabled: boolean;
+      isOAuth: boolean;
+    }
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    role?: UserRole;
+    isTwoFactorEnabled?: boolean;
+    isOAuth?: boolean;
+  }
+}
+
 export const {
   handlers: { GET, POST },
   auth,
   signIn,
   signOut,
 } = NextAuth({
-  pages: {
-    signIn: "/auth/login",
-    error: "/auth/error",
-  },
-  events: {
-    async linkAccount({ user }) {
-      await db.user.update({
-        where: { id: user.id },
-        data: { emailVerified: new Date() },
-      });
-    },
-  },
-
+  adapter: PrismaAdapter(db),
+  session: { strategy: "jwt" },
+  ...authConfig,
   callbacks: {
+    ...authConfig.callbacks,
     async signIn({ user, account }) {
       // Allow OAuth without email verification
       if (account?.provider !== "credentials") return true;
 
       const existingUser = await getUserById(user.id!);
+      if (!existingUser) return false;
 
-      // Prevent sign in without email verification
+      // For phone-based authentication, we don't need email verification
+      if (existingUser.role === "DRIVER") return true;
+
+      // For other users, check email verification
       if (!existingUser?.emailVerified) return false;
 
       if (existingUser.isTwoFactorEnabled) {
@@ -70,7 +84,7 @@ export const {
 
       return session;
     },
-    async jwt({ token }) {
+    async jwt({ token, user }) {
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
@@ -88,7 +102,4 @@ export const {
       return token;
     },
   },
-  adapter: PrismaAdapter(db),
-  session: { strategy: "jwt" },
-  ...authConfig,
 });

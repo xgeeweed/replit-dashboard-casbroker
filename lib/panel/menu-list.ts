@@ -1,3 +1,5 @@
+"use client";
+
 import {
   LayoutGrid,
   LucideIcon,
@@ -33,6 +35,20 @@ export function getAdminMenuList(pathname: string): Group[] {
     {
       groupLabel: "Management",
       menus: [
+        {
+          href: BASE_PATH + "/loadboard",
+          label: "LoadBoard",
+          active: pathname.includes(BASE_PATH + "/loadboard"),
+          icon: BookOpen,
+          submenus: [],
+        },
+        {
+          href: BASE_PATH + "/book-loads",
+          label: "Book Loads",
+          active: pathname.includes(BASE_PATH + "/book-loads"),
+          icon: BookOpen,
+          submenus: [],
+        },
         {
           href: BASE_PATH + "/loads/add",
           label: "Add Load",
@@ -163,11 +179,6 @@ export function getAdminMenuList(pathname: string): Group[] {
               href: BASE_PATH + "/global-settings/pickup-locations",
               label: "Pickup Locations",
               active: pathname.includes(BASE_PATH + "/global-settings/pickup-locations"),
-            },
-            {
-              href: BASE_PATH + "/global-settings/rates",
-              label: "Rates",
-              active: pathname.includes(BASE_PATH + "/global-settings/rates"),
             },
             {
               href: BASE_PATH + "/global-settings/terminal-locations",

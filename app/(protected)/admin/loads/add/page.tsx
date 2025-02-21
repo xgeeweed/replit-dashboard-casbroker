@@ -20,6 +20,7 @@ type Container = {
   size: "20 ft" | "40 ft" | "2x20 ft";
   selected?: boolean;
   mergedWith?: string;
+  blNumber?: string;
 };
 
 type MergedPair = {
@@ -93,7 +94,7 @@ const PICKUP_LOCATIONS = [
   { value: "WTTMA1TMAF", label: "GHANA PORT AND HARBOURS AUTHORITY", coordinates: { lat: 5.6265188, lng: 0.003165 } },
   { value: "WITMA1GLCL", label: "GOLDEN JUBILEE LCL", coordinates: { lat: 5.6265188, lng: 0.003165 } },
   { value: "WITMA1TMAB", label: "DHL LOGISTICS", coordinates: { lat: 5.6265188, lng: 0.003165 } },
-  { value: "WITMA1CSHA", label: "AMARIS TERMINAL", coordinates: { lat: 5.6265188, lng: 0.003165 } },
+  { value: "WITMA1AMAR", label: "AMARIS TERMINAL", coordinates: { lat: 5.6265188, lng: 0.003165 } },
   { value: "WITMA1ATLS", label: "ATLAS", coordinates: { lat: 5.6265188, lng: 0.003165 } },
   { value: "WITMA1KPUT", label: "KPONE UNITY TERMINAL", coordinates: { lat: 5.6265188, lng: 0.003165 } },
   { value: "WTTKD9TKOT", label: "Takoradi", coordinates: { lat: 4.8956, lng: -1.7557 } },
@@ -101,7 +102,17 @@ const PICKUP_LOCATIONS = [
 
 declare global {
   interface Window {
-    google: any;
+    google: {
+      maps: {
+        places: {
+          Autocomplete: new (input: HTMLInputElement, opts?: any) => any;
+          AutocompleteService: new () => any;
+        };
+        event: {
+          clearInstanceListeners: (instance: any) => void;
+        };
+      };
+    };
     initAutocomplete: () => void;
   }
 }
@@ -301,8 +312,21 @@ export default function PostLoad() {
     if (!validateBLNumber(blData.blNumber)) {
       return;
     }
+    // Store current selections before fetching new data
+    const currentSelections = selectedContainers;
+    const currentMergedPairs = mergedPairs;
+    
     const success = await fetchBLData(blData.blNumber);
     if (success) {
+      // If it's the same BL number, restore selections
+      if (blData.blNumber === currentSelections[0]?.blNumber) {
+        setSelectedContainers(currentSelections);
+        setMergedPairs(currentMergedPairs);
+      } else {
+        // Reset selections for new BL
+        setSelectedContainers([]);
+        setMergedPairs([]);
+      }
       setStep(2);
     }
   };
@@ -311,8 +335,12 @@ export default function PostLoad() {
     const isSelected = selectedContainers.find(c => c.id === container.id);
     if (isSelected) {
       setSelectedContainers(prev => prev.filter(c => c.id !== container.id));
+      // Also remove from merged pairs if it was part of one
+      setMergedPairs(prev => prev.filter(pair => 
+        pair.container1.id !== container.id && pair.container2.id !== container.id
+      ));
     } else {
-      setSelectedContainers(prev => [...prev, container]);
+      setSelectedContainers(prev => [...prev, { ...container, blNumber: blData.blNumber }]);
     }
   };
 
@@ -511,6 +539,32 @@ export default function PostLoad() {
     }
   };
 
+  const validateStep3 = () => {
+    // For merged pairs, check the first container's details
+    for (const pair of mergedPairs) {
+      const details = loadDetails[pair.container1.id];
+      if (!details?.pickupLocation || !details?.deliveryLocation || !details?.pickupDate) {
+        toast.error("Please fill in all required fields for merged containers");
+        return false;
+      }
+    }
+
+    // For unmerged containers
+    const unmergedContainers = selectedContainers.filter(container => 
+      !mergedPairs.some(pair => pair.container1.id === container.id || pair.container2.id === container.id)
+    );
+
+    for (const container of unmergedContainers) {
+      const details = loadDetails[container.id];
+      if (!details?.pickupLocation || !details?.deliveryLocation || !details?.pickupDate) {
+        toast.error("Please fill in all required fields for each container");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -663,7 +717,7 @@ export default function PostLoad() {
                   <div>
                     <label className={labelClass}>Pickup Location</label>
                     <Select
-                      onValueChange={(value) => handlePickupLocationChange(value)}
+                      onValueChange={(value) => handlePickupLocationChange('bulk', value)}
                       required
                     >
                       <SelectTrigger className="mt-1">
@@ -756,17 +810,38 @@ export default function PostLoad() {
               </div>
               <div className="flex justify-end space-x-3">
                 <Button variant="outline" onClick={() => setStep(2)} className={buttonClass}>Back</Button>
-                <Button 
+                <Button
                   onClick={() => {
-                    if (validateLoadDetails(loadDetails.bulk || { 
-                      pickupLocation: '', 
-                      deliveryLocation: '', 
-                      pickupDate: '',
-                      comments: '' 
-                    })) {
-                      setStep(4);
+                    // First check merged pairs
+                    const mergedValid = mergedPairs.every(pair => {
+                      const details = loadDetails[pair.container1.id];
+                      return details?.pickupLocation && details?.deliveryLocation && details?.pickupDate;
+                    });
+
+                    if (!mergedValid) {
+                      toast.error("Please fill in all required fields for merged containers");
+                      return;
                     }
-                  }} 
+
+                    // Then check unmerged containers
+                    const unmergedContainers = selectedContainers.filter(container => 
+                      !mergedPairs.some(pair => 
+                        pair.container1.id === container.id || pair.container2.id === container.id
+                      )
+                    );
+
+                    const unmergedValid = unmergedContainers.every(container => {
+                      const details = loadDetails[container.id];
+                      return details?.pickupLocation && details?.deliveryLocation && details?.pickupDate;
+                    });
+
+                    if (!unmergedValid) {
+                      toast.error("Please fill in all required fields for each container");
+                      return;
+                    }
+
+                    setStep(4);
+                  }}
                   className={buttonClass}
                 >
                   Review
@@ -1196,21 +1271,35 @@ export default function PostLoad() {
               <Button variant="outline" onClick={() => setStep(2)} className={buttonClass}>Back</Button>
               <Button
                 onClick={() => {
-                  const allValid = selectedContainers
-                    .filter(container => !container.mergedWith)
-                    .every(container => {
-                      const details = loadDetails[container.id] || { 
-                        pickupLocation: '', 
-                        deliveryLocation: '', 
-                        pickupDate: '',
-                        comments: '' 
-                      };
-                      return validateLoadDetails(details, container.id);
-                    });
+                  // First check merged pairs
+                  const mergedValid = mergedPairs.every(pair => {
+                    const details = loadDetails[pair.container1.id];
+                    return details?.pickupLocation && details?.deliveryLocation && details?.pickupDate;
+                  });
 
-                  if (allValid) {
-                    setStep(4);
+                  if (!mergedValid) {
+                    toast.error("Please fill in all required fields for merged containers");
+                    return;
                   }
+
+                  // Then check unmerged containers
+                  const unmergedContainers = selectedContainers.filter(container => 
+                    !mergedPairs.some(pair => 
+                      pair.container1.id === container.id || pair.container2.id === container.id
+                    )
+                  );
+
+                  const unmergedValid = unmergedContainers.every(container => {
+                    const details = loadDetails[container.id];
+                    return details?.pickupLocation && details?.deliveryLocation && details?.pickupDate;
+                  });
+
+                  if (!unmergedValid) {
+                    toast.error("Please fill in all required fields for each container");
+                    return;
+                  }
+
+                  setStep(4);
                 }}
                 className={buttonClass}
               >

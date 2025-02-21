@@ -10,8 +10,8 @@ import { SidebarToggle } from "@/components/panel/sidebar-toggle";
 
 export function Sidebar() {
   const sidebar = useStore(useSidebarToggle, (state) => state);
-  
-  if(!sidebar) return null;
+
+  if (!sidebar) return null;
 
   return (
     <aside
@@ -33,8 +33,8 @@ export function Sidebar() {
           <Link href="/dashboard" className="flex items-center gap-2">
             {/* <PanelsTopLeft className="w-6 h-6 mr-1" /> */}
             {/* add a logo here */}
-            <img src="https://casbroker.com/wp-content/uploads/2021/04/WhatsApp-Image-2024-07-02-at-6.08.53-AM-1-1.jpeg" alt="logo" className="w-50 h-20" /> 
-            
+            <img src="https://casbroker.com/wp-content/uploads/2021/04/WhatsApp-Image-2024-07-02-at-6.08.53-AM-1-1.jpeg" alt="logo" className="w-50 h-20" />
+
             {/*<h1
               className={cn(
                 "font-bold text-lg whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300",

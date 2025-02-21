@@ -128,15 +128,20 @@ export default function LoadDetails() {
     setShowCancelDialog(false);
   };
 
-  const handleRouteChange = (newDestination: string, newRate: number, distanceKm: number) => {
+  const handleRouteChange = (data: {
+    destination: string;
+    rate: number;
+    distanceKm: number;
+    coordinates: { lat: number; lng: number };
+  }) => {
     setLoad((prev) => prev ? {
       ...prev,
       deliveryLocation: {
-        name: newDestination,
-        coordinates: prev.deliveryLocation.coordinates
+        name: data.destination,
+        coordinates: data.coordinates
       },
-      rate: newRate,
-      distance: `${distanceKm.toFixed(2)} km`,
+      rate: data.rate,
+      distance: `${data.distanceKm.toFixed(2)} km`,
     } : null);
     setShowRouteWizard(false);
   };
@@ -325,8 +330,7 @@ export default function LoadDetails() {
         onClose={() => setShowRouteWizard(false)}
         onConfirm={handleRouteChange}
         currentDestination={load.deliveryLocation.name}
-        distance={load.distance}
-        currentRate={load.rate}
+        currentCoordinates={load.deliveryLocation.coordinates}
         containerSize={load.equipment.container_size}
       />
 
